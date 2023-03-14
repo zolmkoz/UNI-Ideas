@@ -1,0 +1,75 @@
+name: Test FUDforum
+
+on:
+  push:
+    branches: [ master ]
+  #pull_request:
+  #  branches: [ master ]
+  
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    services:
+      mariadb:
+        image: mariadb:latest
+        ports:
+          - 3306
+        env:
+          MYSQL_USER: fuduser
+          MYSQL_PASSWORD: fudpass
+          MYSQL_DATABASE: fuddb
+          MYSQL_ROOT_PASSWORD: root
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+        
+    strategy:
+      fail-fast: true
+      matrix:
+        #os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
+        php: [7.4, 8.1]
+        #dependency-version: [prefer-lowest, prefer-stable]
+
+    name: P${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+            
+      - name: Install FUDforum
+        run: |
+             php create_fudforum_archive install 1 > fudforum_archive
+             mkdir forum
+             cp install.php fudforum_archive forum/
+             cd forum
+             pwd
+             cat << EOF > install.ini
+             WWW_ROOT         = "http://127.0.0.1:8080/forum/"
+             SERVER_ROOT      = "/home/runner/work/FUDforum/FUDforum/forum"
+             SERVER_DATA_ROOT = "/home/runner/work/FUDforum/FUDforum/forum"
+             DBHOST           = 127.0.0.1:${{ job.services.mariadb.ports[3306] }}
+             DBHOST_USER      = fuduser
+             DBHOST_PASSWORD  = fudpass
+             DBHOST_DBNAME    = fuddb
+             DBHOST_TBL_PREFIX= fud30_
+             DBHOST_DBTYPE    = mysqli
+             COOKIE_DOMAIN    = 127.0.0.1
+             LANGUAGE         = en
+             TEMPLATE         = default
+             ROOT_LOGIN       = admin
+             ROOT_PASS        = admin
+             ADMIN_EMAIL      = "me@nowhere.com"
+             EOF
+             pwd
+             cat install.ini
+             php ./install.php install.ini
+             
+      - name: Upgrade FUDforum
+        run: |
+             cp upgrade.php fudforum_archive forum/
+             cd forum
+             pwd
+             php ./upgrade.php admin admin
+ 
+      - name: Check for syntax errors
+        run: |
+             find ./forum/ -name \*.php -exec php -l {} \; | grep -v 'No syntax errors' && exit 1 || echo "No errors - well done!"

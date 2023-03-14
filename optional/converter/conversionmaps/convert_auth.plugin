@@ -1,0 +1,183 @@
+<?php
+/***************************************************************************
+* copyright            : (C) 2001-2011 Advanced Internet Designs Inc.
+* email                : forum@prohost.org
+* $Id$
+*
+* This program is free software; you can redistribute it and/or modify it 
+* under the terms of the GNU General Public License as published by the 
+* Free Software Foundation; version 2 of the License. 
+***************************************************************************/
+
+plugin_add_hook('AUTHENTICATE', 'plugin_convert_auth');
+
+function plugin_convert_auth($data) {
+	if (empty($_POST['login']) || empty($_POST['login'])) return 0;
+	$login    = $_POST['login'];
+	$password = $_POST['password'];
+
+	if (!($u = db_sab('SELECT id, passwd, salt FROM '. $GLOBALS['DBHOST_TBL_PREFIX'] .'users WHERE login='. _esc($login)))) {
+		// Deny access, not a valid forum user.
+		return 0;
+	} else if (empty($u->salt) && $u->passwd == md5($password) || $u->passwd == sha1($u->salt . sha1($password))) {
+		// Allow through, valid FUDforum password.
+		return 1;
+	} else {
+		if ((@include_once $GLOBALS['PLUGIN_PATH'] .'convert_auth.ini') !== false) {
+			eval('$auth = '. $ini['auth_func'] .';');
+			if ($auth) {
+				// Convert imported password to a FUDforum password.
+				q('UPDATE '. $GLOBALS['DBHOST_TBL_PREFIX'] .'users SET passwd = \''. md5($password) .'\', salt = NULL WHERE id='. $u->id);
+				return 1;
+			}
+		}
+	}
+
+	// Deny access.
+	return 0;
+}
+
+function convert_auth_info() {
+	return array('name' => 'Convert authentication',
+		     'desc' => 'This plugin will authenticate imported users and convert their passwords to FUDforum\'s standard as they log in (without having to reset their passwords). This plugin can be removed after a couple of weeks when all active user acconts have been converted.',
+		     'version' => '1.0');
+}
+
+function convert_auth_config() {
+	if((@include_once $GLOBALS['PLUGIN_PATH'] .'convert_auth.ini') === false) {
+		$ini = NULL;
+	}
+
+	if (isset($_POST['Set'])) {
+		foreach (array_keys($_POST) as $key) {
+			if ($key == 'auth_func') {
+				$ini[$key] = trim($_POST[$key]);
+			}
+		}
+		$fp = fopen($GLOBALS['PLUGIN_PATH'] .'convert_auth.ini', 'w');
+		fwrite($fp, '<?php $ini = '. var_export($ini, 1) .'; ?>');
+		fclose($fp);
+		pf(successify('Settings successfully saved.'));
+	}
+	echo '<p>Autentication function:<br />';
+	echo '<input name="auth_func" value="'. $ini['auth_func'] .'" size="72" /></p>';
+}
+
+/** Support functions for PHPbb3 authentication.
+ *  Copied from phpBB's includes/functions.php file.
+*/
+
+function phpbb_check_hash($password, $hash)
+{
+	$itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	if (strlen($hash) == 34)
+	{
+		return (_hash_crypt_private($password, $hash, $itoa64) === $hash) ? true : false;
+	}
+
+	return (md5($password) === $hash) ? true : false;
+}
+
+/**
+* The crypt function/replacement
+*/
+function _hash_crypt_private($password, $setting, &$itoa64)
+{
+	$output = '*';
+
+	// Check for correct hash
+	if (substr($setting, 0, 3) != '$H$')
+	{
+		return $output;
+	}
+
+	$count_log2 = strpos($itoa64, $setting[3]);
+
+	if ($count_log2 < 7 || $count_log2 > 30)
+	{
+		return $output;
+	}
+
+	$count = 1 << $count_log2;
+	$salt = substr($setting, 4, 8);
+
+	if (strlen($salt) != 8)
+	{
+		return $output;
+	}
+
+	/**
+	* We're kind of forced to use MD5 here since it's the only
+	* cryptographic primitive available in all versions of PHP
+	* currently in use.  To implement our own low-level crypto
+	* in PHP would result in much worse performance and
+	* consequently in lower iteration counts and hashes that are
+	* quicker to crack (by non-PHP code).
+	*/
+	if (PHP_VERSION >= 5)
+	{
+		$hash = md5($salt . $password, true);
+		do
+		{
+			$hash = md5($hash . $password, true);
+		}
+		while (--$count);
+	}
+	else
+	{
+		$hash = pack('H*', md5($salt . $password));
+		do
+		{
+			$hash = pack('H*', md5($hash . $password));
+		}
+		while (--$count);
+	}
+
+	$output = substr($setting, 0, 12);
+	$output .= _hash_encode64($hash, 16, $itoa64);
+
+	return $output;
+}
+
+function _hash_encode64($input, $count, &$itoa64)
+{
+	$output = '';
+	$i = 0;
+
+	do
+	{
+		$value = ord($input[$i++]);
+		$output .= $itoa64[$value & 0x3f];
+
+		if ($i < $count)
+		{
+			$value |= ord($input[$i]) << 8;
+		}
+
+		$output .= $itoa64[($value >> 6) & 0x3f];
+
+		if ($i++ >= $count)
+		{
+			break;
+		}
+
+		if ($i < $count)
+		{
+			$value |= ord($input[$i]) << 16;
+		}
+
+		$output .= $itoa64[($value >> 12) & 0x3f];
+
+		if ($i++ >= $count)
+		{
+			break;
+		}
+
+		$output .= $itoa64[($value >> 18) & 0x3f];
+	}
+	while ($i < $count);
+
+	return $output;
+}
+
+?>

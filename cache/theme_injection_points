@@ -1,0 +1,8 @@
+<?php $injection_points = array (
+  0 => 'left_block',
+  1 => 'right_block',
+  2 => 'before_index',
+  3 => 'after_index',
+  4 => 'before_topic',
+  5 => 'after_topic',
+); ?>

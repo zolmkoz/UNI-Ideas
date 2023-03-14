@@ -573,7 +573,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 </head>
 <body>
 <!--  -->
-<div class="header">
+<div class="header" style="background-color: #0F2026;border-radius: 0%;padding:10px;margin:0;">
   <?php echo ($GLOBALS['FUD_OPT_1'] & 1 && $GLOBALS['FUD_OPT_1'] & 16777216 ? '
   <div class="headsearch">
     <form id="headsearch" method="get" action="/uni-ideas/index.php">'._hs.'

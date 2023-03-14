@@ -215,7 +215,7 @@ function is_allowed_user(&$usr, $simple=0)
   </div>
   ' : ''); ?>
   <a href="/uni-ideas/" title="Home">
-    <img class="headimg" src="/uni-ideas/theme/default/images/header.gif" alt="" align="left" height="80" />
+    <img class="headimg" src="/uni-ideas/theme/default/images/logo.gif" alt="" align="left" height="80" />
     <span class="headtitle"><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
   </a><br />
   <span class="headdescr"><?php echo $GLOBALS['FORUM_DESCR']; ?><br /><br /></span>

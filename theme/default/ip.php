@@ -207,7 +207,7 @@ function fud_whois($ip)
   </div>
   ' : ''); ?>
   <a href="/uni-ideas/" title="Home">
-    <img class="headimg" src="/uni-ideas/theme/default/images/logo.gif" alt="" align="left" height="80" />
+    <img class="headimg" src="/uni-ideas/theme/default/images/logomain.png" alt="" align="left" height="95"/>
     <span class="headtitle"><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
   </a><br />
   <span class="headdescr"><?php echo $GLOBALS['FORUM_DESCR']; ?><br /><br /></span>

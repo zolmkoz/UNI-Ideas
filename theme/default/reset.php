@@ -790,6 +790,7 @@ function reverse_fmt($data)
 	<script src="/uni-ideas/js/jquery.js"></script>
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
 </head>
 <body>
 <!--  -->
@@ -805,7 +806,7 @@ function reverse_fmt($data)
   </div>
   ' : ''); ?>
   <a href="/uni-ideas/" title="Home">
-    <img class="headimg" src="/uni-ideas/theme/default/images/logo.gif" alt="" align="left" height="80" />
+    <img class="headimg" src="/uni-ideas/theme/default/images/logomain.png" alt="" align="left" height="95"/>
     <span class="headtitle"><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
   </a><br />
   <span class="headdescr"><?php echo $GLOBALS['FORUM_DESCR']; ?><br /><br /></span>

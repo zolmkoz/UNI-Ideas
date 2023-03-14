@@ -422,6 +422,7 @@ if ($FUD_OPT_1 & 1073741824 || $FUD_OPT_2 & 16) {
 	<?php echo $RSS; ?>
 	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
 	<script src="/uni-ideas/js/jquery.js"></script>
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
@@ -441,7 +442,7 @@ if ($FUD_OPT_1 & 1073741824 || $FUD_OPT_2 & 16) {
   </div>
   ' : ''); ?>
   <a href="/uni-ideas/" title="Home">
-    <img class="headimg" src="/uni-ideas/theme/default/images/logo.gif" alt="" align="left" height="90"/>
+    <img class="headimg" src="/uni-ideas/theme/default/images/logomain.png" alt="" align="left" height="95"/>
     <span class="headtitle"><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
   </a><br />
   <span class="headdescr"><?php echo $GLOBALS['FORUM_DESCR']; ?><br /><br /></span>

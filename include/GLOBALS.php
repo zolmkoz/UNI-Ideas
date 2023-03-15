@@ -84,7 +84,7 @@
 	$GLOBALS['MAX_IMAGE_COUNT']	= 10;
 	$GLOBALS['STATS_CACHE_AGE']	= 600;		/* seconds */
 	$GLOBALS['FORUM_TITLE']		= 'UNI-Ideas';
-	$GLOBALS['FORUM_DESCR']		= 'Fast Uncompromising Discussions. FUDforum will get your users talking.';
+	$GLOBALS['FORUM_DESCR']		= 'Let\'s discuss about your idea! ';
 	$GLOBALS['MAX_LOGIN_SHOW']	= 25;
 	$GLOBALS['MAX_LOCATION_SHOW']	= 25;
 	$GLOBALS['SHOW_N_MODS']		= 0;

@@ -1,1 +1,3 @@
-<?php $custom_field_cache = array (); ?>
+<?php $custom_field_lookup = array (
+);     $custom_field_cache  = array (
+); ?>

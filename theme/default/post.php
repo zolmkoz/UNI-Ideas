@@ -4526,7 +4526,7 @@ function post_to_smiley($text)
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
-	<style>
+		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 		}
@@ -4570,9 +4570,51 @@ function post_to_smiley($text)
 			width: 270px;
 			height: 30px;
 		}
+
+		.content{
+			background-color: #ffffff;
+			border-radius: 0px;
+			padding: 20px;
+			margin: 0px;	
+			margin-top: 2px;
+		}
+		.tr{
+			color: #fa4d1d;
+		}
+		
+		.wa {
+			background-color: while;
+		}
+
+		.SmallText{
+			color: white;
+		}
+		.footer{
+			background-color: #0F2026;
+			border-radius: 0%;
+			color: #ffffff;
+		}
+		.footer a{
+			text-decoration: none;
+			font-weight: bold ;
+			color: #fa4d1d;
+		}
+		.logo_foot{
+			display: flex;
+			justify-content: center;
+		}
+		.logo_foot span{
+			font-weight: bold;
+			font-size: 20px;
+			
+		}
+		.logo_foot img{
+	
+			height: 30px;
+		}
 	</style>
 </head>
-<body style="background-color: #0F2026;">
+<body style="background-color: #ffffff;">
 <!--HEADER-->
 <div class="header" style="background-color: #0F2026; border: none;">
 
@@ -4636,11 +4678,17 @@ function post_to_smiley($text)
 
 </div>
 <div class="footer ac">
-	<b>.::</b>
+	<div class="logo_foot">
+		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />
+		<span><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
+	</div>
+	<hr />
+
+	
 	<a href="mailto:<?php echo $GLOBALS['ADMIN_EMAIL']; ?>">Contact</a>
-	<b>::</b>
+	<b>|</b>
 	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>
-	<b>::.</b>
+	
 	<p class="SmallText">Powered by: FUDforum <?php echo $GLOBALS['FORUM_VERSION']; ?>.<br />Copyright &copy;2001-2022 <a href="http://fudforum.org/">FUDforum Bulletin Board Software</a></p>
 </div>
 
@@ -5210,11 +5258,17 @@ if (!document.getElementById('preview')) {
 
 </div>
 <div class="footer ac">
-	<b>.::</b>
+	<div class="logo_foot">
+		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />
+		<span><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
+	</div>
+	<hr />
+
+	
 	<a href="mailto:<?php echo $GLOBALS['ADMIN_EMAIL']; ?>">Contact</a>
-	<b>::</b>
+	<b>|</b>
 	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>
-	<b>::.</b>
+	
 	<p class="SmallText">Powered by: FUDforum <?php echo $GLOBALS['FORUM_VERSION']; ?>.<br />Copyright &copy;2001-2022 <a href="http://fudforum.org/">FUDforum Bulletin Board Software</a></p>
 </div>
 

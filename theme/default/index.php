@@ -471,9 +471,51 @@ if ($FUD_OPT_1 & 1073741824 || $FUD_OPT_2 & 16) {
 			width: 270px;
 			height: 30px;
 		}
+
+		.content{
+			background-color: #ffffff;
+			border-radius: 0px;
+			padding: 20px;
+			margin: 0px;	
+			margin-top: 2px;
+		}
+		.tr{
+			color: #fa4d1d;
+		}
+		
+		.wa {
+			background-color: while;
+		}
+
+		.SmallText{
+			color: white;
+		}
+		.footer{
+			background-color: #0F2026;
+			border-radius: 0%;
+			color: #ffffff;
+		}
+		.footer a{
+			text-decoration: none;
+			font-weight: bold ;
+			color: #fa4d1d;
+		}
+		.logo_foot{
+			display: flex;
+			justify-content: center;
+		}
+		.logo_foot span{
+			font-weight: bold;
+			font-size: 20px;
+			
+		}
+		.logo_foot img{
+	
+			height: 30px;
+		}
 	</style>
 </head>
-<body style="background-color: #0F2026;">
+<body style="background-color: #ffffff;">
 <!--HEADER-->
 <div class="header" style="background-color: #0F2026; border: none;">
 
@@ -535,7 +577,7 @@ if ($FUD_OPT_1 & 1073741824 || $FUD_OPT_2 & 16) {
 <?php echo $announcements; ?>
 <?php echo (!$frm_id || ($frm_id && !empty($forum_list_table_data)) ? '
 <table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr>
+<tr class="tb_1">
 	<th colspan="3" class="wa">Forum</th>
 	<th class="nw hide1">Messages</th>
 	<th class="nw hide1">Topics</th>
@@ -551,24 +593,7 @@ if ($FUD_OPT_1 & 1073741824 || $FUD_OPT_2 & 16) {
 <form id="quick_login_form" method="post" action="/uni-ideas/index.php?t=login"'.($GLOBALS['FUD_OPT_3'] & 256 ? ' autocomplete="off"' : '').'>
 '._hs.'
 <table border="0" cellspacing="0" cellpadding="3">
-<tr class="SmallText">
-	<td>
-		<label>Login:<br />
-		<input class="SmallText" type="text" name="quick_login" size="18" /></label>
-	</td>
-	<td>
-		<label>Password:<br />
-		<input class="SmallText" type="password" name="quick_password" size="18" /></label>
-	</td>
-	'.($FUD_OPT_1 & 128 ? '<td>
-	&nbsp;<br />
-	<label><input type="checkbox" checked="checked" name="quick_use_cookies" value="1" /> Use Cookies?</label>
-</td>' : '' )  .'
-	<td>
-		&nbsp;<br />
-		<input type="submit" class="button" name="quick_login_submit" value="Login" />
-	</td>
-</tr>
+
 </table>
 </form>
 </div>'); ?>
@@ -597,11 +622,17 @@ if ($FUD_OPT_1 & 1073741824 || $FUD_OPT_2 & 16) {
 
 </div>
 <div class="footer ac">
-	<b>.::</b>
+	<div class="logo_foot">
+		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />
+		<span><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
+	</div>
+	<hr />
+
+	
 	<a href="mailto:<?php echo $GLOBALS['ADMIN_EMAIL']; ?>">Contact</a>
-	<b>::</b>
+	<b>|</b>
 	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>
-	<b>::.</b>
+	
 	<p class="SmallText">Powered by: FUDforum <?php echo $GLOBALS['FORUM_VERSION']; ?>.<br />Copyright &copy;2001-2022 <a href="http://fudforum.org/">FUDforum Bulletin Board Software</a></p>
 </div>
 

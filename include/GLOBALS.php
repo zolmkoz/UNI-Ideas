@@ -8,7 +8,6 @@
 * under the terms of the GNU General Public License as published by the
 * Free Software Foundation; version 2 of the License.
 **/
-
 	$GLOBALS['INCLUDE'] 		= 'C:/xampp/htdocs/UNI-Ideas/include/';
 	$GLOBALS['WWW_ROOT'] 		= 'http://localhost/uni-ideas/';
 	$GLOBALS['WWW_ROOT_DISK']	= 'C:/xampp/htdocs/UNI-Ideas/';
@@ -19,21 +18,17 @@
 	$GLOBALS['FILE_STORE']		= 'C:/xampp/htdocs/UNI-Ideas/files/';
 	$GLOBALS['FORUM_SETTINGS_PATH'] = 'C:/xampp/htdocs/UNI-Ideas/cache/';
 	$GLOBALS['PLUGIN_PATH'] 	= 'C:/xampp/htdocs/UNI-Ideas/plugins/';
-
 	$GLOBALS['FUD_OPT_1']		= 1737421887;
 	$GLOBALS['FUD_OPT_2']		= 1777733759;
 	$GLOBALS['FUD_OPT_3']		= 41943104;
 	$GLOBALS['FUD_OPT_4']		= 3;
-
 	$GLOBALS['CUSTOM_AVATAR_MAX_SIZE'] = 20000;	/* bytes */
 	$GLOBALS['CUSTOM_AVATAR_MAX_DIM']  = '64x64';	/* width x height (pixels) */
-
 	$GLOBALS['COOKIE_PATH']		= '/uni-ideas/';
 	$GLOBALS['COOKIE_DOMAIN']	= '';
 	$GLOBALS['COOKIE_NAME']		= 'fud_session_1678778030';
 	$GLOBALS['COOKIE_TIMEOUT'] 	= 604800;	/* seconds */
 	$GLOBALS['SESSION_TIMEOUT'] 	= 604800;	/* seconds */
-
 	$GLOBALS['DBHOST'] 		= '127.0.0.1';
 	$GLOBALS['DBHOST_SLAVE_HOST']	= '';
 	$GLOBALS['DBHOST_USER']		= 'root';
@@ -41,27 +36,21 @@
 	$GLOBALS['DBHOST_DBNAME']	= 'fud_test';
 	$GLOBALS['DBHOST_TBL_PREFIX']	= 'fud30_';		/* do not modify this */
 	$GLOBALS['DBHOST_DBTYPE']	= 'mysqli';
-
 	$GLOBALS['FUD_SMTP_SERVER']	= '127.0.0.1';
 	$GLOBALS['FUD_SMTP_PORT']	= 25;
 	$GLOBALS['FUD_SMTP_TIMEOUT']	= 10;		/* seconds */
 	$GLOBALS['FUD_SMTP_LOGIN']	= '';
 	$GLOBALS['FUD_SMTP_PASS']	= '';
-
 	$GLOBALS['ADMIN_EMAIL'] 	= 'admin@UNI-ideas.com';
-
 	$GLOBALS['PRIVATE_ATTACHMENTS']	= 5;		/* int */
 	$GLOBALS['PRIVATE_ATTACH_SIZE']	= 1000000;	/* bytes */
 	$GLOBALS['MAX_PMSG_FLDR_SIZE']	= 300000;	/* bytes */
 	$GLOBALS['MAX_PMSG_FLDR_SIZE_AD']	= 1000000;	/* bytes */
 	$GLOBALS['MAX_PMSG_FLDR_SIZE_PM']	= 1000000;	/* bytes */
-
 	$GLOBALS['FORUM_IMG_CNT_SIG']	= 2;		/* int */
 	$GLOBALS['FORUM_SIG_ML']	= 256;		/* int */
-
 	$GLOBALS['UNCONF_USER_EXPIRY']	= 7;		/* days */
 	$GLOBALS['MOVED_THR_PTR_EXPIRY']	= 3;		/* days */
-
 	$GLOBALS['MAX_SMILIES_SHOWN']	= 15;		/* int */
 	$GLOBALS['DISABLED_REASON']	= 'Temporarily offline; please come back soon!';
 	$GLOBALS['POSTS_PER_PAGE'] 	= 40;
@@ -88,10 +77,8 @@
 	$GLOBALS['MAX_LOGIN_SHOW']	= 25;
 	$GLOBALS['MAX_LOCATION_SHOW']	= 25;
 	$GLOBALS['SHOW_N_MODS']		= 0;
-
 	$GLOBALS['TREE_THREADS_MAX_DEPTH']	= 15;
 	$GLOBALS['TREE_THREADS_MAX_SUBJ_LEN']	= 75;
-
 	$GLOBALS['REG_TIME_LIMIT']		= 60;		/* seconds */
 	$GLOBALS['POST_ICONS_PER_ROW']	= 9;		/* int */
 	$GLOBALS['MAX_LOGGEDIN_USERS']	= 25;		/* int */
@@ -99,20 +86,15 @@
 	$GLOBALS['PHP_CLI']		= '';		/* Command line PHP exectable */
 	$GLOBALS['MNAV_MAX_DATE']	= 31;		/* days */
 	$GLOBALS['MNAV_MAX_LEN']	= 512;		/* characters */
-
 	$GLOBALS['FEED_MAX_N_RESULTS']	= 20;		/* int */
 	$GLOBALS['FEED_AUTH_ID']	= 0;		/* 0 - treat as anon user, >0 treat like specific forum user */
 	$GLOBALS['FEED_CACHE_AGE']	= 3600;
-
 	$GLOBALS['PDF_PAGE']		= 'letter';	/* string */
 	$GLOBALS['PDF_WMARGIN']		= 15;		/* int */
 	$GLOBALS['PDF_HMARGIN']		= 15;		/* int */
 	$GLOBALS['PDF_MAX_CPU']		= 15;		/* seconds */
-
 	$GLOBALS['FUD_WHOIS_SERVER']	= 'ws.arin.net';
 	$GLOBALS['MIN_TIME_BETWEEN_LOGIN']	= 10;		/* seconds */
-
 /* DO NOT EDIT FILE BEYOND THIS POINT UNLESS YOU KNOW WHAT YOU ARE DOING */
-
 	require($GLOBALS['INCLUDE'] .'core.inc');
 ?>

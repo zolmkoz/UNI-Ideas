@@ -783,7 +783,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
-	<style>
+		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 		}
@@ -827,9 +827,51 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 			width: 270px;
 			height: 30px;
 		}
+
+		.content{
+			background-color: #ffffff;
+			border-radius: 0px;
+			padding: 20px;
+			margin: 0px;	
+			margin-top: 2px;
+		}
+		.tr{
+			color: #fa4d1d;
+		}
+		
+		.wa {
+			background-color: while;
+		}
+
+		.SmallText{
+			color: white;
+		}
+		.footer{
+			background-color: #0F2026;
+			border-radius: 0%;
+			color: #ffffff;
+		}
+		.footer a{
+			text-decoration: none;
+			font-weight: bold ;
+			color: #fa4d1d;
+		}
+		.logo_foot{
+			display: flex;
+			justify-content: center;
+		}
+		.logo_foot span{
+			font-weight: bold;
+			font-size: 20px;
+			
+		}
+		.logo_foot img{
+	
+			height: 30px;
+		}
 	</style>
 </head>
-<body style="background-color: #0F2026;">
+<body style="background-color: #ffffff;">
 <!--HEADER-->
 <div class="header" style="background-color: #0F2026; border: none;">
 
@@ -854,7 +896,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!--Nav bar-->
 <div>
 	<div class="nav">
-		
+
 		<?php echo ($FUD_OPT_4 & 16 ? '<div class="menu"><a href="/uni-ideas/index.php?t=blog&amp;'._rsid.'" title="Blog"><img src="/uni-ideas/theme/default/images/blog.png" alt="" width="16" height="16" /> Blog</a></div>' : ''); ?>
 		<?php echo ($FUD_OPT_4 & 8 ? '<div class="menu"><a href="/uni-ideas/index.php?t=page&amp;'._rsid.'" title="Pages"><img src="/uni-ideas/theme/default/images/pages.png" alt="" width="16" height="16" /> Pages</a></div>' : ''); ?>
 		<?php echo ($FUD_OPT_3 & 134217728 ? '<div class="menu"><a href="/uni-ideas/index.php?t=cal&amp;'._rsid.'" title="Calendar"><img src="/uni-ideas/theme/default/images/calendar.png" alt="" width="16" height="16" /> Calendar</a></div>' : ''); ?>
@@ -993,11 +1035,17 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 
 </div>
 <div class="footer ac">
-	<b>.::</b>
+	<div class="logo_foot">
+		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />
+		<span><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
+	</div>
+	<hr />
+
+	
 	<a href="mailto:<?php echo $GLOBALS['ADMIN_EMAIL']; ?>">Contact</a>
-	<b>::</b>
+	<b>|</b>
 	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>
-	<b>::.</b>
+	
 	<p class="SmallText">Powered by: FUDforum <?php echo $GLOBALS['FORUM_VERSION']; ?>.<br />Copyright &copy;2001-2022 <a href="http://fudforum.org/">FUDforum Bulletin Board Software</a></p>
 </div>
 

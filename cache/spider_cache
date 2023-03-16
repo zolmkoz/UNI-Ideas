@@ -1,1 +1,2 @@
-<?php $spider_cache = array (); ?>
+<?php $spider_cache = array (
+); ?>

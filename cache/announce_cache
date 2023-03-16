@@ -1,1 +1,2 @@
-<?php $announce_cache = array(); ?>
+<?php $announce_cache = array (
+); ?>

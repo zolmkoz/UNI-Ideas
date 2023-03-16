@@ -810,6 +810,7 @@ function error_check()
 	<script src="/UNI-Ideas/js/jquery.js"></script>
 	<script async src="/UNI-Ideas/js/ui/jquery-ui.js"></script>
 	<script src="/UNI-Ideas/js/lib.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
 	<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif

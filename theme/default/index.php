@@ -425,8 +425,10 @@ if ($FUD_OPT_1 & 1073741824 || $FUD_OPT_2 & 16) {
 	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
 	<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -584,17 +586,17 @@ if ($FUD_OPT_1 & 1073741824 || $FUD_OPT_2 & 16) {
 	<th class="nw ac hide2">Last message</th>
 </tr>
 	'.$forum_list_table_data.'
-</table>
-' : ''); ?>
-<?php echo (_uid ? '<div class="SmallText ar">[ <a href="/uni-ideas/index.php?t=markread&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'&amp;cat='.$cat_id.'" title="All your unread messages will be marked as read">Mark all messages read</a> ]
-'.($FUD_OPT_2 & 1048576 ? '[ <a href="/uni-ideas/feed.php?mode=m&amp;l=1&amp;basic=1"><img src="/uni-ideas/theme/default/images/rss.gif" title="Syndicate this forum (XML)" alt="Syndicate this forum (XML)" width="16" height="16" /></a> ]' : '' )  .'
-</div>' : ''); ?>
-<?php echo (__fud_real_user__ ? '' : '<div class="fr">
-<form id="quick_login_form" method="post" action="/uni-ideas/index.php?t=login"'.($GLOBALS['FUD_OPT_3'] & 256 ? ' autocomplete="off"' : '').'>
-'._hs.'
-<table border="0" cellspacing="0" cellpadding="3">
+		</table>
+		' : ''); ?>
+		<?php echo (_uid ? '<div class="SmallText ar">[ <a href="/uni-ideas/index.php?t=markread&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'&amp;cat='.$cat_id.'" title="All your unread messages will be marked as read">Mark all messages read</a> ]
+		'.($FUD_OPT_2 & 1048576 ? '[ <a href="/uni-ideas/feed.php?mode=m&amp;l=1&amp;basic=1"><img src="/uni-ideas/theme/default/images/rss.gif" title="Syndicate this forum (XML)" alt="Syndicate this forum (XML)" width="16" height="16" /></a> ]' : '' )  .'
+		</div>' : ''); ?>
+		<?php echo (__fud_real_user__ ? '' : '<div class="fr">
+		<form id="quick_login_form" method="post" action="/uni-ideas/index.php?t=login"'.($GLOBALS['FUD_OPT_3'] & 256 ? ' autocomplete="off"' : '').'>
+		'._hs.'
+		<table border="0" cellspacing="0" cellpadding="3">
 
-</table>
+		</table>
 </form>
 </div>'); ?>
 <?php echo ($logedin || $forum_info ? '<br />
@@ -635,6 +637,11 @@ if ($FUD_OPT_1 & 1073741824 || $FUD_OPT_2 & 16) {
 	
 	<p class="SmallText">Powered by: FUDforum <?php echo $GLOBALS['FORUM_VERSION']; ?>.<br />Copyright &copy;2001-2022 <a href="http://fudforum.org/">FUDforum Bulletin Board Software</a></p>
 </div>
+
+
+
+
+
 
 </body></html>
 

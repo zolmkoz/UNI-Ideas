@@ -192,6 +192,7 @@ function fud_whois($ip)
 	<script src="/uni-ideas/js/jquery.js"></script>
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
 		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif

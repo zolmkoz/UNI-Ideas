@@ -2497,6 +2497,7 @@ function reverse_nl2br($data)
 	<script src="/uni-ideas/js/jquery.js"></script>
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
 	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
 		<style>
 		*{

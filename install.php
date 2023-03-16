@@ -1,4 +1,3 @@
-<?php
 /***************************************************************************
 * copyright            : (C) 2001-2021 Advanced Internet Designs Inc.
 * email                : forum@prohost.org

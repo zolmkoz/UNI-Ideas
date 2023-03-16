@@ -59,14 +59,14 @@ if (_uid === '_uid') {
 
 		$help_section_data .= '<table cellspacing="1" cellpadding="2" class="ContentTable">
 <tr>
-	<th>'.$topic_title.'</th>
+	<th >'.$topic_title.'</th>
 </tr>
 <tr>
 	<td class="content">
-		<div class="GenText wa">
+		<div class="GenText wa questionHelp">
 			'.$topic_help.'
 		</div>
-		<div class="GenText ar">
+		<div class="GenText ar questionHelp">
 			<a href="javascript://" onclick="chng_focus(\'top\');">back to top</a>
 		</div>
 	</td>
@@ -177,6 +177,28 @@ if (_uid === '_uid') {
 	
 			height: 30px;
 		}
+		th {
+			font-size: 18pt;
+			text-align: center;
+			color: #0f2026;
+			font-weight: bold;
+			height: 23px;
+			vertical-align: middle;
+			background: #ccc;
+
+			/* url('/uni-ideas/theme/default/images/maucam.png'); */
+		}
+		.questionHelp{
+			border-color: none;
+		}
+		.questionHelp a {
+			text-decoration: none;
+			color: black;
+		}
+		/* .back a{
+			text-decoration: none;
+			color: black;
+		} */
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -219,6 +241,9 @@ if (_uid === '_uid') {
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
+
+
+
 <a name="top"></a>
 <?php echo $return_top; ?>
 <?php echo $help_section_data; ?>
@@ -230,6 +255,9 @@ if (_uid === '_uid') {
 </td></tr></table>
 
 </div>
+
+
+
 <div class="footer ac">
 	<div class="logo_foot">
 		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />

@@ -992,11 +992,17 @@ function error_check()
 
 <!-- footer -->
 <div class="footer ac">
-	<b>.::</b>
+	<div class="logo_foot">
+		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />
+		<span><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
+	</div>
+	<hr />
+
+	
 	<a href="mailto:<?php echo $GLOBALS['ADMIN_EMAIL']; ?>">Contact</a>
-	<b>::</b>
-	<a href="/UNI-Ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>
-	<b>::.</b>
+	<b>|</b>
+	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>
+	
 	<p class="SmallText">Powered by: FUDforum <?php echo $GLOBALS['FORUM_VERSION']; ?>.<br />Copyright &copy;2001-2022 <a href="http://fudforum.org/">FUDforum Bulletin Board Software</a></p>
 </div>
 

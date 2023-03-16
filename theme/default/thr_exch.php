@@ -1175,19 +1175,18 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 </td></tr></table>
 
 </div>
+  <!-- Footer -->
+</div>
 <div class="footer ac">
 	<div class="logo_foot">
 		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />
 		<span><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
 	</div>
 	<hr />
-
-	
 	<a href="mailto:<?php echo $GLOBALS['ADMIN_EMAIL']; ?>">Contact</a>
 	<b>|</b>
 	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>
-	
-	<p class="SmallText">Powered by: FUDforum <?php echo $GLOBALS['FORUM_VERSION']; ?>.<br />Copyright &copy;2001-2022 <a href="http://fudforum.org/">FUDforum Bulletin Board Software</a></p>
+	<p class="SmallText">Powered by: Mây Trắng Groups<br />Copyright &copy;2023 <a href="https://github.com/zolmkoz/UNI-Ideas">UNI-Ideas</a></p>
 </div>
 
 </body></html>

@@ -733,7 +733,6 @@ if (document.forms['groupmgr'].gr_member) {
 		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />
 		<span><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
 	</div>
-	<hr />
 	<a href="mailto:<?php echo $GLOBALS['ADMIN_EMAIL']; ?>">Contact</a>
 	<b>|</b>
 	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>

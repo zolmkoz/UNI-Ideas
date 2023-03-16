@@ -15,18 +15,18 @@ if (_uid === '_uid') {
 {
 	if ($GLOBALS['FUD_OPT_2'] & 32768 && !empty($_SERVER['PATH_INFO'])) {
 		if (!$returnto || !strncmp($returnto, '/er/', 4)) {
-			header('Location: /UNI-Ideas/index.php/i/'. _rsidl);
+			header('Location: /uni-ideas/index.php/i/'. _rsidl);
 		} else if ($returnto[0] == '/') { /* Unusual situation, path_info & normal themes are active. */
-			header('Location: /UNI-Ideas/index.php'. $returnto);
+			header('Location: /uni-ideas/index.php'. $returnto);
 		} else {
-			header('Location: /UNI-Ideas/index.php?'. $returnto);
+			header('Location: /uni-ideas/index.php?'. $returnto);
 		}
 	} else if (!$returnto || !strncmp($returnto, 't=error', 7)) {
-		header('Location: /UNI-Ideas/index.php?t=index&'. _rsidl);
+		header('Location: /uni-ideas/index.php?t=index&'. _rsidl);
 	} else if (strpos($returnto, 'S=') === false && $GLOBALS['FUD_OPT_1'] & 128) {
-		header('Location: /UNI-Ideas/index.php?'. $returnto .'&S='. s);
+		header('Location: /uni-ideas/index.php?'. $returnto .'&S='. s);
 	} else {
-		header('Location: /UNI-Ideas/index.php?'. $returnto);
+		header('Location: /uni-ideas/index.php?'. $returnto);
 	}
 	exit;
 }class fud_user
@@ -498,7 +498,7 @@ function is_allowed_user(&$usr, $simple=0)
 		}
 		setcookie($GLOBALS['COOKIE_NAME'].'1', 'd34db33fd34db33fd34db33fd34db33f', ($ban_expiry ? $ban_expiry : (__request_timestamp__ + 63072000)), $GLOBALS['COOKIE_PATH'], $GLOBALS['COOKIE_DOMAIN']);
 		if ($banned) {
-			error_dialog('ERROR: You have been banned.', 'Your account was '.($ban_expiry ? 'temporarily banned until '.strftime('%a, %d %B %Y %H:%M', $ban_expiry) : 'permanently banned' )  .' from accessing the site, due to a violation of the forum&#39;s rules.
+			error_dialog('ERROR: You have been banned.', 'Your account was '.($ban_expiry ? 'temporarily banned until '.utf8_encode(strftime('%a, %d %B %Y %H:%M', $ban_expiry)) : 'permanently banned' )  .' from accessing the site, due to a violation of the forum&#39;s rules.
 <br />
 <br />
 <span class="GenTextRed">'.$ban_reason.'</span>');
@@ -512,7 +512,7 @@ function is_allowed_user(&$usr, $simple=0)
 	}
 
 	if ($GLOBALS['FUD_OPT_1'] & 1048576 && $usr->users_opt & 262144) {
-		error_dialog('ERROR: Your account is not yet confirmed', 'We have not received a confirmation from your parent and/or legal guardian, which would allow you to post messages. If you lost your COPPA form, <a href="/UNI-Ideas/index.php?t=coppa_fax&amp;'._rsid.'">view it again</a>.');
+		error_dialog('ERROR: Your account is not yet confirmed', 'We have not received a confirmation from your parent and/or legal guardian, which would allow you to post messages. If you lost your COPPA form, <a href="/uni-ideas/index.php?t=coppa_fax&amp;'._rsid.'">view it again</a>.');
 	}
 
 	if ($GLOBALS['FUD_OPT_2'] & 1 && !($usr->users_opt & 131072)) {
@@ -630,9 +630,9 @@ function is_allowed_user(&$usr, $simple=0)
 	/* Send logged in users to profile page if they are not logging out. */
 	if (_uid) {
 		if ($FUD_OPT_2 & 32768) {
-			header('Location: /UNI-Ideas/index.php/re/'. _rsidl);
+			header('Location: /uni-ideas/index.php/re/'. _rsidl);
 		} else {
-			header('Location: /UNI-Ideas/index.php?t=register&'. _rsidl);
+			header('Location: /uni-ideas/index.php?t=register&'. _rsidl);
 		}
 		exit;
 	}
@@ -730,14 +730,14 @@ function error_check()
 			$ses_id = user_login($usr_d->id, $usr->ses_id, ((empty($_POST['use_cookie']) && $FUD_OPT_1 & 128) ? false : true));
 
 			if (!($usr_d->users_opt & 131072)) {
-				error_dialog('ERROR: Your account is not yet confirmed', 'You have not confirmed your account via e-mail yet.<br /><table border="0"><tr><td><ol><li>If you have not received a confirmation e-mail, <a href="/UNI-Ideas/index.php?t=reset&amp;email='.$usr_d->email.'&amp;S='.$ses_id.'">request it again</a>.</li><li>If '.$usr_d->email.' is not your correct e-mail address, <a href="/UNI-Ideas/index.php?t=register&amp;S='.$ses_id.'">specify the correct address</a>.</li></ol></td></tr></table>', null, $ses_id);
+				error_dialog('ERROR: Your account is not yet confirmed', 'You have not confirmed your account via e-mail yet.<br /><table border="0"><tr><td><ol><li>If you have not received a confirmation e-mail, <a href="/uni-ideas/index.php?t=reset&amp;email='.$usr_d->email.'&amp;S='.$ses_id.'">request it again</a>.</li><li>If '.$usr_d->email.' is not your correct e-mail address, <a href="/uni-ideas/index.php?t=register&amp;S='.$ses_id.'">specify the correct address</a>.</li></ol></td></tr></table>', null, $ses_id);
 			}
 			if ($usr_d->users_opt & 2097152) {
 				error_dialog('Unapproved Account', 'The administrator of the forum has chosen to confirm each new account manually before activation. Your account has not yet been confirmed, therefore you will not be able to access some of the features available to confirmed members.', null, $ses_id);
 			}
 
 			if (!empty($_POST['adm']) && $usr_d->users_opt & 1048576) {
-				header('Location: /UNI-Ideas/adm/index.php?S='. $ses_id .'&SQ='. $new_sq);
+				header('Location: /uni-ideas/adm/index.php?S='. $ses_id .'&SQ='. $new_sq);
 				exit;
 			}
 
@@ -781,7 +781,7 @@ function error_check()
 /* Print number of unread private messages in User Control Panel. */
 	if (__fud_real_user__ && $FUD_OPT_1 & 1024) {	// PM_ENABLED
 		$c = q_singleval('SELECT count(*) FROM fud30_pmsg WHERE duser_id='. _uid .' AND fldr=1 AND read_stamp=0');
-		$ucp_private_msg = $c ? '<li><a href="/UNI-Ideas/index.php?t=pmsg&amp;'._rsid.'" title="Private Messaging"><img src="/UNI-Ideas/theme/default/images/top_pm.png" alt="" width="16" height="16" /> You have <span class="GenTextRed">('.$c.')</span> unread '.convertPlural($c, array('private message','private messages')).'</a></li>' : '<li><a href="/UNI-Ideas/index.php?t=pmsg&amp;'._rsid.'" title="Private Messaging"><img src="/UNI-Ideas/theme/default/images/top_pm.png" alt="" width="15" height="11" /> Private Messaging</a></li>';
+		$ucp_private_msg = $c ? '<li><a href="/uni-ideas/index.php?t=pmsg&amp;'._rsid.'" title="Private Messaging"><img src="/uni-ideas/theme/default/images/icon/chat.png" alt="" width="16" height="16" /> You have <span class="GenTextRed">('.$c.')</span> unread '.convertPlural($c, array('private message','private messages')).'</a></li>' : '<li><a href="/uni-ideas/index.php?t=pmsg&amp;'._rsid.'" title="Private Messaging"><img src="/uni-ideas/theme/default/images/icon/chat.png" alt="" width="15" height="11" /> Private Messaging</a></li>';
 	} else {
 		$ucp_private_msg = '';
 	}
@@ -800,17 +800,15 @@ function error_check()
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="<?php echo (!empty($META_DESCR) ? $META_DESCR.'' : $GLOBALS['FORUM_DESCR'].''); ?>" />
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
-	<link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GLOBALS['FORUM_TITLE']; ?> Search" href="/UNI-Ideas/open_search.php" />
+	<link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GLOBALS['FORUM_TITLE']; ?> Search" href="/uni-ideas/open_search.php" />
 	<?php echo $RSS; ?>
-	<link rel="stylesheet" href="/UNI-Ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
-	<link rel="stylesheet" href="/UNI-Ideas/js/ui/jquery-ui.css" media="screen" />
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
-	<script src="/UNI-Ideas/js/jquery.js"></script>
-	<script async src="/UNI-Ideas/js/ui/jquery-ui.js"></script>
-	<script src="/UNI-Ideas/js/lib.js"></script>
-	<style>
+	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
+	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<script src="/uni-ideas/js/jquery.js"></script>
+	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
+	<script src="/uni-ideas/js/lib.js"></script>
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 		}
@@ -898,7 +896,7 @@ function error_check()
 		}
 	</style>
 </head>
-<body>
+<body style="background-color: #ffffff;">
 <!--HEADER-->
 <div class="header" style="background-color: #0F2026; border: none;">
 
@@ -939,49 +937,42 @@ function error_check()
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
-<!-- FORM LOGIN -->
-
-<div class="container">
-	<div class="row justify-content-center">
-		<div class="col-md-12 col-lg-10">
-			<div class="wrap d-md-flex" style="background-color: #ccc">
-				<div class="img" style="background-image: url(/UNI-Ideas/theme/default/images/login.png);"></div>
-				<div class="login-wrap p-4 p-md-5">
-			      	<div class="d-flex">
-			      		<div class="w-100">
-			      			<h3 class="mb-4">Sign In</h3>
-			      		</div>
-			      	</div>
-					
-					<form id="login" method="post" action="/UNI-Ideas/index.php?t=login" class="signin-form" <?php echo ($FUD_OPT_3 & 256 ? ' autocomplete="off"' : '');?>>
-			      		<div class="form-group mb-3">
-			      			<label class="label" for="name">Username</label>
-							<?php echo login_php_get_err('login'); ?>
-							<input type="text" tabindex="1" name="login" class="form-control" placeholder="Username" required>
-			      		</div>
-						<div class="form-group mb-3">
-							<label class="label" for="password">Password</label>
-							<?php echo login_php_get_err('password'); ?>
-							<input type="password" class="form-control" placeholder="Password" tabindex="2" name="password" required>
-						</div>
-						<?php echo ($FUD_OPT_1 & 128 ? '<tr class="RowStyleB">
-							<td colspan="3" class="al">
-								<label><input type="checkbox" name="use_cookie" value="Y" checked="checked" /> Use cookies<br /><span class="SmallText">If you&#39;re using a public terminal such as a computer in a library, school, or Internet cafe, it is recommended that you uncheck this option for greater security. If you leave this option selected then you will be automatically logged-into the forum the next time you visit.</span></label>
-							</td>
-						</tr>' : ''); ?>
-		            	<div class="form-group">
-		            		<button type="submit" tabindex="3" value="Login" class="btn" style="width: 40%;height: 10%;background-color: #0F2026;color:white;margin:0 30%">Sign In</button>
-		            	</div>
-						<?php echo _hs; ?><input type="hidden" name="adm" value="<?php echo (isset($_GET['adm']) ? '1' : ''); ?>" />
-		            </form>
-		        </div>
-		      </div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Current time -->
-<div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__); ?></span></div>
+<form id="login" method="post" action="/uni-ideas/index.php?t=login"<?php echo ($FUD_OPT_3 & 256 ? ' autocomplete="off"' : '').'>
+<div class="ctb">
+<table cellspacing="1" cellpadding="2" class="DialogTable">
+<tr>
+	<th colspan="3">Login Form</th>
+</tr>
+<tr>
+	<td class="RowStyleA GenText" colspan="3">
+		'.(isset($reset_login_notify) ? $reset_login_notify.'' : '
+		You are not logged in. This could be due to one of several reasons:
+		<ol>
+			<li class="GenText">Your cookie has expired, and you need to login to renew your cookie.</li>
+			<li class="GenText">You do not have permission to access the requested resource as an anonymous user. You must login to gain permission.</li>
+		</ol>'); ?>
+	</td>
+</tr>
+<tr class="RowStyleB">
+	<td class="GenText">Login:</td>
+	<td><?php echo login_php_get_err('login'); ?><input type="text" tabindex="1" name="login" /></td>
+	<td class="nw"><?php echo ($FUD_OPT_1 & 2 ? '<a href="/uni-ideas/index.php?t=register&amp;'._rsid.'">Want to register?</a>' : ''); ?></td>
+</tr>
+<tr class="RowStyleA">
+	<td class="GenText">Password:</td>
+	<td><?php echo login_php_get_err('password'); ?><input type="password" tabindex="2" name="password" /></td>
+	<td class="nw"><?php echo ($FUD_OPT_4 & 2 ? '<a href="/uni-ideas/index.php?t=reset&amp;'._rsid.'">Forgot password</a>' : ''); ?></td>
+</tr>
+<?php echo ($FUD_OPT_1 & 128 ? '<tr class="RowStyleB">
+	<td colspan="3" class="al">
+		<label><input type="checkbox" name="use_cookie" value="Y" checked="checked" /> Use cookies<br /><span class="SmallText">If you&#39;re using a public terminal such as a computer in a library, school, or Internet cafe, it is recommended that you uncheck this option for greater security. If you leave this option selected then you will be automatically logged-into the forum the next time you visit.</span></label>
+	</td>
+</tr>' : ''); ?>
+<tr>
+	<td colspan="3" class="RowStyleA ar"><input type="submit" class="button" tabindex="3" value="Login" /></td>
+</tr>
+</table></div><?php echo _hs; ?><input type="hidden" name="adm" value="<?php echo (isset($_GET['adm']) ? '1' : ''); ?>" /></form>
+<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
 <script>
 	document.forms['login'].login.focus();
 </script>
@@ -989,17 +980,23 @@ function error_check()
 </td><td width="200px" align-"right" valign="top" class="sidebar-right">
 	'.$RIGHT_SIDEBAR.'
 ' : ''); ?>
+</td></tr></table>
 
-<!-- footer -->
+</div>
 <div class="footer ac">
-	<b>.::</b>
+	<div class="logo_foot">
+		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />
+		<span><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
+	</div>
+	<hr />
+
+	
 	<a href="mailto:<?php echo $GLOBALS['ADMIN_EMAIL']; ?>">Contact</a>
-	<b>::</b>
-	<a href="/UNI-Ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>
-	<b>::.</b>
+	<b>|</b>
+	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>
+	
 	<p class="SmallText">Powered by: FUDforum <?php echo $GLOBALS['FORUM_VERSION']; ?>.<br />Copyright &copy;2001-2022 <a href="http://fudforum.org/">FUDforum Bulletin Board Software</a></p>
 </div>
 
-</body>
-</html>
+</body></html>
 

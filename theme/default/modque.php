@@ -3284,7 +3284,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 </tr>
 <?php echo $modque_message; ?>
 </table>
-<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
+<br />  
 <?php echo $page_stats; ?>
 <?php echo (!empty($RIGHT_SIDEBAR) ? '
 </td><td width="200px" align-"right" valign="top" class="sidebar-right">

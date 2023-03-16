@@ -973,7 +973,7 @@ function error_check()
 	<td colspan="3" class="RowStyleA ar"><input type="submit" class="button" tabindex="3" value="Login" /></td>
 </tr>
 </table></div><?php echo _hs; ?><input type="hidden" name="adm" value="<?php echo (isset($_GET['adm']) ? '1' : ''); ?>" /></form>
-<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
+<br />  
 <script>
 	document.forms['login'].login.focus();
 </script>

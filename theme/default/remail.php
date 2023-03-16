@@ -853,7 +853,7 @@ function reverse_fmt($data)
 <input type="hidden" name="th" value="<?php echo $th; ?>" />
 </form>
 </div>
-<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
+<br />  
 <?php echo (!empty($RIGHT_SIDEBAR) ? '
 </td><td width="200px" align-"right" valign="top" class="sidebar-right">
 	'.$RIGHT_SIDEBAR.'

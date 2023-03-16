@@ -634,7 +634,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 
 <tr class="RowStyleC"><td class="nw ar GenText" colspan="2"><a href="/uni-ideas/index.php?t=showposts&amp;id=<?php echo $u->id; ?>&amp;<?php echo _rsid; ?>">Show all messages by <?php echo $u->alias; ?></a></td></tr>
 </table>
-<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
+<br />  
 <?php echo $page_stats; ?>
 <?php echo (!empty($RIGHT_SIDEBAR) ? '
 </td><td width="200px" align-"right" valign="top" class="sidebar-right">

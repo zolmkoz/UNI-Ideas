@@ -3082,7 +3082,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 </table>
 </form>
 <?php echo $reference_msg; ?>
-<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
+<br />  
 <?php echo $page_stats; ?>
 
 <style>

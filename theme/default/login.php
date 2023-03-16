@@ -940,6 +940,7 @@ function error_check()
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
+<br>
 <!-- FORM LOGIN -->
 
 <div class="container">
@@ -982,7 +983,7 @@ function error_check()
 	</div>
 </div>
 <!-- Current time -->
-<div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__); ?></span></div>
+<br>
 <script>
 	document.forms['login'].login.focus();
 </script>

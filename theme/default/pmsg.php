@@ -1326,7 +1326,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 </table></form>
 <?php echo $page_pager; ?>
 <div class="ar pmL"><a href="/uni-ideas/index.php?t=ppost&amp;<?php echo _rsid; ?>"><img src="/uni-ideas/theme/default/images/new_pm.gif" alt="" /></a></div>
-<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
+<br />  
 <?php echo $page_stats; ?>
 <?php echo (!empty($RIGHT_SIDEBAR) ? '
 </td><td width="200px" align-"right" valign="top" class="sidebar-right">

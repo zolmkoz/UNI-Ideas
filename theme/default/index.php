@@ -611,7 +611,7 @@ if ($FUD_OPT_1 & 1073741824 || $FUD_OPT_2 & 16) {
 <img src="/uni-ideas/theme/default/images/moved.png" alt="Redirection" width="30" height="30" /> Redirection
 </fieldset>
 <div><br /></div>
-<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
+<br />  
 <?php echo $page_stats; ?>
 <script>
 	min_max_cats("/uni-ideas/theme/default/images", "Minimize Category", "Maximize Category", "<?php echo $usr->sq; ?>", "<?php echo s; ?>");

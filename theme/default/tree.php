@@ -1276,7 +1276,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <?php echo tmpl_create_forum_select((isset($frm->forum_id) ? $frm->forum_id : $frm->id), $usr->users_opt & 1048576); ?>
 <br /><div class="wa ac">-=] <a href="javascript://" onclick="chng_focus('page_top');">Back to Top</a> [=-</div>
 <div class="ar SmallText"><?php echo ($FUD_OPT_2 & 1048576 ? '[ <a href="/uni-ideas/index.php?t=help_index&amp;section=boardusage#syndicate">Syndicate this forum (XML)</a> ] [ <a href="/uni-ideas/feed.php?mode=m&amp;th='.$th.'&amp;basic=1"><img src="/uni-ideas/theme/default/images/rss.gif" title="Syndicate this forum (XML)" alt="RSS" width="16" height="16" /></a> ]' : ''); ?> <?php echo ($FUD_OPT_2 & 2097152 ? '[ <a href="/uni-ideas/pdf.php?msg='.$mid.'&amp;'._rsid.'"><img src="/uni-ideas/theme/default/images/pdf.gif" title="Generate printable PDF" alt="PDF" /></a> ]' : ''); ?></div>
-<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
+<br />  
 <?php echo $page_stats; ?>
 <script defer="defer">
 	var cur_msg = <?php echo $mid; ?>;

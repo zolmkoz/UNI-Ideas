@@ -360,7 +360,7 @@ function is_allowed_user(&$usr, $simple=0)
 </table>
 </div>
 <input type="hidden" name="msg_id" value="<?php echo $msg_id; ?>" /><?php echo _hs; ?></form>
-<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
+<br />  
 <?php echo (!empty($RIGHT_SIDEBAR) ? '
 </td><td width="200px" align-"right" valign="top" class="sidebar-right">
 	'.$RIGHT_SIDEBAR.'

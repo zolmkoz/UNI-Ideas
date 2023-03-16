@@ -759,7 +759,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	<img src="/uni-ideas/theme/default/images/readlocked.png" alt="Locked" />&nbsp;Locked&nbsp;&nbsp;
 	<img src="/uni-ideas/theme/default/images/moved.png" alt="Moved to another forum" />&nbsp;Moved to another forum
 </fieldset>
-<br /><div class="ac"><span class="curtime"><b>Current Time:</b> <?php echo utf8_encode(strftime('%a %b %d %H:%M:%S %Z %Y', __request_timestamp__)); ?></span></div>
+<br />  
 <?php echo $page_stats; ?>
 <?php echo (!empty($RIGHT_SIDEBAR) ? '
 </td><td width="200px" align-"right" valign="top" class="sidebar-right">

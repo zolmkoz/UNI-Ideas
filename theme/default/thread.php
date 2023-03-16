@@ -870,6 +870,9 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		.clear pad{
+			align-items: center;
+		}
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -1042,9 +1045,10 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />
 		<span><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
 	</div>
+	<hr />
 	<a href="mailto:<?php echo $GLOBALS['ADMIN_EMAIL']; ?>">Contact</a>
-	<b> | </b>
-	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home page <img src="/uni-ideas/theme/default/images/icon/homefooter.png"/></a>
+	<b>|</b>
+	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home</a>
 	<p class="SmallText">Powered by: Mây Trắng Groups<br />Copyright &copy;2023 <a href="https://github.com/zolmkoz/UNI-Ideas">UNI-Ideas</a></p>
 </div>
 

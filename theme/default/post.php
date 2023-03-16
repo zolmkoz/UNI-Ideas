@@ -5022,6 +5022,94 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	<script src="/uni-ideas/js/jquery.js"></script>
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<style>
+		*{
+			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+		}
+		.nav {
+			list-style-type: none;
+			overflow: hidden;
+			background-color: #ffffff;
+			height: 54px;
+		}
+
+		.nav :hover{
+			border-bottom: 2px solid #fa4d1d;
+		}
+
+		.menu {
+			float: left;
+		}
+
+		.menu a {
+			display: block;
+			color: black;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+			font-weight: bold;
+			font-size: 15px;
+			text-transform: uppercase;
+		}
+
+		.menu a:hover {
+			background-color: #ffffff;
+			color: #fa4d1d ;
+		}
+		.search_input{
+			color: #ffffff;
+			border-bottom: 2px solid #fa4d1d;
+			border-color: none;
+			background: none;
+			border-radius: 15px;
+			width: 270px;
+			height: 30px;
+		}
+
+		.content{
+			background-color: #ffffff;
+			border-radius: 0px;
+			padding: 20px;
+			margin: 0px;	
+			margin-top: 2px;
+		}
+		.tr{
+			color: #fa4d1d;
+		}
+		
+		.wa {
+			background-color: while;
+		}
+
+		.SmallText{
+			color: white;
+		}
+		.footer{
+			background-color: #0F2026;
+			border-radius: 0%;
+			color: #ffffff;
+		}
+		.footer a{
+			text-decoration: none;
+			font-weight: bold ;
+			color: #fa4d1d;
+		}
+		.logo_foot{
+			display: flex;
+			justify-content: center;
+		}
+		.logo_foot span{
+			font-weight: bold;
+			font-size: 20px;
+			
+		}
+		.logo_foot img{
+	
+			height: 30px;
+		}
+	</style>
 </head>
 <body>
 <!--  -->

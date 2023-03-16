@@ -47,6 +47,8 @@ text,	a:link, a:visited, a:active, a.CatLink, .CatDesc, .CatLockedName, .GenText
 a:link, a:visited, a:active, a.PagerLink {
 	color: #069;
 	text-decoration: underline;
+
+	
 }
 
 a.CatLink {

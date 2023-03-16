@@ -515,6 +515,9 @@ $logedin = $forum_info = '';
 	
 			height: 30px;
 		}
+		.tbl_fod{
+			background-color: #ffffff;
+		}
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -563,54 +566,52 @@ $logedin = $forum_info = '';
 <div class="content">
 
 <!-- Table for sidebars. -->
-<table width="100%"><tr><td>
-
-<?php echo (_uid ? '<span class="GenText">Welcome <b>'.$usr->alias.'</b>, your last visit was on '.utf8_encode(strftime('%a, %d %B %Y %H:%M', $usr->last_visit)).'</span><br />' : ''); ?>
-<span id="ShowLinks">
-<span class="GenText fb">Show:</span>
-<a href="/uni-ideas/index.php?t=selmsg&amp;date=today&amp;<?php echo _rsid; ?>&amp;frm_id=<?php echo (isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'&amp;th='.$th.'" title="Show all messages that were posted today" rel="nofollow">Today&#39;s Messages</a>
-'.(_uid ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;unread=1&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all unread messages" rel="nofollow">Unread Messages</a>&nbsp;' : ''); ?>
-<?php echo (!$th ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;reply_count=0&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all messages, which have no replies" rel="nofollow">Unanswered Messages</a>&nbsp;' : ''); ?>
-<b>::</b> <a href="/uni-ideas/index.php?t=polllist&amp;<?php echo _rsid; ?>" rel="nofollow">Polls</a>
-<b>::</b> <a href="/uni-ideas/index.php?t=mnav&amp;<?php echo _rsid; ?>" rel="nofollow">Message Navigator</a>
-</span><?php echo $admin_cp; ?>
-<?php echo $cat_path; ?>
-
-<?php echo $announcements; ?>
-<?php echo (!$frm_id || ($frm_id && !empty($forum_list_table_data)) ? '
-<table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr class="tb_1">
-	<th colspan="3" class="wa">Forum</th>
-	<th class="nw hide1">Messages</th>
-	<th class="nw hide1">Topics</th>
-	<th class="nw ac hide2">Last message</th>
-</tr>
-	'.$forum_list_table_data.'
-		</table>
-		' : ''); ?>
-		<?php echo (_uid ? '<div class="SmallText ar">[ <a href="/uni-ideas/index.php?t=markread&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'&amp;cat='.$cat_id.'" title="All your unread messages will be marked as read">Mark all messages read</a> ]
-		'.($FUD_OPT_2 & 1048576 ? '[ <a href="/uni-ideas/feed.php?mode=m&amp;l=1&amp;basic=1"><img src="/uni-ideas/theme/default/images/rss.gif" title="Syndicate this forum (XML)" alt="Syndicate this forum (XML)" width="16" height="16" /></a> ]' : '' )  .'
-		</div>' : ''); ?>
-		<?php echo (__fud_real_user__ ? '' : '<div class="fr">
-		<form id="quick_login_form" method="post" action="/uni-ideas/index.php?t=login"'.($GLOBALS['FUD_OPT_3'] & 256 ? ' autocomplete="off"' : '').'>
-		'._hs.'
-		<table border="0" cellspacing="0" cellpadding="3">
-
-		</table>
-</form>
-</div>'); ?>
-<?php echo ($logedin || $forum_info ? '<br />
-<table cellspacing="1" cellpadding="2" class="ContentTable">
-	'.$logedin.'
-	'.$forum_info.'
-</table>' : ''); ?>
-<br /><fieldset>
+<table width="100%">
+	<tr>
+		<td>
+			<?php echo (_uid ? '<span class="GenText">Welcome <b>'.$usr->alias.'</b>, your last visit was on '.utf8_encode(strftime('%a, %d %B %Y %H:%M', $usr->last_visit)).'</span><br />' : ''); ?>
+			<span id="ShowLinks">
+			<span class="GenText fb">Show:</span>
+			<a href="/uni-ideas/index.php?t=selmsg&amp;date=today&amp;<?php echo _rsid; ?>&amp;frm_id=<?php echo (isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'&amp;th='.$th.'" title="Show all messages that were posted today" rel="nofollow">Today&#39;s Messages</a>
+			'.(_uid ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;unread=1&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all unread messages" rel="nofollow">Unread Messages</a>&nbsp;' : ''); ?>
+			<?php echo (!$th ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;reply_count=0&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all messages, which have no replies" rel="nofollow">Unanswered Messages</a>&nbsp;' : ''); ?>
+			<b>::</b> <a href="/uni-ideas/index.php?t=polllist&amp;<?php echo _rsid; ?>" rel="nofollow">Polls</a>
+			<b>::</b> <a href="/uni-ideas/index.php?t=mnav&amp;<?php echo _rsid; ?>" rel="nofollow">Message Navigator</a>
+			</span><?php echo $admin_cp; ?>
+			<?php echo $cat_path; ?>
+		</td>
+	</tr>
+	<tr>
+		<?php echo $announcements; ?>
+		<?php echo (!$frm_id || ($frm_id && !empty($forum_list_table_data)) ? '
+			<table>
+				<tr>
+					<th colspan="3">Forum</th>
+					<th>Messages</th>
+					<th>Topics</th>
+					<th>Last message</th>
+				</tr>
+				'.$forum_list_table_data.'
+			</table>
+			' : ''); ?>
+						<?php echo (_uid ? '<div class="SmallText ar">[ <a href="/uni-ideas/index.php?t=markread&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'&amp;cat='.$cat_id.'" title="All your unread messages will be marked as read">Mark all messages read</a> ]
+						'.($FUD_OPT_2 & 1048576 ? '[ <a href="/uni-ideas/feed.php?mode=m&amp;l=1&amp;basic=1"><img src="/uni-ideas/theme/default/images/rss.gif" title="Syndicate this forum (XML)" alt="Syndicate this forum (XML)" width="16" height="16" /></a> ]' : '' )  .'
+						</div>' : ''); ?>
+						<?php echo ($logedin || $forum_info ? '<br />
+						<table cellspacing="1" cellpadding="2" class="ContentTable">
+							'.$logedin.'
+							'.$forum_info.'
+						</table>' : ''); ?>
+	</tr>
+</table>
+<br />
+<fieldset>
 <legend>Legend</legend>
 <img src="/uni-ideas/theme/default/images/new_content.png" alt="New messages since last read" width="30" height="30" /> New messages since last read&nbsp;&nbsp;
 <img src="/uni-ideas/theme/default/images/existing_content.png" alt="No new messages since last read" width="30" height="30" /> No new messages since last read&nbsp;&nbsp;
 <img src="/uni-ideas/theme/default/images/moved.png" alt="Redirection" width="30" height="30" /> Redirection
 </fieldset>
-<div><br /></div>
+<br />
 <br />  
 <!-- <?php echo $page_stats; ?> -->
 <script>
@@ -620,7 +621,7 @@ $logedin = $forum_info = '';
 </td><td width="200px" align-"right" valign="top" class="sidebar-right">
 	'.$RIGHT_SIDEBAR.'
 ' : ''); ?>
-</td></tr></table>
+
 
 <!-- Footer -->
 </div>
@@ -635,5 +636,4 @@ $logedin = $forum_info = '';
 	<p class="SmallText">Powered by: Mây Trắng Groups<br />Copyright &copy;2023 <a href="https://github.com/zolmkoz/UNI-Ideas">UNI-Ideas</a></p>
 </div>
 </body></html>
-
 

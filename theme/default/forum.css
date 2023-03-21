@@ -61,7 +61,6 @@ a.CatLink {
 .CatDesc {
 	color: #000;
 	height: 23px;
-	background: url('/uni-ideas/theme/default/images/tableHeaderbg2.png');
 }
 
 .CatLockedName {
@@ -313,14 +312,6 @@ form {
 	margin: 0;
 }
 
-img {
-        border: 0;
-        max-width: 800px;
-        transition:all 0.5s ease-out;
-}
-img:hover {
-    transform: scale(1.05);
-}
 
 figcaption {
         font-style: italic;
@@ -407,8 +398,10 @@ table.tt {
 }
 
 a.big:link, a.big:active, a.big:visited {
-	color: #069;
-	font-size: 11pt;
+	text-decoration: none; 
+	color: #0F2026; 
+	font-weight: bold;
+	font-size: 25px
 }
 
 .small, a.small:link, a.small:active, a.small:visited {
@@ -421,7 +414,7 @@ a.small:link, a.small:active, a.small:visited {
 }
 
 a:hover, a.big:hover, td.msgud a:hover, td.msgot a:hover {
-	color: #dc143c;
+	color: #FA4D1D;
 }
 
 td.msgud, td.msgot, td.msgot a, div.ctags {

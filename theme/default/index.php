@@ -86,11 +86,12 @@ if (_uid === '_uid') {
 		if ($cat != $cid && !$frm_id) {
 			if ($cbuf) { /* If previous category was using compact view, print forum row. */
 				if (empty($collapse[$i[4]])) { /* Only show if parent is not collapsed as well. */
-					$forum_list_table_data .= '<tr class="row child-c'.$cat.'">
-	<td class="RowStyleA wo hide2">&nbsp;</td>
-	<td class="RowStyleB ac wo hide2">&nbsp;</td>
-	<td  class="RowStyleA wa" colspan="4">Available Forums:'.$cbuf.'</td>
-</tr>';
+					$forum_list_table_data .= '
+					<tr class="row child-c'.$cat.'">
+						<td class="RowStyleA wo hide2">&nbsp;</td>
+						<td class="RowStyleB ac wo hide2">&nbsp;</td>
+						<td  class="RowStyleA wa">Available Forums:'.$cbuf.'</td>
+				</tr>';
 				}
 				$cbuf = '';
 			}
@@ -111,33 +112,22 @@ if (_uid === '_uid') {
 				}
 			}
 			$cat = $cid;
-			if ($i[3] & 1 && $k != $cat_id && !($i[3] & 4)) {
-				if (!isset($collapse[$k])) {
-					$collapse[$k] = !($i[3] & 2);
-				}
-				$forum_list_table_data .= '<tr id="c'.$r[5].'" style="display: table-row;">
-	<td class="CatDesc '.(empty($collapse[$cid]) ? 'expanded' : 'collapsed' )  .'" colspan="5" style="padding-left: '.($i[0] ? $i[0] * 20 : '0').'px;">
-		<a href="/uni-ideas/index.php?t=index&amp;cat='.$k.'&amp;'._rsid.'" class="CatLink">'.$i[1].'</a> '.$i[2].'
-	</td>
-	<td class="CatDesc hide1">
-	'.(key($cidxc) ? '<a href="javascript://" onclick=\'nextCat("c'.$k.'")\'><img src="/uni-ideas/theme/default/images/down.png" alt="" width="16" height="11" border="0" style="vertical-align: top; float: right;" /></a>' : '' )  .'
-	'.($cat ? '<a href="javascript://" onclick=\'prevCat("c'.$k.'")\'><img src="/uni-ideas/theme/default/images/up.png" border="0" alt="" width="16" height="11" style="vertical-align: top; float: right;" /></a>' : '' )  .'
-</td>
-</tr>';
-			} else {
-				if ($i[3] & 4) {
-					++$i[0];
-				}
-				$forum_list_table_data .= '<tr id="c'.$r[5].'" style="display: table-row;">
-	<td class="CatDesc CatLockPad" colspan="5" style="padding-left: '.($i[0] ? $i[0] * 20 : '0').'px;">
-		<span class="CatLockedName"><a href="/uni-ideas/index.php?t=index&amp;cat='.$k.'&amp;'._rsid.'" class="CatLink">'.$i[1].'</a></span> '.$i[2].'
-	</td>
-	<td class="CatDesc hide1">
-	'.(key($cidxc) ? '<a href="javascript://" onclick=\'nextCat("c'.$k.'")\'><img src="/uni-ideas/theme/default/images/down.png" alt="" width="16" height="11" border="0" style="vertical-align: top; float: right;" /></a>' : '' )  .'
-	'.($cat ? '<a href="javascript://" onclick=\'prevCat("c'.$k.'")\'><img src="/uni-ideas/theme/default/images/up.png" border="0" alt="" width="16" height="11" style="vertical-align: top; float: right;" /></a>' : '' )  .'
-</td>
-</tr>';
-			}
+			// if ($i[3] & 1 && $k != $cat_id && !($i[3] & 4)) {
+			// 	if (!isset($collapse[$k])) {
+			// 		$collapse[$k] = !($i[3] & 2);
+			// 	}
+			// 	$forum_list_table_data .= '
+			
+			// 	';
+			// } else {
+			// 	if ($i[3] & 4) {
+			// 		++$i[0];
+			// 	}
+			// 	$forum_list_table_data .= '
+				
+					
+			// 	';
+			// }
 		}
 
 		/* Compact category view (ignore when expanded). */
@@ -150,7 +140,7 @@ if (_uid === '_uid') {
 		/* Visible forum with no 'read' permission. */
 		if (!($r[17] & 2) && !$is_a && !$r[16]) {
 			$forum_list_table_data .= '<tr style="display: '.(empty($collapse[$cid]) ? 'table-row' : 'none' )  .'" class="child-c'.$r[5].'">
-	<td class="RowStyleA" colspan="6">'.$r[10].($r[11] ? '<br />'.$r[11] : '').'</td>
+	<td class="RowStyleA">'.$r[10].($r[11] ? '<br />'.$r[11] : '').'</td>
 </tr>';
 			continue;
 		}
@@ -161,7 +151,7 @@ if (_uid === '_uid') {
 		}
 
 		if (!_uid) { /* Anon user. */
-			$forum_read_indicator = '<img title="Only registered forum members can track read &amp; unread messages" src="/uni-ideas/theme/default/images/existing_content.png" alt="Only registered forum members can track read &amp; unread messages" width="30" height="30" />';
+			$forum_read_indicator = '<img style="margin-top: 10px" title="Only registered forum members can track read &amp; unread messages" src="/uni-ideas/theme/default/images/existing_content.png" alt="Only registered forum members can track read &amp; unread messages" width="30" height="30" />';
 		} else if ($r[15] < $r[2] && $usr->last_read < $r[2]) {
 			$forum_read_indicator = '<img title="New messages" src="/uni-ideas/theme/default/images/new_content.png" alt="New messages" width="30" height="30" />';
 		} else {
@@ -181,13 +171,12 @@ if (_uid === '_uid') {
 			$moderators = '&nbsp;';
 		}
 
-		$forum_list_table_data .= '<tr style="display: '.(empty($collapse[$cid]) ? 'table-row' : 'none' )  .'" class="row child-c'.$r[5].'">
-	<td class="RowStyleA wo hide2">'.($r[6] ? '<img src="/uni-ideas/images/forum_icons/'.$r[6].'" alt="Forum Icon" />' : '&nbsp;' ) .'</td>
-	<td class="RowStyleB ac wo hide2">'.(empty($r[12]) ? $forum_read_indicator : '<img title="Redirection" src="/uni-ideas/theme/default/images/moved.png" alt="" />' )  .'</td>
-	<td class="RowStyleA wa"><a href="'.(empty($r[12]) ? '/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$r[7].'&amp;'._rsid : $r[12] )  .'" class="big">'.$r[10].'</a>'.($r[11] ? '<br />'.$r[11] : '').$moderators.'</td>
-	<td class="RowStyleB ac hide1">'.(empty($r[12]) ? $r[13] : '--' )  .'</td>
-	<td class="RowStyleB ac hide1">'.(empty($r[12]) ? $r[14] : '--' )  .'</td>
-	<td class="RowStyleA ac nw hide2">'.(empty($r[12]) ? ($r[8] ? '<span class="DateText">'.utf8_encode(strftime('%a, %d %B %Y', $r[2])).'</span><br />By: '.($r[3] ? '<a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r[3].'&amp;'._rsid.'">'.$r[4].'</a>' : $GLOBALS['ANON_NICK'] ) .' <a href="/uni-ideas/index.php?t='.d_thread_view.'&amp;goto='.$r[8].'&amp;'._rsid.'#msg_'.$r[8].'"><img title="'.$r[0].'" src="/uni-ideas/theme/default/images/goto.gif" alt="'.$r[0].'" width="9" height="9" /></a>' : 'n/a' )  : '--' )  .'</td>
+		$forum_list_table_data .= '<tr style="background-color: #fff;border: none;display: '.(empty($collapse[$cid]) ? 'table-row' : 'none' )  .'" class="w3-table-all'.$r[5].'">
+	<td>'.(empty($r[12]) ? $forum_read_indicator : '<img title="Redirection" src="/uni-ideas/theme/default/images/moved.png" alt="" />' )  .'</td>
+	<td><a  href="'.(empty($r[12]) ? '/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$r[7].'&amp;'._rsid : $r[12] )  .'" class="big">'.$r[10].'</a>'.($r[11] ? '<br />'.$r[11] : '').$moderators.'</td>
+	<td style="text-align: center;"><span class="glyphicon glyphicon-comment" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.(empty($r[12]) ? $r[13] : '--' )  .'</td>
+	<td style="text-align: center;"><span class="glyphicon glyphicon-book" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.(empty($r[12]) ? $r[14] : '--' )  .'</td>
+	<td style="text-align: center;"><span class="glyphicon glyphicon-cloud-upload" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.(empty($r[12]) ? ($r[8] ? '<span>'.utf8_encode(strftime('%a, %d %B %Y', $r[2])).'</span><br />By: '.($r[3] ? '<a style="text-decoration: none;color:#0F2026" href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r[3].'&amp;'._rsid.'">'.$r[4].'</a>' : $GLOBALS['ANON_NICK'] ) .' <a href="/uni-ideas/index.php?t='.d_thread_view.'&amp;goto='.$r[8].'&amp;'._rsid.'#msg_'.$r[8].'"><img title="'.$r[0].'" src="/uni-ideas/theme/default/images/goto.gif" alt="'.$r[0].'" width="9" height="9" /></a>' : 'n/a' )  : '--' )  .'</td>
 </tr>';
 	}
 	unset($c);
@@ -196,7 +185,7 @@ if (_uid === '_uid') {
 		$forum_list_table_data .= '<tr class="row child-c'.$cat.'">
 	<td class="RowStyleA wo hide2">&nbsp;</td>
 	<td class="RowStyleB ac wo hide2">&nbsp;</td>
-	<td  class="RowStyleA wa" colspan="4">Available Forums:'.$cbuf.'</td>
+	<td  class="RowStyleA wa">Available Forums:'.$cbuf.'</td>
 </tr>';
 	}function draw_user_link($login, $type, $custom_color='')
 {
@@ -426,9 +415,14 @@ $logedin = $forum_info = '';
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -518,9 +512,32 @@ $logedin = $forum_info = '';
 		.tbl_fod{
 			background-color: #ffffff;
 		}
+		a.big:link, a.big:active, a.big:visited {
+			text-decoration: none; 
+			color: #FA4D1D; 
+			font-weight: bold;
+			font-size: 30px
+		}
+
+
+		a:hover, a.big:hover, td.msgud a:hover, td.msgot a:hover {
+			color: #0F2026
+		}
+		td {
+  			text-align: center;
+		}
+		.mySlides {display:none}
+		.w3-left, .w3-right, .w3-badge {cursor:pointer}
+		.w3-badge {height:13px;width:13px;padding:0}
+		img {
+			border: 0;
+			max-width: 1920px;
+			max-height: 900px;
+		}
+
 	</style>
 </head>
-<body style="background-color: #ffffff;">
+<body style="background-color: #ffffff;font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
 <!--HEADER-->
 <div class="header" style="background-color: #0F2026; border: none;">
 
@@ -563,6 +580,15 @@ $logedin = $forum_info = '';
 </div>
 
 <!--HEADER-->
+
+<div style="display:flex;align-items: center;justify-content:center"><img src="/uni-ideas/theme/default/images/shake-up-sales-meeting-og.jpg" style="width:60%; height: 60%;"></div>
+  
+
+  
+
+
+
+
 <div class="content">
 
 <!-- Table for sidebars. -->
@@ -571,29 +597,38 @@ $logedin = $forum_info = '';
 		<td>
 			<?php echo (_uid ? '<span class="GenText">Welcome <b>'.$usr->alias.'</b>, your last visit was on '.utf8_encode(strftime('%a, %d %B %Y %H:%M', $usr->last_visit)).'</span><br />' : ''); ?>
 			<span id="ShowLinks">
-			<span class="GenText fb">Show:</span>
-			<a href="/uni-ideas/index.php?t=selmsg&amp;date=today&amp;<?php echo _rsid; ?>&amp;frm_id=<?php echo (isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'&amp;th='.$th.'" title="Show all messages that were posted today" rel="nofollow">Today&#39;s Messages</a>
-			'.(_uid ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;unread=1&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all unread messages" rel="nofollow">Unread Messages</a>&nbsp;' : ''); ?>
-			<?php echo (!$th ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;reply_count=0&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all messages, which have no replies" rel="nofollow">Unanswered Messages</a>&nbsp;' : ''); ?>
-			<b>::</b> <a href="/uni-ideas/index.php?t=polllist&amp;<?php echo _rsid; ?>" rel="nofollow">Polls</a>
-			<b>::</b> <a href="/uni-ideas/index.php?t=mnav&amp;<?php echo _rsid; ?>" rel="nofollow">Message Navigator</a>
-			</span><?php echo $admin_cp; ?>
+			<h1 style="text-align: center; font-weight: bold">Welcome to your Categories!</h1>
+			<!-- <span style="font-size: 20px; color: black; font-weight: bold">Show</span> -->
+			<a style=" text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px;margin-left: 70%;" href="/uni-ideas/index.php?t=selmsg&amp;date=today&amp;<?php echo _rsid; ?>&amp;frm_id=<?php echo (isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'&amp;th='.$th.'" title="Show all messages that were posted today" rel="nofollow">Today&#39;s Messages</a>
+			'.(_uid ? '<a href="/uni-ideas/index.php?t=selmsg&amp;unread=1&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all unread messages" rel="nofollow">Unread Messages</a>&nbsp;' : ''); ?>
+			<?php echo (!$th ? '<b style="color: #344CB7;">|</b> <a href="/uni-ideas/index.php?t=selmsg&amp;reply_count=0&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all messages, which have no replies" rel="nofollow" style=" text-decoration: none; color: #2B3467; font-weight: bold; font-size: 15px">Unanswered Messages</a>&nbsp;' : ''); ?>
+			<b style='color: #2B3467;'>|</b> <a style='text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px' href='/uni-ideas/index.php?t=polllist&amp;<?php echo _rsid; ?>' rel='nofollow'>Polls</a>
+			<b style='color: #2B3467;'>|</b> <a style=' text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px' href='/uni-ideas/index.php?t=mnav&amp;<?php echo _rsid; ?> rel='nofollow'>Message Navigator</a>
+			</span>
+			<?php echo $admin_cp; ?>
 			<?php echo $cat_path; ?>
 		</td>
+
 	</tr>
-	<tr>
+
+	<tr style='border: none;'>
 		<?php echo $announcements; ?>
 		<?php echo (!$frm_id || ($frm_id && !empty($forum_list_table_data)) ? '
-			<table>
-				<tr>
-					<th colspan="3">Forum</th>
-					<th>Messages</th>
-					<th>Topics</th>
-					<th>Last message</th>
-				</tr>
-				'.$forum_list_table_data.'
-			</table>
-			' : ''); ?>
+			<div class="w3-container">
+				<div class="w3-responsive">
+					<table class="w3-table-all" style="border: none;">
+						<tr style="border: none;border-top: 2px solid #000;font-weight: bold; font-size: 17px;">
+							<td style="width: 55%;" colspan="2"></td>
+							<td style="width: 15%;text-align: center">Messages</td>
+							<td style="width: 15%;text-align: center">Topics</td>
+							<td style="width: 15%;text-align: center">Last Message</td>
+						</tr>
+						'.$forum_list_table_data.'
+					</table>
+				</div>
+			</div>
+			
+			'  : ''); ?>
 						<?php echo (_uid ? '<div class="SmallText ar">[ <a href="/uni-ideas/index.php?t=markread&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'&amp;cat='.$cat_id.'" title="All your unread messages will be marked as read">Mark all messages read</a> ]
 						'.($FUD_OPT_2 & 1048576 ? '[ <a href="/uni-ideas/feed.php?mode=m&amp;l=1&amp;basic=1"><img src="/uni-ideas/theme/default/images/rss.gif" title="Syndicate this forum (XML)" alt="Syndicate this forum (XML)" width="16" height="16" /></a> ]' : '' )  .'
 						</div>' : ''); ?>
@@ -601,18 +636,13 @@ $logedin = $forum_info = '';
 						<table cellspacing="1" cellpadding="2" class="ContentTable">
 							'.$logedin.'
 							'.$forum_info.'
-						</table>' : ''); ?>
+						</table>
+			' : ''); ?>
 	</tr>
 </table>
 <br />
-<fieldset>
-<legend>Legend</legend>
-<img src="/uni-ideas/theme/default/images/new_content.png" alt="New messages since last read" width="30" height="30" /> New messages since last read&nbsp;&nbsp;
-<img src="/uni-ideas/theme/default/images/existing_content.png" alt="No new messages since last read" width="30" height="30" /> No new messages since last read&nbsp;&nbsp;
-<img src="/uni-ideas/theme/default/images/moved.png" alt="Redirection" width="30" height="30" /> Redirection
-</fieldset>
-<br />
-<br />  
+
+<br/>
 <!-- <?php echo $page_stats; ?> -->
 <script>
 	min_max_cats("/uni-ideas/theme/default/images", "Minimize Category", "Maximize Category", "<?php echo $usr->sq; ?>", "<?php echo s; ?>");
@@ -621,6 +651,12 @@ $logedin = $forum_info = '';
 </td><td width="200px" align-"right" valign="top" class="sidebar-right">
 	'.$RIGHT_SIDEBAR.'
 ' : ''); ?>
+
+
+
+
+
+
 
 
 <!-- Footer -->
@@ -635,5 +671,18 @@ $logedin = $forum_info = '';
 	<a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>">Home page <img src="/uni-ideas/theme/default/images/icon/homefooter.png"/></a>
 	<p class="SmallText">Powered by: Mây Trắng Groups<br />Copyright &copy;2023 <a href="https://github.com/zolmkoz/UNI-Ideas">UNI-Ideas</a></p>
 </div>
-</body></html>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
 

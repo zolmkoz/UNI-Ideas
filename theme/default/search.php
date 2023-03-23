@@ -161,7 +161,7 @@ function tmpl_create_pager($start, $count, $total, $arg, $suf='', $append=1, $js
 
 	$checkboxes = '';
 	foreach ($vls as $k => $v) {
-		$checkboxes .= '<label><input type="radio" name="'.$name.'" value="'.$v.'" '.($v == $selected ? 'checked="checked" ' : '' )  .' />'.$nms[$k].'</label>'.$sep;
+		$checkboxes .= '<label style="color:#000; font-size: 13px"><input type="radio" name="'.$name.'" value="'.$v.'" '.($v == $selected ? 'checked="checked" ' : '' )  .' />'.$nms[$k].'</label>'.$sep;
 	}
 
 	return $checkboxes;
@@ -1369,7 +1369,7 @@ function trim_body($body)
 			$search_data = '<br />
 <table cellspacing="1" cellpadding="2" class="ContentTable">
 <tr>
-	<th class="wa ac">No Results</th>
+	<img style="margin-left:33%" src="/uni-ideas/theme/default/images/notfound.png" alt="" />
 </tr>
 </table>';
 			$page_pager = '';
@@ -1434,8 +1434,7 @@ function trim_body($body)
 			$search_data = '<br />
 <table cellspacing="1" cellpadding="2" class="ContentTable">
 <tr>
-	<th> </th>
-	<th>'.$total.' Search Results Found</th>
+		<img style="margin-left:33%" src="/uni-ideas/theme/default/images/notfound.png" alt="" />
 </tr>
 '.$search_data.'
 </table>';
@@ -1476,7 +1475,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<meta charset="utf-8">
+<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="<?php echo (!empty($META_DESCR) ? $META_DESCR.'' : $GLOBALS['FORUM_DESCR'].''); ?>" />
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
@@ -1484,11 +1483,18 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	<?php echo $RSS; ?>
 	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
-	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -1575,6 +1581,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -1618,32 +1625,54 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
+
+
 <span id="ShowLinks">
-<span class="GenText fb">Show:</span>
-<a href="/uni-ideas/index.php?t=selmsg&amp;date=today&amp;<?php echo _rsid; ?>&amp;frm_id=<?php echo (isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'&amp;th='.$th.'" title="Show all messages that were posted today" rel="nofollow">Today&#39;s Messages</a>
-'.(_uid ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;unread=1&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all unread messages" rel="nofollow">Unread Messages</a>&nbsp;' : ''); ?>
-<?php echo (!$th ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;reply_count=0&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all messages, which have no replies" rel="nofollow">Unanswered Messages</a>&nbsp;' : ''); ?>
-<b>::</b> <a href="/uni-ideas/index.php?t=polllist&amp;<?php echo _rsid; ?>" rel="nofollow">Polls</a>
-<b>::</b> <a href="/uni-ideas/index.php?t=mnav&amp;<?php echo _rsid; ?>" rel="nofollow">Message Navigator</a>
-</span><?php echo $admin_cp; ?>
+<!-- <span class="GenText fb">Show:</span> -->
+<a style='text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px' href="/uni-ideas/index.php?t=selmsg&amp;date=today&amp;<?php echo _rsid; ?>&amp;frm_id=<?php echo (isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'&amp;th='.$th.'" title="Show all messages that were posted today" rel="nofollow">Today&#39;s Messages</a>
+	'.(_uid ? '<b style="color: #2B3467;">|</b> 
+<a style= "text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px" href="/uni-ideas/index.php?t=selmsg&amp;unread=1&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all unread messages" rel="nofollow">Unread Messages</a>&nbsp;' : ''); ?>
+	<?php echo (!$th ? '<b style="color: #2B3467;">|</b> 
+<a style= "text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px" href="/uni-ideas/index.php?t=selmsg&amp;reply_count=0&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all messages, which have no replies" rel="nofollow">Unanswered Messages</a>&nbsp;' : ''); ?>
+	<b style='color: #2B3467;'>|</b> 
+<a style= 'text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px' href="/uni-ideas/index.php?t=polllist&amp;<?php echo _rsid; ?>" rel="nofollow">Polls</a>
+<b style='color: #2B3467;'>|</b> 
+<a style='text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px' href="/uni-ideas/index.php?t=mnav&amp;<?php echo _rsid; ?>" rel="nofollow">Message Navigator</a>
+</span>
+
+
+
+
+<?php echo $admin_cp; ?>
 <form id="search" method="get" action="/uni-ideas/index.php">
-<?php echo _hs; ?>
-<input type="hidden" name="t" value="search" />
-<table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr>
-	<th class="wa">Forum Search</th><th class="wa">Search Options</th>
-</tr>
-<tr class="RowStyleA">
-	<td class="vt nw"><input spellcheck="true" type="search" name="srch" tabindex="1" value="<?php echo filter_var($srch, FILTER_SANITIZE_STRING); ?>" /> <input type="submit" tabindex="2" class="button" name="btn_submit" value="Search" /><br /><span class="SmallText"><?php echo $search_options; ?></span></td>
-	<td class="RowStyleB SmallText">
-		<div class="sr">Search in forum:<br /><select class="SmallText" name="forum_limiter"><option value="">Search All Forums</option><?php echo $forum_limit_data; ?></select></div>
-		<div class="sr">Attachments:<br /><select class="SmallText" name="attach"><?php echo $attach_options; ?></select></div>
-		<div class="sr">Search logic:<br /><select class="SmallText" name="search_logic"><?php echo $logic_options; ?></select></div>
-		<div class="sr">Sort by:<br /><select class="SmallText" name="sort_order"><?php echo $sort_options; ?></select></div>
-		<div class="sr">Filter by user:<br /><input class="SmallText" type="text" value="<?php echo filter_var($author, FILTER_SANITIZE_STRING); ?>" name="author" /></div>
-	</td>
-</tr>
-</table>
+	<?php echo _hs; ?>
+	<input type="hidden" name="t" value="search" />
+		<div class="w3-responsive">
+			<table class="w3-table-all" style="border: none;">
+				<tr>
+					<th  style="font-size: 20px;width: 50%">Forum Search</th>
+					<th  style="font-size: 20px;width: 50%">Search Options</th>
+				</tr>
+				<tr style="background-color: #ccc;">
+					<td>
+						<input style="width: 30%;height:30px;" spellcheck="true" type="search" name="srch" tabindex="1" value="<?php echo filter_var($srch, FILTER_SANITIZE_STRING); ?>" /> 
+						<input style="width: 7%;background-color:#0F2026;color:#ffffff;border:none;height:30px" type="submit" tabindex="2" name="btn_submit" value="Search" />
+						<br />
+						<span class="SmallText">
+							<?php echo $search_options; ?>
+						</span>
+					</td>
+					<td>
+						<div class="sr" style="font-weight:bold">Search in forum:<br /><select style="color: #0F2026;" class="SmallText" name="forum_limiter"><option style="color: #0F2026;" value="">Search All Forums</option><?php echo $forum_limit_data; ?></select></div>
+						<div class="sr" style="font-weight:bold">Attachments:<br /><select style="color: #0F2026;" class="SmallText" name="attach"><?php echo $attach_options; ?></select></div>
+						<div class="sr" style="font-weight:bold">Search logic:<br /><select style="color: #0F2026;" class="SmallText" name="search_logic"><?php echo $logic_options; ?></select></div>
+						<div class="sr" style="font-weight:bold">Sort by:<br /><select style="color: #0F2026;" class="SmallText" name="sort_order"><?php echo $sort_options; ?></select></div>
+						<div class="sr" style="font-weight:bold">Filter by user:<br /><input class="SmallText" type="text" value="<?php echo filter_var($author, FILTER_SANITIZE_STRING); ?>" name="author" /></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
 </form>
 <?php echo $search_data; ?>
 <div class="al"><?php echo $page_pager; ?></div>

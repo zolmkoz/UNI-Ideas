@@ -272,27 +272,40 @@ if (_uid) {
 	$c = uq(q_limit('SELECT /*!40000 SQL_CALC_FOUND_ROWS */ flag_cc, flag_country, home_page, users_opt, alias, join_date, posted_msg_count, id, custom_color, last_visit FROM fud30_users WHERE '. $qry .' id>1 AND '. q_bitand('users_opt', 1073741824) .' = 0 ORDER BY '. $ord,
 			$MEMBERS_PER_PAGE, $start));
 	while ($r = db_rowobj($c)) {
-		$find_user_data .= '<tr class="'.alt_var('finduser_alt','RowStyleA','RowStyleB').'">
-	'.($GLOBALS['FUD_OPT_3'] & 524288 ? '<td>'.($r->flag_cc ? '<img src="/uni-ideas/images/flags/'.$r->flag_cc.'.png" border="0" width="16" height="11" alt="'.$r->flag_country.'" title="'.$r->flag_country.'" />' : '' )  .'</td>' : '' )  .'
-	<td class="nw GenText"><a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r->id.'&amp;'._rsid.'">'.draw_user_link($r->alias, $r->users_opt, $r->custom_color).'</a>'.($r->users_opt & 131072 ? '' : '&nbsp;&nbsp;(unconfirmed user)' ) .'</td>
-	<td class="ac nw hide2">'.$r->posted_msg_count.'</td>
-        <td class="DateText nw hide2">'.utf8_encode(strftime('%a, %d %B %Y', $r->join_date)).'</td>
-        <td class="nw GenText"><a href="/uni-ideas/index.php?t=showposts&amp;id='.$r->id.'&amp;'._rsid.'"><img alt="" src="/uni-ideas/theme/default/images/show_posts.gif" /></a>
-'.(($FUD_OPT_2 & 1073741824 && $r->users_opt & 16) ? '<a href="/uni-ideas/index.php?t=email&amp;toi='.$r->id.'&amp;'._rsid.'" rel="nofollow"><img src="/uni-ideas/theme/default/images/msg_email.gif" alt="" /></a>' : '' ) .'
-'.(($FUD_OPT_1 & 1024 && _uid) ? '<a href="/uni-ideas/index.php?t=ppost&amp;'._rsid.'&amp;toi='.$r->id.'"><img src="/uni-ideas/theme/default/images/msg_pm.gif" alt="" /></a>' : '' ) .'
-'.($r->home_page ? '<a href="'.$r->home_page.'" rel="nofollow"><img alt="" src="/uni-ideas/theme/default/images/homepage.gif" /></a>' : '' ) .'</td>
-	'.($is_a ? '<td class="SmallText nw">
-	<a href="/uni-ideas/adm/admuser.php?usr_id='.$r->id.'&amp;S='.s.'&amp;act=1&amp;SQ='.$GLOBALS['sq'].'">Edit</a> ||
-	<a href="/uni-ideas/adm/admuser.php?usr_id='.$r->id.'&amp;S='.s.'&amp;act=del&amp;f=1&amp;SQ='.$GLOBALS['sq'].'">Delete</a> ||
-	'.($r->users_opt & 65536 ? '<a href="/uni-ideas/adm/admuser.php?act=block&amp;usr_id='.$r->id.'&amp;S='.s.'&amp;SQ='.$GLOBALS['sq'].'">UnBan</a>' : '<a href="/uni-ideas/adm/admuser.php?act=block&amp;usr_id='.$r->id.'&amp;S='.s.'&amp;SQ='.$GLOBALS['sq'].'">Ban</a>' ) .'
-</td>' : '' ) .'
-</tr>';
+		$find_user_data .= '
+		
+		<tr class="'.alt_var('finduser_alt','RowStyleA','RowStyleB').'">
+		'.($GLOBALS['FUD_OPT_3'] & 524288 ? '<td>'.($r->flag_cc ? '<img src="/uni-ideas/images/flags/'.$r->flag_cc.'.png" border="0" width="16" height="11" alt="'.$r->flag_country.'" title="'.$r->flag_country.'" />' : '' )  .'</td>' : '' )  .'
+			<td class="nw GenText" style="text-align:center"><a style="text-decoration: none;font-size: 15px" href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r->id.'&amp;'._rsid.'">'.draw_user_link($r->alias, $r->users_opt, $r->custom_color).'</a>'.($r->users_opt & 131072 ? '' : '&nbsp;&nbsp;(unconfirmed user)' ) .'</td>
+			<td class="ac nw hide2" style="text-align:center;font-size: 15px">'.$r->posted_msg_count.'</td>
+        	<td class="DateText nw hide2" style="text-align:center;font-size: 15px">'.utf8_encode(strftime('%a, %d %B %Y', $r->join_date)).'</td>
+        	<td class="nw GenText" style="text-align:center;font-size: 15px">
+				<a style="text-decoration: none;font-size: 15px" style="text-decoration: none;" href="/uni-ideas/index.php?t=showposts&amp;id='.$r->id.'&amp;'._rsid.'">
+					<img  alt="" src="/uni-ideas/theme/default/images/postimg123.bak.png" /></a>
+					'.(($FUD_OPT_2 & 1073741824 && $r->users_opt & 16) ? '
+				<a style="text-decoration: none;font-size: 15px" href="/uni-ideas/index.php?t=email&amp;toi='.$r->id.'&amp;'._rsid.'" rel="nofollow">
+					<img style="margin-top: 2px" src="/uni-ideas/theme/default/images/ttt.png" alt="" /></a>' : '' ) .'
+					'.(($FUD_OPT_1 & 1024 && _uid) ? '
+				<a style="text-decoration: none;font-size: 15px" href="/uni-ideas/index.php?t=ppost&amp;'._rsid.'&amp;toi='.$r->id.'"><img src="/uni-ideas/theme/default/images/msg_pm.gif" alt="" /></a>' : '' ) .'
+					'.($r->home_page ? '
+				<a style="text-decoration: none;font-size: 15px" href="'.$r->home_page.'" rel="nofollow"><img alt="" src="/uni-ideas/theme/default/images/homepage.gif" /></a>' : '' ) .'
+			</td>
+			'.($is_a ? '
+
+			<td class="SmallText nw">
+				<a href="/uni-ideas/adm/admuser.php?usr_id='.$r->id.'&amp;S='.s.'&amp;act=1&amp;SQ='.$GLOBALS['sq'].'">Edit</a> ||
+				<a href="/uni-ideas/adm/admuser.php?usr_id='.$r->id.'&amp;S='.s.'&amp;act=del&amp;f=1&amp;SQ='.$GLOBALS['sq'].'">Delete</a> ||'.($r->users_opt & 65536 ? '
+				<a href="/uni-ideas/adm/admuser.php?act=block&amp;usr_id='.$r->id.'&amp;S='.s.'&amp;SQ='.$GLOBALS['sq'].'">UnBan</a>' : '
+				<a href="/uni-ideas/adm/admuser.php?act=block&amp;usr_id='.$r->id.'&amp;S='.s.'&amp;SQ='.$GLOBALS['sq'].'">Ban</a>' ) .'
+			</td>' : '' ) .'
+		</tr>';
 	}
 	unset($c);
 	if (!$find_user_data) {
-		$find_user_data = '<tr class="RowStyleA">
-	<td colspan="'.($is_a ? '5' : '4' )  .'" class="wa GenText">No Such User</td>
-</tr>';
+		$find_user_data = '
+			<tr class="RowStyleA">
+				<td colspan="'.($is_a ? '5' : '4' )  .'" class="wa GenText">No Such User</td>
+			</tr>';
 	}
 
 	$pager = '';
@@ -363,7 +376,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<meta charset="utf-8">
+<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="<?php echo (!empty($META_DESCR) ? $META_DESCR.'' : $GLOBALS['FORUM_DESCR'].''); ?>" />
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
@@ -371,11 +384,18 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	<?php echo $RSS; ?>
 	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
-	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -431,10 +451,6 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		.tr{
 			color: #fa4d1d;
 		}
-		
-		.wa {
-			background-color: while;
-		}
 
 		.SmallText{
 			color: white;
@@ -462,6 +478,32 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		.n-login{
+			width: 30%;
+			border-color: black;
+			border-radius: 5px;
+		}
+		.bnt-find{
+			color: white;
+			background-color: #0F2026;
+			font-size: 15px;
+			border-radius: 9px;
+			width: 70px;
+			border-color: #ffffff;
+		}
+		.bnt-find:hover{
+			background-color: #fa4d1d;
+		}
+		.adminColor {
+			font-weight: bold;
+			color: #FA4D1D;
+			font-size: 15px;
+		}
+		.modsColor {
+			color: green;
+			font-weight: bold;
+			font-size: 15px;
+		}	
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -472,8 +514,6 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<div class="headsearch">
 		<form id="headsearch" method="get" action="/uni-ideas/index.php">'._hs.'
 		<input type="hidden" name="t" value="search" />
-		<br>
-		<br>
 		<input class = "search_input" type="search" name="srch" value="" size="50" placeholder="Forum Search" /></label>
 		<input type="image" src="/uni-ideas/theme/default/images/search.png" title="Search" name="btn_submit">&nbsp;
 		</form>
@@ -506,35 +546,64 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	</ul>
 </div>
 <br /><?php echo $admin_cp; ?>
+
 <form method="get" id="fufrm" action="/uni-ideas/index.php"><?php echo _hs; ?>
-<table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr>
-	<th colspan="3">User Information</th>
-</tr>
-<tr class="RowStyleA">
-	<td class="GenText">By Login:</td>
-	<td class="GenText">
-		<input type="text" name="usr_login" tabindex="1" value="<?php echo char_fix(htmlspecialchars($usr_login)); ?>" />
-		<input type="submit" class="button" tabindex="2" name="btn_submit" value="Find" /></td>
-		<td class="RowStyleC SmallText vt">The search engine will automatically add * mask to your query, the <b>search is case-sensitive</b>.<br />ex. to search for all users who&#39;s login begins with an &#39;a&#39;, enter &#39;a&#39; into the search box.
-	</td>
-</tr>
-</table>
-<input type="hidden" name="t" value="finduser" />
+	<div class="w3-container">
+		<div class="w3-responsive">
+			<table class="w3-table-all" style="border: none;">
+				<tr style="border: none;border-top: 2px solid #000;font-weight: bold; font-size: 17px;">
+					<td>
+						<input type="hidden" name="t" value="finduser" />
+					</td>
+					<td>
+						<input style="width: 30%; margin-left:50%" type="text" name="usr_login" class="n-login" tabindex="1" value="<?php echo char_fix(htmlspecialchars($usr_login)); ?>" />
+						<input style="width: 7%;" type="submit" class="bnt-find" tabindex="2" name="btn_submit" value="Find" /></td>
+					</td>
+				</tr>
+					
+			</table>
+		</div>
+	</div>
+	<input type="hidden" name="t" value="finduser" />
 </form>
-<table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr>
-	<?php echo ($GLOBALS['FUD_OPT_3'] & 524288 ? '<th width="1"><a class="thLnk" href="/uni-ideas/index.php?t=finduser&amp;usr_login='.urlencode($usr_login).'&amp;'._rsid.'&amp;fl='.(isset($_GET['fl']) && !($_GET['fl'] % 2) ? '1' : '2' )  .'&amp;btn_submit=Find" rel="nofollow">Flag</a></th>' : ''); ?>
-	<th class="wa"><a class="thLnk" href="/uni-ideas/index.php?t=finduser&amp;usr_login=<?php echo urlencode($usr_login); ?>&amp;us=<?php echo (isset($_GET['us']) && !($_GET['us'] % 2) ? '1' : '2' )  .'&amp;btn_submit=Find&amp;'._rsid.'" rel="nofollow">User</a></th>
-	<th class="nw hide2"><a href="/uni-ideas/index.php?t=finduser&amp;usr_login='.urlencode($usr_login).'&amp;'._rsid.'&amp;pc='.(isset($_GET['pc']) && !($_GET['pc'] % 2) ? '1' : '2' )  .'&amp;btn_submit=Find" class="thLnk" rel="nofollow">Message Count</a></th>
-	<th class="nw hide2"><div class="ac"><a href="/uni-ideas/index.php?t=finduser&amp;usr_login='.urlencode($usr_login).'&amp;'._rsid.'&amp;rd='.(isset($_GET['rd']) && !($_GET['rd'] % 2) ? '1' : '2' )  .'&amp;btn_submit=Find" class="thLnk" rel="nofollow">Join Date</a></div></th>
-	<th class="ac">Action</th>
-	'.($is_a ? '<th class="nw">Admin Opts.</th>' : ''); ?>
-</tr>
-<?php echo $find_user_data; ?>
-</table>
+
+	<!-- <table cellspacing="1" cellpadding="2" class="ContentTable">
+	<tr>
+		<th colspan="3" style="font-size: 25px;"></th>
+	</tr>
+	<tr class="RowStyleA">
+		<td style="color: #0F2026;font-size:15px; font-weight:bold">By Login:</td>
+		<td >
+			<input type="text" name="usr_login" class="n-login" tabindex="1" value="<?php echo char_fix(htmlspecialchars($usr_login)); ?>" />
+			<input type="submit" class="bnt-find" tabindex="2" name="btn_submit" value="Find" /></td>
+			
+	</tr>
+	</table> -->
+	<!-- <input type="hidden" name="t" value="finduser" /> -->
+
+
+<div class="w3-responsive">
+	<table class="w3-table-all" style="border: none;">
+		<tr>
+			<?php echo ($GLOBALS['FUD_OPT_3'] & 524288 ? '
+				<th><a class="thLnk" href="/uni-ideas/index.php?t=finduser&amp;usr_login='.urlencode($usr_login).'&amp;'._rsid.'&amp;fl='.(isset($_GET['fl']) && !($_GET['fl'] % 2) ? '1' : '2' )  .'&amp;btn_submit=Find" rel="nofollow">Flag</a></th>' : ''); ?>
+				<th style="width: 15%;text-align:center">
+					<a style="text-decoration: none; font-size: 25px;color:#ffffff"  class="thLnk" href="/uni-ideas/index.php?t=finduser&amp;usr_login=<?php echo urlencode($usr_login); ?>&amp;us=<?php echo (isset($_GET['us']) && !($_GET['us'] % 2) ? '1' : '2' )  .'&amp;btn_submit=Find&amp;'._rsid.'" rel="nofollow">User Information</a></th>
+				<th style="width: 15%;text-align:center">
+					<a style="text-decoration: none; font-size: 25px;" href="/uni-ideas/index.php?t=finduser&amp;usr_login='.urlencode($usr_login).'&amp;'._rsid.'&amp;pc='.(isset($_GET['pc']) && !($_GET['pc'] % 2) ? '1' : '2' )  .'&amp;btn_submit=Find" class="thLnk" rel="nofollow">Message Count</a></th>
+				<th style="width: 15%;text-align:center">
+					<a style="text-decoration: none; font-size: 25px;text-align: left" href="/uni-ideas/index.php?t=finduser&amp;usr_login='.urlencode($usr_login).'&amp;'._rsid.'&amp;rd='.(isset($_GET['rd']) && !($_GET['rd'] % 2) ? '1' : '2' )  .'&amp;btn_submit=Find" class="thLnk" rel="nofollow">Join Date</a></th>
+				<th style="width: 15%;font-size: 25px;text-align:center">Action</th>
+					'.($is_a ? '
+				<th class="nw">Admin Opts.</th>
+				' : ''); ?>
+		</tr>
+		<?php echo $find_user_data; ?>
+	</table>
+</div>
+
+
 <?php echo $pager; ?>
-<br />  
 <?php echo $page_stats; ?>
 <script>
 	document.forms['fufrm'].usr_login.focus();

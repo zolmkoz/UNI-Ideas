@@ -3118,6 +3118,15 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		.re{
+			background-color: #fa4d1d;
+			font-size: 20px;
+			
+		}
+	.RowStyle{
+		background-color: #0F2026;
+		color: #ffffff;
+	}
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -3165,16 +3174,17 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <form method="post" action="/uni-ideas/index.php?t=register" id="fud_register" enctype="multipart/form-data"<?php echo ($FUD_OPT_3 & 256 ? ' autocomplete="off"' : ''); ?>>
 <table cellspacing="1" cellpadding="2" class="ContentTable">
 <tr id="c1" style="display: table-row;">
-	<th colspan="2" class="CatDesc expanded">Required Information</th>
+	<th colspan="2"  class="re collapsed"  >Required Information</th>
 </tr>
 <tr class="child-c1">
-	<td colspan="2" class="RowStyleC">All fields are required.</td>
+	<td colspan="2" class="RowStyle">All fields are required.</td>
 </tr>
 <?php echo (!__fud_real_user__ ? (!__fud_real_user__ ? draw_err('reg_time_limit').'' : '' )  .'
 <tr class="child-c1 RowStyleA">
 	<td width="55%"><label for="reg_login">
-            Login:<br />
-            <span class="SmallText">The name by which you would like to log-in and be known on this site.</span>
+            <div style="color:black; font size: 10px">Login:</div>
+			<br />
+            <span class="SmallText"  >The name by which you would like to log-in and be known on this site.</span>
             '.draw_err('reg_login').'</label>
         </td>
 	<td width="45%"><input type="text" size="25" name="reg_login" id="reg_login" value="'.$reg_login.'" maxlength="'.$GLOBALS['MAX_LOGIN_SHOW'].'" required="required" />
@@ -3243,10 +3253,10 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 '.$required_custom_fields.'
 
 <tr id="c2" style="display: table-row;">
-	<th colspan="2" class="CatDesc collapsed">Optional Information</th>
+	<th colspan="2" class="re collapsed">Optional Information</th>
 </tr>
 <tr class="child-c2 RowStyleA" style="display: none;">
-	<td colspan="2" class="RowStyleC">It is recommended that you not reveal any personal or identifying information in your profile. All information will be viewable by other forum members.</td>
+	<td colspan="2" class="RowStyle">It is recommended that you not reveal any personal or identifying information in your profile. All information will be viewable by other forum members.</td>
 </tr>
 '.$optional_custom_fields.'
 <tr class="child-c2 RowStyleA" style="display: none;">
@@ -3305,8 +3315,8 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 </tr>
 <tr class="child-c2 RowStyleA" style="display: none;">
 	<td colspan="2">
-		<fieldset class="RowStyleA">
-		<legend class="RowStyleB">Social networking sites:</legend>
+		<fieldset class="RowStyleAS">
+		<legend class="RowStyle" >Social networking sites:</legend>
 		<table border="0" cellspacing="3" cellpadding="5" align="center">
 		<tr>
 			<td>
@@ -3360,7 +3370,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 </tr>
 
 <tr id="c3" style="display: table-row;">
-	<th colspan="2" class="CatDesc collapsed">Preferences</th>
+	<th colspan="2" class="re collapsed">Preferences</th>
 </tr>
 '.($FUD_OPT_1 & 32768 ? '
 <tr class="child-c3 RowStyleA" style="display: none;">

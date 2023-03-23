@@ -275,15 +275,6 @@ blockquote blockquote blockquote {
 	border: 1px dashed #1b7cad;
 }
 
-.adminColor {
-	font-weight: bold;
-	color: #f00;
-}
-
-.modsColor {
-	color: #0b0;
-	font-weight: bold;
-}
 
 .brdrNormal, td.tabItop, td.tabImid, td.tabIbot {
 	border: #000;

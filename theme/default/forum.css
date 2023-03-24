@@ -90,15 +90,6 @@ text, .GenText, .MsgIg, td.repI {
 	font-size: x-small;
 }
 
-th {
-	font-size: 10pt;
-	text-align: left;
-	color: #fff;
-	font-weight: bold;
-	height: 23px;
-	vertical-align: middle;
-	background: url('/uni-ideas/theme/default/images/maucam.png');
-}
 
 a.thLnk:link, a.thLnk:active, a.thLnk:visited {
 	font-size: 10pt;
@@ -515,11 +506,7 @@ td.pmSf {
 	background: red;
 }
 
-table.pmDu {
-	width: 175px;
-	background-color: #fff;
-	border: 1px #c2cdd6 solid;
-}
+
 
 td.mvTc {
 	background: #e5ffe7;

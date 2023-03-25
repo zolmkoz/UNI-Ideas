@@ -920,10 +920,10 @@ if (_uid) {
 				$tab_url .= '&amp;id='. _uid;
 			}
 			$tabs .= $pg == $tab ? '' : '
-			<td class="tabI" style="border: none"><div class="tabT" style="background-color: #fff;border: none"><a style="text-decoration: none; color: #000; font-weight: bold;font-size: 15px;border: none" href="'.$tab_url.'">'.$tab_name.'</a></div></td>';
+			<td  style="border: none"><div style="background-color: #fff;border: none;margin-left: 5px 20px">&ensp;|||&ensp;<a style="text-decoration: none; color: #000; font-weight: bold;font-size: 15px;border: none;width: 100px" href="'.$tab_url.'">'.$tab_name.'</a></div></td>';
 		}
 
-		$tabs = '<table cellspacing="1" cellpadding="0" class="tab" style="border: 1px solid #ccc; margin-left:65%">
+		$tabs = '<table cellspacing="1" cellpadding="0" style="border: 1px solid #ccc">
 					<tr style="border: none">
 						'.$tabs.'
 					</tr>
@@ -1049,7 +1049,7 @@ if (_uid) {
 		switch ($obj->fldr) {
 			case 1:
 			case 2:
-				$action = '<a href="/uni-ideas/index.php?t=ppost&amp;'._rsid.'&amp;reply='.$obj->id.'"><img src="/uni-ideas/theme/default/images/msg_reply.gif" alt="" /></a>&nbsp;<a href="/uni-ideas/index.php?t=ppost&amp;quote='.$obj->id.'&amp;'._rsid.'"><img src="/uni-ideas/theme/default/images/msg_quote.gif" alt="" /></a>&nbsp;<a href="/uni-ideas/index.php?t=ppost&amp;forward='.$obj->id.'&amp;'._rsid.'"><img src="/uni-ideas/theme/default/images/msg_forward.gif" alt="" /></a>';
+				$action = '<a href="/uni-ideas/index.php?t=ppost&amp;'._rsid.'&amp;reply='.$obj->id.'"><img width="110px" height="40px" src="/uni-ideas/theme/default/images/icon/reply.png" alt="" /></a>&nbsp;<a href="/uni-ideas/index.php?t=ppost&amp;quote='.$obj->id.'&amp;'._rsid.'"><img width="120px" height="40px" src="/uni-ideas/theme/default/images/icon/qqqqqo.png" alt="" /></a>&nbsp;<a href="/uni-ideas/index.php?t=ppost&amp;forward='.$obj->id.'&amp;'._rsid.'"><img width="120px" height="40px" src="/uni-ideas/theme/default/images/icon/forward.png" alt="" /></a>';
 				break;
 			case 3:
 				$obj->users_opt = $obj->users_opt2;
@@ -1072,16 +1072,6 @@ if (_uid) {
 			$goto = $folder_id != 4 ? '/uni-ideas/index.php?t=pmsg_view&amp;'. _rsid .'&amp;id='. $obj->id : '/uni-ideas/index.php?t=ppost&amp;'. _rsid .'&amp;msg_id='. $obj->id;
 		}
 
-		if ($FUD_OPT_2 & 32 && (!($obj->users_opt & 32768) || $is_a)) {
-			$obj->login =& $obj->alias;
-			if (($obj->time_sec + $LOGEDIN_TIMEOUT * 60) > __request_timestamp__) {
-				$online_indicator = '<img src="/uni-ideas/theme/default/images/online.png" alt="'.$obj->login.' is currently online" title="'.$obj->login.' is currently online" width="16" height="16" />&nbsp;';
-			} else {
-				$online_indicator = '<img src="/uni-ideas/theme/default/images/offline.png" alt="'.$obj->login.' is currently offline" title="'.$obj->login.' is currently offline" width="16" height="16" />&nbsp;';
-			}
-		} else {
-			$online_indicator = '';
-		}
 
 		if ($obj->pmsg_opt & 64) {
 			$msg_type ='<span class="SmallText">(replied)</span>&nbsp;';
@@ -1091,14 +1081,20 @@ if (_uid) {
 			$msg_type ='<span class="SmallText">(forwarded)</span>&nbsp;';
 		}
 
-		$private_msg_entry .= '<tr class="RowStyleB">
-	<td class="ac GenText"><input type="checkbox" name="sel[]" value="'.$obj->id.'" /></td>
-	<td>'.($obj->read_stamp ? '<img src="/uni-ideas/theme/default/images/pmsg_read.png" alt="Read private message" width="22" height="22" title="Read private message" />' : '<img src="/uni-ideas/theme/default/images/pmsg_unread.png" alt="Unread private message" width="22" height="22" title="Unread private message" />' ) .'</td>
-	<td width="100%" class="GenText">'.$msg_type.'<a href="'.$goto.'">'.$obj->subject.'</a>'.(($obj->pmsg_opt & 4 && $obj->pmsg_opt & 16 && $obj->duser_id == _uid && $obj->ouser_id != _uid) ? '<span class="SmallText">&nbsp;&nbsp;[<a href="/uni-ideas/index.php?t=pmsg_view&amp;'._rsid.'&amp;dr=1&amp;id='.$obj->id.'" title="Do not send a confirmation that you&#39;ve read this message">deny receipt</a>]</span>' : '' ) .'</td>
-	<td class="nw GenText">'.$online_indicator.'<a href="/uni-ideas/index.php?t=usrinfo&amp;'._rsid.'&amp;id='.$obj->ouser_id.'" title="'.char_fix(htmlspecialchars($obj->to_list)).'">'.filter_var($obj->alias, FILTER_SANITIZE_STRING).'</a></td>
-	<td class="nw DateText">'.utf8_encode(strftime('%a, %d %B %Y %H:%M', $obj->post_stamp)).'</td>
-	<td class="nw ac GenText">'.$action.'</td>
-</tr>';
+		$private_msg_entry .= '
+		
+		<div class="w3-responsive">
+			<table class="w3-table-all" style="border: none;">
+				<tr>
+					<td width="5%" ><input type="checkbox" name="sel[]" value="'.$obj->id.'" /></td>
+					<td width="30%">'.$msg_type.'<a style="text-decoration: none; color: #0F2026; font-weight: bold;font-size: 15px" href="'.$goto.'">'.$obj->subject.'</a>'.(($obj->pmsg_opt & 4 && $obj->pmsg_opt & 16 && $obj->duser_id == _uid && $obj->ouser_id != _uid) ? '<span class="SmallText">&nbsp;&nbsp;[<a href="/uni-ideas/index.php?t=pmsg_view&amp;'._rsid.'&amp;dr=1&amp;id='.$obj->id.'" title="Do not send a confirmation that you&#39;ve read this message">deny receipt</a>]</span>' : '' ) .'</td>
+					<td width="10%"><span class="glyphicon glyphicon-cloud-upload" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span><a style="text-decoration: none; color: #0F2026; font-weight: bold;font-size: 15px" href="/uni-ideas/index.php?t=usrinfo&amp;'._rsid.'&amp;id='.$obj->ouser_id.'" title="'.char_fix(htmlspecialchars($obj->to_list)).'">'.filter_var($obj->alias, FILTER_SANITIZE_STRING).'</a></td>
+					<td width="18%" style="text-decoration: none; color: #0F2026; font-weight: bold;font-size: 15px;"><span class="glyphicon glyphicon-time" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.utf8_encode(strftime('%a, %d %B %Y %H:%M', $obj->post_stamp)).'</td>
+					<td width="18%">'.$action.'</td>
+				</tr>
+			</table>
+		</div>
+		';
 	}
 	unset($c);
 
@@ -1118,15 +1114,19 @@ if (_uid) {
 		$tmp = $folders;
 		unset($tmp[$folder_id]);
 		$moveto_list = tmpl_draw_select_opt(implode("\n", array_keys($tmp)), implode("\n", $tmp), 2);
-		$private_tools = '<tr class="RowStyleB">
-	<td class="SmallText al" colspan="3"><a href="/uni-ideas/index.php?t=pmsg_dump&amp;'._rsid.'">Download Message Dump</a></td>
-	<td colspan="3" class="SmallText ar">
-		<input type="submit" class="button" name="btn_move" value="'.$btn_action.'" />
-		<select name="moveto">'.$moveto_list.'</select>
-		<input type="hidden" name="old_folder_id" value="'.$folder_id.'" />
-		&nbsp;&nbsp;&nbsp;<input type="submit" class="button" name="'.$btn_del_name.'" value="'.$btn_del_title.'" />'.($FUD_OPT_2 & 2097152 ? '&nbsp;&nbsp;&nbsp;<input type="submit" class="button" name="btn_pdf" value="Make PDF Archive" />' : '' )  .'
-	</td>
-</tr>';
+		$private_tools = '
+		<table class="w3-table-all" style="border: none;margin-left:80%">
+			<tr style="border: none">
+				<td colspan="3" >
+					 <input type="submit" style="width: 100px; height: 35px; border: 1px solid #CF0A0A; background-color: #CF0A0A;border-radius: 10px; font-weight: bold; font-size: 17px;color:#fff" class="bnt" name="'.$btn_del_name.'" value="'.$btn_del_title.'" />'.($FUD_OPT_2 & 2097152 ? 
+					'<input type="submit" style="width: 170px; height: 35px; margin-left: 10px; border: 1px solid #39AEA9; background-color: #39AEA9;border-radius: 10px; font-weight: bold; font-size: 17px;color:#fff" class="bnt" name="btn_pdf" value="Make PDF Archive" />' : '' )  .'
+				</td>
+			</tr>
+			<tr>
+			<td>DOWNLOAD MESSAGE DUMP</td>
+			</tr>
+		</table>
+		';
 	}
 
 	if ($FUD_OPT_2 & 32768) {
@@ -1145,7 +1145,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<meta charset="utf-8">
+<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="<?php echo (!empty($META_DESCR) ? $META_DESCR.'' : $GLOBALS['FORUM_DESCR'].''); ?>" />
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
@@ -1153,11 +1153,18 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	<?php echo $RSS; ?>
 	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
-	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -1271,10 +1278,9 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 			color: white;
 			background-color: #0F2026;
 			font-size: 20px;
-			border-radius: 9px;
-			width: 140px;
-			height: 32px;
-			border-color: #ffffff;
+			border-radius: 10px;
+			width: 85px;
+			height: 25px;
 		}
 		.bnt-find:hover{
 			background-color: #fa4d1d;
@@ -1353,71 +1359,43 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <hr style="height:1px; width: 60%; background-color:#fa4d1d"/>
 
 
-<!-- <div class="ar"><a href="/uni-ideas/index.php?t=ppost&amp;<?php echo _rsid; ?>"><img src="/uni-ideas/theme/default/images/new_pm.gif" alt="" /></a></div> -->
+
+
+
+
 <form action="/uni-ideas/index.php?t=pmsg" method="post" id="priv_frm"><?php echo _hs; ?>
-	<div class="w3-container">
-		<div class="w3-responsive">
-			<table class="w3-table-all" style="border: none;">
-				<tr style="border: none;font-weight: bold; font-size: 17px;">
-					<td style="width: 15%;text-align: center" colspan="2"><?php echo ($private_tools ? '<a style=" text-decoration: none; color: #0F2026; font-weight: bold;font-size: 20px;" href="/uni-ideas/index.php?t=pmsg_dump&amp;'._rsid.'">Download Message Dump&nbsp; &nbsp; </a>' : '&nbsp;' )  .'</td>
-					<td style="width: 85%; font-weight: bold; font-size:20px; color: #0F2026">
-						||&nbsp; &nbsp; Folder:
-						<select style="color: #0F2026;font-size:20px;width: 350px;" name="folder_id" onchange="document.forms[\'priv_frm\'].submit();">
-							'.$select_options_cur_folder.'
-						</select> 
-						<input type="submit" class="bnt-find" name="sel_folder" value="Go" />
-					</td>
-				</tr>	
-			</table>
-		</div>
-	</div>
-
-	<div class="w3-responsive">
-		<table class="w3-table-all" style="border: none;">
-			<tr style="border: none;border-top: 2px solid #000;font-weight: bold; font-size: 17px;">
-				<td style="width: 8%;text-align: center;text-decoration: none; color: #434242; font-weight: bold;font-size: 20px" >Select 
-					<input type="checkbox" name="toggle" title="all/none" onclick="jQuery(\'input:checkbox\').prop(\'checked\', this.checked);" /> 
-				</td>
-				<td style="width: 10%; text-align: left">
-					<a style="text-decoration: none; color: #434242; font-weight: bold;font-size: 20px"  href="/uni-ideas/index.php?t=pmsg&amp;folder_id='.$folder_id.'&amp;'._rsid.'&amp;o=subject&amp;s='.($o=='p.subject' && $s=='ASC' ? 'd' : 'a'); ?>">Subject</a>
-				</td>
-				<td style="width: 20%;text-align: center">
-					<a style="text-decoration: none; color: #434242; font-weight: bold;font-size: 20px" href="/uni-ideas/index.php?t=pmsg&amp;folder_id=
-					<?php echo $folder_id; ?>&amp;<?php echo _rsid; ?>&amp;o=
-					<?php echo ($folder_id == 3 ? 'alias2' : 'alias' )  .'&amp;s='.(($o=='u.alias' || $o=='u2.alias') && $s=='ASC' ? 'd' : 'a' )  .'" 
-					'.($folder_id == 3 ? 'Recipient' : 'Author'); ?></a>
-				</td>
-				<td style="width: 20%;text-align: center">
-					<a style="text-decoration: none; color: #434242; font-weight: bold;font-size: 20px" href="/uni-ideas/index.php?t=pmsg&amp;folder_id=<?php echo $folder_id; ?>&amp;<?php echo _rsid; ?>&amp;o=post_stamp&amp;s=<?php echo ($o=='p.post_stamp' && $s=='ASC' ? 'd' : 'a'); ?>" class="thLnk">Time</a>
-				</td>
-				<td style="width: 30%;text-align: center;color: #434242; font-weight: bold;font-size: 20px">Action</td>
-				<td style="width: 30%;text-align: center;color: #434242; font-weight: bold;font-size: 20px">Action</td>
-			</tr>
-			<tr>
-				<?php echo $private_msg_entry; ?>
-				<?php echo $private_tools; ?>	
-			</tr>
-			
-		</table>
-	</div>
+<table cellspacing="1" cellpadding="2" class="w3-table-all" style="border: none;padding: 0px 0px">
+<tr>
+	<td colspan="3" style="padding: 0px;"><?php echo ($private_tools ? '<a href="/uni-ideas/index.php?t=ppost&amp;<?php echo _rsid; ?>"><img style="width: 120px;height:45px" src="/uni-ideas/theme/default/images/icon/newmes.png" alt="" /></a>' : '&nbsp;' )  .'</td>
+	<td colspan="3" class="SmallText ar nw" style="color: #2B3467; font-weight: bold;font-size: 20px">
+		Folder:
+		<select style="font-size: 15px; width: 200px" name="folder_id" onchange="document.forms[\'priv_frm\'].submit();">
+		'.$select_options_cur_folder.'
+		</select> 
+		<input type="submit" style="width:80px;height:30px;color: #0F2026;" class="button" name="sel_folder" value="Go" />
+	</td>
+</tr>
 
 
-	<!-- <table class="w3-table-all" style="border: none;">
-	<tr style="border: none;font-weight: bold; font-size: 17px;">
-		<td colspan="3"></td>
-		<td colspan="3" >
-		</td>
-	</tr>
-	<tr>
-		<th class="nw">Select <input type="checkbox" name="toggle" title="all/none" onclick="jQuery(\'input:checkbox\').prop(\'checked\', this.checked);" /> </th>
-		<th>&nbsp;</th>
-		<th class="wa"><a href="/uni-ideas/index.php?t=pmsg&amp;folder_id='.$folder_id.'&amp;'._rsid.'&amp;o=subject&amp;s='.($o=='p.subject' && $s=='ASC' ? 'd' : 'a'); ?>" class="thLnk">Subject</a></th>
-		<th class="ac"><a href="/uni-ideas/index.php?t=pmsg&amp;folder_id=<?php echo $folder_id; ?>&amp;<?php echo _rsid; ?>&amp;o=<?php echo ($folder_id == 3 ? 'alias2' : 'alias' )  .'&amp;s='.(($o=='u.alias' || $o=='u2.alias') && $s=='ASC' ? 'd' : 'a' )  .'" class="thLnk">'.($folder_id == 3 ? 'Recipient' : 'Author'); ?></a></th>
-		<th class="ac"><a href="/uni-ideas/index.php?t=pmsg&amp;folder_id=<?php echo $folder_id; ?>&amp;<?php echo _rsid; ?>&amp;o=post_stamp&amp;s=<?php echo ($o=='p.post_stamp' && $s=='ASC' ? 'd' : 'a'); ?>" class="thLnk">Time</a></th>
-		<th class="ac">Action</th>
-	</tr>
-	
-	</table> -->
+
+
+
+<tr>
+	<th width="5%" style="font-size: 20px">Select &nbsp; <input type="checkbox" name="toggle" title="all/none" onclick="jQuery(\'input:checkbox\').prop(\'checked\', this.checked);" /> </th>
+	<th width="30%"><a style="text-decoration: none; color: #fff; font-weight: bold;font-size: 20px" href="/uni-ideas/index.php?t=pmsg&amp;folder_id='.$folder_id.'&amp;'._rsid.'&amp;o=subject&amp;s='.($o=='p.subject' && $s=='ASC' ? 'd' : 'a'); ?>" class="thLnk">Subject</a></th>
+	<th width="10%"><a style="text-decoration: none; color: #fff; font-weight: bold;font-size: 20px" href="/uni-ideas/index.php?t=pmsg&amp;folder_id=<?php echo $folder_id; ?>&amp;<?php echo _rsid; ?>&amp;o=<?php echo ($folder_id == 3 ? 'alias2' : 'alias' )  .'&amp;s='.(($o=='u.alias' || $o=='u2.alias') && $s=='ASC' ? 'd' : 'a' )  .'" class="thLnk">'.($folder_id == 3 ? 'Recipient' : 'Author'); ?></a></th>
+	<th width="18%"><a style="text-decoration: none; color: #fff; font-weight: bold;font-size: 20px" href="/uni-ideas/index.php?t=pmsg&amp;folder_id=<?php echo $folder_id; ?>&amp;<?php echo _rsid; ?>&amp;o=post_stamp&amp;s=<?php echo ($o=='p.post_stamp' && $s=='ASC' ? 'd' : 'a'); ?>" class="thLnk">Time</a></th>
+	<th width="17%" style="color: #fff; font-weight: bold;font-size: 20px">Action</th>
+</tr>
+
+
+
+
+
+
+<?php echo $private_msg_entry; ?>
+<?php echo $private_tools; ?>
+</table>
 </form>
 
 
@@ -1426,17 +1404,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 
 
 
-<?php echo $page_pager; ?>
-<div class="ar pmL"><a href="/uni-ideas/index.php?t=ppost&amp;<?php echo _rsid; ?>"><img src="/uni-ideas/theme/default/images/new_pm.gif" alt="" /></a></div>
-<br />  
-<?php echo $page_stats; ?>
-<?php echo (!empty($RIGHT_SIDEBAR) ? '
-</td><td width="200px" align-"right" valign="top" class="sidebar-right">
-	'.$RIGHT_SIDEBAR.'
-' : ''); ?>
-</td></tr></table>
 
-</div>
   <!-- Footer -->
 </div>
 <div class="footer ac">

@@ -1662,7 +1662,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
     <h3 style="color:#0F2026">Let's create your ideas!</h3>
     <button class="bnt-find" >POST &nbsp;<span class="glyphicon glyphicon-chevron-right" style="color: #ffffff;font-size: 20px"></span></button>
   </div>
-  <span id="ShowLinks" style="margin-left: 68%;position: absolute; top: 92%; left: 3%;">
+  <span id="ShowLinks" style="margin-left: 50%;position: absolute; top: 92%; left: 3%;">
 		<!-- <span class="GenText fb">Show:</span> -->
 		<a style='text-decoration: none; color: #2B3467; font-weight: bold;font-size: 20px' href="/uni-ideas/index.php?t=selmsg&amp;date=today&amp;<?php echo _rsid; ?>&amp;frm_id=<?php echo (isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'&amp;th='.$th.'" title="Show all messages that were posted today" rel="nofollow">Today&#39;s Messages</a>
 			'.(_uid ? '<b style="color: #2B3467;">|</b> 

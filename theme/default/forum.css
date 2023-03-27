@@ -90,7 +90,6 @@ text, .GenText, .MsgIg, td.repI {
 	font-size: x-small;
 }
 
-
 a.thLnk:link, a.thLnk:active, a.thLnk:visited {
 	font-size: 10pt;
 	text-decoration: underline;
@@ -101,17 +100,6 @@ a.thLnk:visited {
 	color: #c2cdd6;
 }
 
-.RowStyleA, td.tt {
-	background: #eee;
-}
-
-.RowStyleB, .curtime, fieldset {
-	background: #dee2e6;
-}
-
-.RowStyleC {
-	background: #c2cdd6;
-}
 
 .row:hover td {
 	opacity: 0.8;
@@ -494,17 +482,6 @@ table.tab {
 	padding: 1px 3px 1px 3px;
 }
 
-td.pmSn {
-	background: #fff;
-}
-
-td.pmSa {
-	background: #fffa00;
-}
-
-td.pmSf {
-	background: red;
-}
 
 
 
@@ -664,8 +641,7 @@ img.at { float: left; clear: left; }
 
 div.sr { float: left; padding: 5px; }
 
-div.ctb {text-align: center; clear: both;}
-div.ctb table {margin: 0 auto; text-align: left;}
+
 div.ip { overflow: auto; margin: 0; padding: 2px; width: 600px; height: 400px; }
 span.vt { padding-left: 20px; }
 table.icqCP { font-size: smaller; border: 0; }

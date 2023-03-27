@@ -972,7 +972,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	</tr>
 </table-->
 <?php echo ($MOD || $mo == 8224 ? '<form method="post" action="/uni-ideas/index.php?t=mmd">' : ''); ?>
-<table border="0" cellspacing="1" cellpadding="2" class="clear pad">
+<table border="0" cellspacing="1" cellpadding="2" class="clear pad" style="margin-left: 1%">
 <tr>
 	<th class="hide2">&nbsp;</th>
 	<th class="hide2">&nbsp;</th>
@@ -983,7 +983,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 </tr>
 <?php echo ($MOD || $mo == 8224 ? '
 <tr>
-	<td colspan="3" class="RowStyleC ar">
+	<td colspan="3" class="RowStyleC ar" >
 		<input type="submit" class="button small" name="del_sel_all" value="Delete selected" />
 		<input type="submit" class="button small" name="mov_sel_all" value="Move Selected" />
 		<input type="submit" class="button small" name="merge_sel_all" value="Merge Selected" />

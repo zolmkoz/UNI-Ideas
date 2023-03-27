@@ -66,7 +66,7 @@ function changeKarma(msg_id, user_id, updown, ses, sq){	jQuery.ajax({		url: 'ind
 		error: function(xhr, desc, e){			alert('Failed to submit: '+desc);}	});}
 function prevCat(id){	var p=document.getElementById(id);	if(!p){		return;}	while(p=p.previousSibling){		if(p.id && p.id.substring(0,1)=='c' && p.style.display !='none'){			chng_focus(p.id);			break;	}}}
 function nextCat(id){	var p=document.getElementById(id);	if(!p){		return;}	while(p=p.nextSibling){		if(p.id && p.id.substring(0,1)=='c' && p.style.display !='none'){			chng_focus(p.id);			break;	}}}
-function min_max_cats(theme_image_root, minimize_category, maximize_category, sq, s){	jQuery(document).ready(function(){		var toggleMinus=theme_image_root+'/min.png';		var togglePlus =theme_image_root+'/max.png';
+function min_max_cats(theme_image_root, minimize_category, maximize_category, sq, s){	jQuery(document).ready(function(){		var toggleMinus=theme_image_root+'/up.png';		var togglePlus =theme_image_root+'/down.png';
 		jQuery('.collapsed').prepend('<img src="'+togglePlus+'" alt="+" title="'+maximize_category+'"/> ')		               .addClass('collapsable');		jQuery('.expanded').prepend('<img src="'+toggleMinus+'" alt="-" title="'+minimize_category+'"/> ')		              .addClass('collapsable');
   jQuery('img', jQuery('.collapsable')).addClass('clickable')  .css('cursor', 'pointer')  .click(function(e){    var toggleSrc=jQuery(this).attr('src');    var cat=jQuery(this).parents('tr').attr('id');    var on;    e.stopPropagation();
     if(toggleSrc.indexOf(toggleMinus)>=0){       
@@ -78,7 +78,7 @@ function min_max_cats(theme_image_root, minimize_category, maximize_category, sq
        });   }
 
  });})}
-function min_max_posts(theme_image_root, minimize_message, maximize_message){jQuery(document).ready(function(){  var toggleMinus=theme_image_root+'/min.png';  var togglePlus =theme_image_root+'/max.png';
+function min_max_posts(theme_image_root, minimize_message, maximize_message){jQuery(document).ready(function(){  var toggleMinus=theme_image_root+'/up.png';  var togglePlus =theme_image_root+'/down.png';
   jQuery('.collapsed').prepend('<img src="'+togglePlus+'" alt="+" title="'+maximize_message+'" class="collapsable"/> ');  jQuery('.expanded').prepend('<img src="'+toggleMinus+'" alt="-" title="'+minimize_message+'" class="collapsable"/> ');
   jQuery('.collapsable').addClass('clickable').css('cursor', 'pointer')  .click(function(){    var toggleSrc=jQuery(this).attr('src');
     if(toggleSrc.indexOf(toggleMinus)>=0){       

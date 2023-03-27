@@ -385,8 +385,7 @@ if (_uid) {
 'Subscriptions'=>'subscribed',
 'Bookmarks'=>'bookmarked',
 'Referrals'=>'referals',
-'Buddy List'=>'buddy_list',
-'Ignore List'=>'ignore_list',
+'Following'=>'buddy_list',
 'Show Own Posts'=>'showposts'
 );
 
@@ -404,7 +403,7 @@ if (_uid) {
 
 	if (!$mod_id_chk) {
 		if ($FUD_OPT_1 & 1024) {
-			$tablist['Private Messaging'] = 'pmsg';
+			
 		}
 		$pg = ($_GET['t'] == 'pmsg_view' || $_GET['t'] == 'ppost') ? 'pmsg' : $_GET['t'];
 
@@ -418,14 +417,18 @@ if (_uid) {
 			} else if ($tab == 'showposts') {
 				$tab_url .= '&amp;id='. _uid;
 			}
-			$tabs .= $pg == $tab ? '<td class="tabON"><div class="tabT"><a class="tabON" href="'.$tab_url.'">'.$tab_name.'</a></div></td>' : '<td class="tabI"><div class="tabT"><a href="'.$tab_url.'">'.$tab_name.'</a></div></td>';
+			$tabs .= $pg == $tab ? '
+				<td class="td_nav" >&ensp;
+					<a class="control_panel" style="text-decoration: none; color: #000; font-weight: bold;font-size: 17px;border: none;width: 100px" href="'.$tab_url.'">'.$tab_name.'</a></div></td>' : '
+				<td class="td_nav" >&ensp;&ensp;
+					<a class="control_panel" style="text-decoration: none; color: #000; font-weight: bold;font-size: 17px;border: none;width: 100px" href="'.$tab_url.'">'.$tab_name.'</a></div></td>';
 		}
 
-		$tabs = '<table cellspacing="1" cellpadding="0" class="tab">
-<tr>
-	'.$tabs.'
-</tr>
-</table>';
+		$tabs = '<table cellspacing="1" cellpadding="0" >
+					<tr style="background-color: #fff;color: #000 ">
+						'.$tabs.'
+					</tr>
+				</table>';
 	}
 }
 
@@ -442,34 +445,37 @@ if (_uid) {
 	$uc_buddy_ents = '';
 	$c = uq('SELECT u.id, u.alias, u.last_visit, '. q_bitand('users_opt', 32768) .' FROM fud30_buddy b INNER JOIN fud30_users u ON b.bud_id=u.id WHERE b.user_id='. _uid .' ORDER BY u.last_visit DESC');
 	while ($r = db_rowarr($c)) {
-		$uc_pm = ($FUD_OPT_1 & 1024) ? '<a href="/uni-ideas/index.php?t=ppost&toi='.$r[0].'&amp;'._rsid.'">PM</a>&nbsp;||&nbsp;' : '';
+		$uc_pm = ($FUD_OPT_1 & 1024) ? '<a style="text-decoration: none; color: #0F2026;font-size: 13px; width: 30px; height: 20px; color: #2192FF" href="/uni-ideas/index.php?t=ppost&toi='.$r[0].'&amp;'._rsid.'">Sent Message &nbsp;|&nbsp;</a>' : '';
 		$obj = new stdClass();
 		$obj->login = $r[1];
-		$uc_online = (!$r[3] && ($r[2] + $LOGEDIN_TIMEOUT * 60) > __request_timestamp__) ? '<img src="/uni-ideas/theme/default/images/online.png" alt="'.$obj->login.' is currently online" title="'.$obj->login.' is currently online" />' : '<img src="/uni-ideas/theme/default/images/offline.png" alt="'.$obj->login.' is currently offline" title="'.$obj->login.' is currently offline" />';
-		$uc_buddy_ents .= '<tr class="RowStyleA">
-	<td class="vm">'.$uc_online.'</td>
-	<td class="nw vm wa"><a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r[0].'&amp;'._rsid.'">'.$r[1].'</a></td>
-	<td class="nw vm RowStyleB SmallText">'.$uc_pm.'<a href="/uni-ideas/index.php?t=uc&amp;ubid='.$r[0].'&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'">X</a></td>
-</tr>';
+		$uc_online = (!$r[3] && ($r[2] + $LOGEDIN_TIMEOUT * 60) > __request_timestamp__) ? '<img style="margin-top: -7px" src="/uni-ideas/theme/default/images/icon/green-dot.png" alt="'.$obj->login.' is currently online" title="'.$obj->login.' is currently online" />' : '<img style="margin-top: -7px" src="/uni-ideas/theme/default/images/icon/reddot_123.png" alt="'.$obj->login.' is currently offline" title="'.$obj->login.' is currently offline" />';
+		$uc_buddy_ents .= '
+		<tr class="RowStyleA">
+			<td class="vm">'.$uc_online.'</td>
+			<td class="nw vm wa"><a style="text-decoration: none; color: #0F2026;font-size: 17px;" href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r[0].'&amp;'._rsid.'">'.$r[1].'</a></td>
+			<td class="nw vm RowStyleB SmallText">'.$uc_pm.'<a style="text-decoration: none; color: #0F2026;font-size: 13px; width: 30px; height: 20px; color: #000" href="/uni-ideas/index.php?t=uc&amp;ubid='.$r[0].'&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'">X&nbsp;</a></td>
+		</tr>';
 	}
 	unset($c);
 
 	$uc_new_pms = '';
 	$c = uq(q_limit('SELECT m.ouser_id, u.alias, m.post_stamp, m.subject, m.id FROM fud30_pmsg m INNER JOIN fud30_users u ON u.id=m.ouser_id WHERE m.duser_id='. _uid .' AND fldr=1 AND read_stamp=0 ORDER BY post_stamp DESC', ($usr->posts_ppg ? $usr->posts_ppg : $POSTS_PER_PAGE)));
 	while ($r = db_rowarr($c)) {
-		$uc_new_pms .= '<tr class="RowStyleB">
-	<td><a href="/uni-ideas/index.php?t=pmsg_view&amp;id='.$r[4].'&amp;'._rsid.'">'.$r[3].'</a></td>
-	<td class="nw"><a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r[0].'&amp;'._rsid.'">'.$r[1].'</a></td>
-	<td class="DateText nw">'.utf8_encode(strftime('%b %d %Y %H:%M', $r[2])).'</td>
-</tr>';
+		$uc_new_pms .= '
+		<tr class="RowStyleB" style="background-color:#fff">
+			<td><img style="margin-top: -5px" src="/uni-ideas/theme/default/images/icon/chatnew11.png">&nbsp;&nbsp;<a style="text-decoration: none; color: #146C94;font-size: 17px;font-weight:bold;" href="/uni-ideas/index.php?t=pmsg_view&amp;id='.$r[4].'&amp;'._rsid.'">'.$r[3].'</a></td>
+			<td class="nw"><span class="glyphicon glyphicon-user" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span><a style="text-decoration: none; color: #0F2026;font-size: 13px;" href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r[0].'&amp;'._rsid.'">'.$r[1].'</a></td>
+			<td class="DateText nw" style="color: #0F2026;font-size: 13px;"><span class="glyphicon glyphicon-time" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.utf8_encode(strftime('%b %d %Y %H:%M', $r[2])).'</td>
+		</tr>';
 	}
 	unset($c);
 	if ($uc_new_pms) {
-		$uc_new_pms = '<tr>
-	<th class="wa">Subject</th>
-	<th class="nw">Author</th>
-	<th class="nw">Time</th>
-</tr>
+		$uc_new_pms = '
+		<tr style="border-bottom: 1px solid #000">
+			<th class="wa" style="color: #000">Subject</th>
+			<th class="nw"style="color: #000">Author</th>
+			<th class="nw" style="color: #000">&nbsp;&nbsp;&nbsp;Time</th>
+		</tr>
 '.$uc_new_pms;
 	}
 
@@ -493,25 +499,33 @@ if (_uid) {
 		'. ($is_a ? '' : ' AND (mo.id IS NOT NULL OR '. q_bitand('COALESCE(g2.group_cache_opt, g1.group_cache_opt)', 1) .'> 0)') .'
 		ORDER BY m.post_stamp DESC');
 	while ($r = db_rowobj($c)) {
-		$uc_sub_forum .= '<tr>
-	<td class="RowStyleA SmallText wa"><a href="/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$r->id.'&amp;'._rsid.'" class="big">'.filter_var($r->cat_name, FILTER_SANITIZE_STRING).' &raquo; '.$r->name.'</a>'.($r->descr ? '<br />
-'.$r->descr.'' : '' ) .'<br /><a href="/uni-ideas/index.php?t=post&amp;frm_id='.$r->id.'&amp;'._rsid.'">New Topic</a> || <a href="/uni-ideas/index.php?t=uc&amp;ufid='.$r->id.'&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'">Unsubscribe</a></td>
-	<td class="RowStyleB ac">'.$r->post_count.'</td>
-	<td class="RowStyleB ac">'.$r->thread_count.'</td>
-	<td class="RowStyleA SmallText ar nw">'.($r->mid ? '<a href="/uni-ideas/index.php?t='.d_thread_view.'&amp;goto='.$r->mid.'&amp;'._rsid.'#msg_'.$r->mid.'" title="'.$r->subject.'">'.substr($r->subject, 0, min(25, strlen($r->subject))).'</a>
-<br />
-<span class="DateText">'.utf8_encode(strftime('%a, %d %B %Y', $r->post_stamp)).'</span>
-<br />
-By: '.($r->alias ? '<a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r->poster_id.'&amp;'._rsid.'">'.filter_var($r->alias, FILTER_SANITIZE_STRING).'</a>' : $GLOBALS['ANON_NICK'].'' ) : '' ) .'</td>
-</tr>';
+		$uc_sub_forum .= '
+		<tr style="background-color:#fff;">
+			<td class="RowStyleA SmallText wa" style="background-color:#fff">
+				<a style="text-decoration: none; color: #146C94;font-size: 17px;font-weight:bold" href="/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$r->id.'&amp;'._rsid.'" class="big">'.filter_var($r->cat_name, FILTER_SANITIZE_STRING).' &raquo; '.$r->name.'</a><br /><br />
+				<a style="text-decoration: none; color: #379237;font-size: 13px;" href="/uni-ideas/index.php?t=post&amp;frm_id='.$r->id.'&amp;'._rsid.'"><span style="color:#379237" class="glyphicon glyphicon-plus"></span>New Topic</a> &nbsp;&nbsp;
+				<a style="text-decoration: none; color: #DF2E38;font-size: 13px;" href="/uni-ideas/index.php?t=uc&amp;ufid='.$r->id.'&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'"><img style="margin-top: -5px; width: 20px" src="/uni-ideas/theme/default/images/icon/unsubcribe1.png">Unsubscribe</a></td>
+			<td class="RowStyleB ac" style="font-size:14px;background-color:#fff;">'.$r->post_count.'</td>
+			<td class="RowStyleB ac" style="font-size:14px;background-color:#fff;">'.$r->thread_count.'</td>
+			<td class="RowStyleA SmallText ar nw" style="text-decoration: none; color: #146C94;font-size: 17px;background-color:#fff;">'
+				.($r->mid ? '
+				<span class="glyphicon glyphicon-star" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span><a style="text-decoration: none; color: #000;font-size: 15px;" href="/uni-ideas/index.php?t='.d_thread_view.'&amp;goto='.$r->mid.'&amp;'._rsid.'#msg_'.$r->mid.'" title="'.$r->subject.'">'.substr($r->subject, 0, min(25, strlen($r->subject))).'</a>
+				<br />
+				&nbsp;<span class="glyphicon glyphicon-time" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span><span class="DateText" style="color: #0F2026;font-size: 13px;">'.utf8_encode(strftime('%a, %d %B %Y', $r->post_stamp)).'</span>
+				<br />
+				<span class="glyphicon glyphicon-cloud-upload" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>By: '.($r->alias ? '
+				<a style="text-decoration: none; color: #146C94;font-size: 17px;font-weight:bold" href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r->poster_id.'&amp;'._rsid.'">'.filter_var($r->alias, FILTER_SANITIZE_STRING).'</a>' : $GLOBALS['ANON_NICK'].'' ) : '' ) .'
+			</td>
+		</tr>';
 	}
 	if ($uc_sub_forum) {
-		$uc_sub_forum = '<tr>
-        <th class="wa">Category &raquo; Forum</th>
-	<th class="nw">Messages</th>
-        <th class="nw">Topics</th>
-        <th class="nw">Last message</th>
-</tr>
+		$uc_sub_forum = '
+		<tr style="border-bottom: 1px solid #000;">
+			<th class="wa" style="color: #000">Category Type &raquo; Category&rsquo;Name</th>
+			<th class="nw" style="color: #000">&nbsp;Comments</th>
+			<th class="nw" style="color: #000">&nbsp;&nbsp;&nbsp;Ideas</th>
+			<th class="nw" style="color: #000">&nbsp;&nbsp;&nbsp;Last comment</th>
+		</tr>
 '.$uc_sub_forum;
 	}
 	unset($c);
@@ -552,20 +566,35 @@ By: '.($r->alias ? '<a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r->poster_
 			$mini_thread_pager = '';
 		}
 
-		$uc_sub_topic .= '<tr>
-	<td class="RowStyleA"><a href="/uni-ideas/index.php?t='.d_thread_view.'&amp;th='.$r->id.'&amp;unread=1&amp;'._rsid.'"><img src="/uni-ideas/theme/default/images/newposts.gif" title="Go to the first unread message in this topic" alt="" /></a>&nbsp;<a class="big" href="/uni-ideas/index.php?t='.d_thread_view.'&amp;th='.$r->id.'&amp;'._rsid.'">'.$r->subject.'</a> '.$mini_thread_pager.'<br /><div class="ar"><a href="/uni-ideas/index.php?t=post&amp;th_id='.$r->id.'&amp;'._rsid.'">Reply</a> || <a href="/uni-ideas/index.php?t=uc&amp;utid='.$r->id.'&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'">Unsubscribe</a></div></td>
-	<td class="RowStyleB ac">'.$r->replies.'</td>
-	<td class="RowStyleB ac">'.$r->views.'</td>
-	<td class="RowStyleC ar nw"><span class="DateText">'.utf8_encode(strftime('%a, %d %B %Y', $r->post_stamp)).'</span><br />By: '.($r->alias ? '<a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r->poster_id.'&amp;'._rsid.'">'.filter_var($r->alias, FILTER_SANITIZE_STRING).'</a>' : $GLOBALS['ANON_NICK'].'' ) .' <a href="/uni-ideas/index.php?t='.d_thread_view.'&amp;goto='.$r->last_post_id.'&amp;'._rsid.'#msg_'.$r->last_post_id.'"><img src="/uni-ideas/theme/default/images/goto.gif" title="Go to the last message in this topic" alt="" /></a></td>
-</tr>';
+		$uc_sub_topic .= '
+		<tr>
+			<td style="background-color:#fff" class="RowStyleA"><a href="/uni-ideas/index.php?t='.d_thread_view.'&amp;th='.$r->id.'&amp;unread=1&amp;'._rsid.'"><span class="glyphicon glyphicon-star" style="color: #FA4D1D; font-size: 14px;"></span></a>&nbsp;
+				<a style="text-decoration: none; color: #0F2026;font-size: 20px;font-weight:bold" class="big" href="/uni-ideas/index.php?t='.d_thread_view.'&amp;th='.$r->id.'&amp;'._rsid.'">'.$r->subject.'</a> '.$mini_thread_pager.'
+				<br />
+				
+				<a style="text-decoration: none; color: #379237;font-size: 13px;" href="/uni-ideas/index.php?t=post&amp;th_id='.$r->id.'&amp;'._rsid.'"><span style="color:#379237" class="glyphicon glyphicon-share-alt"></span>Reply</a> &nbsp;&nbsp;
+				<a style="text-decoration: none; color: #DF2E38;font-size: 13px;" href="/uni-ideas/index.php?t=uc&amp;utid='.$r->id.'&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'"><img style="margin-top: -5px; width: 20px" src="/uni-ideas/theme/default/images/icon/unsubcribe1.png">Unsubscribe</a>
+			</td>
+			<td style="background-color:#fff;" class="RowStyleB ac">'.$r->replies.'</td>
+			<td style="background-color:#fff;" class="RowStyleB ac">'.$r->views.'</td>
+			<td style="text-decoration: none; color: #146C94;font-size: 17px;background-color:#fff;" class="RowStyleC ar nw">
+			&nbsp;<span class="glyphicon glyphicon-time" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>
+				<span style="color: #0F2026;font-size: 13px;" class="DateText">'.utf8_encode(strftime('%a, %d %B %Y', $r->post_stamp)).'</span><br />
+				<span class="glyphicon glyphicon-cloud-upload" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>
+				By: '.($r->alias ? '
+				<a style="text-decoration: none; color: #146C94;font-size: 17px;font-weight:bold" href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r->poster_id.'&amp;'._rsid.'">'.filter_var($r->alias, FILTER_SANITIZE_STRING).'</a>' : $GLOBALS['ANON_NICK'].'' ) .' 
+				<a style="text-decoration: none; color: #146C94;font-size: 17px;font-weight:bold" href="/uni-ideas/index.php?t='.d_thread_view.'&amp;goto='.$r->last_post_id.'&amp;'._rsid.'#msg_'.$r->last_post_id.'"></a>
+			</td>
+		</tr>';
 	}
 	if ($uc_sub_topic) {
-		$uc_sub_topic = '<tr>
-        <th class="wa">Topic</th>
-	<th class="nw">Replies</th>
-        <th class="nw">Views</th>
-        <th class="nw">Last message</th>
-</tr>
+		$uc_sub_topic = '
+		<tr style="border-bottom: 1px solid #000">
+			<th class="wa" style="color: #000">Topic</th>
+			<th class="nw" style="color: #000">&nbsp;&nbsp;&nbsp;Replies</th>
+			<th class="nw" style="color: #000">&nbsp;&nbsp;&nbsp;Views</th>
+			<th class="nw" style="color: #000">&nbsp;&nbsp;&nbsp;Last Comment</th>
+		</tr>
 '.$uc_sub_topic;
 	}
 	unset($c);
@@ -580,19 +609,27 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<meta charset="utf-8">
+<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="<?php echo (!empty($META_DESCR) ? $META_DESCR.'' : $GLOBALS['FORUM_DESCR'].''); ?>" />
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
 	<link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GLOBALS['FORUM_TITLE']; ?> Search" href="/uni-ideas/open_search.php" />
 	<?php echo $RSS; ?>
-	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
+
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/forum.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
-	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -679,6 +716,38 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		.hero-image {
+			background-image: url("/uni-ideas/theme/default/images/1.png");
+			height: 800px;
+			
+			background-repeat: no-repeat;
+			background-size: 100%;
+			position: relative;
+		}
+
+		.hero-text {
+			text-align: center;
+			position: absolute;
+			top: 10%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			color: white;
+		}
+		.control_panel:hover{
+			background-color: #fff;
+		}
+		.following{
+			width: 100%;
+			font-size: 15px;
+			background-color: #0F2026;
+		}
+		.td_nav{
+			border: none;
+			color: black;
+		}
+		.td_nav:hover{
+			border-bottom: 2px solid #fa4d1d;
+		}
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -722,42 +791,57 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
+<div class="hero-image">
+<div class="hero-text">
+	<h1 style="text-align: center;color:#0F2026;font-size: 80px">Notification</h1>
+  </div>
+</div>
+<br />
 <?php echo $tabs; ?>
 
-<table cellspacing="3" cellpadding="3" border="0" class="wa">
-<tr>
-	<td class="vt"><table border="0" cellspacing="1" cellpadding="2" class="ucPW">
-<tr>
-	<th colspan="3">Buddy List</th>
-</tr>
-<?php echo $uc_buddy_ents; ?>
-</table></td>
+<br />
 
-	<td class="wa vt">
-<table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr>
-	<th colspan="3">New Private Messages</th>
-</tr>
-<?php echo $uc_new_pms; ?>
-</table>
-<br /><br />
-<table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr>
-	<th colspan="4">Subscribed Forums With New Messages</th>
-</tr>
-<?php echo $uc_sub_forum; ?>
-</table>
-<br /><br />
-<table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr>
-	<th colspan="4">Subscribed Topics With New Messages</th>
-</tr>
-<?php echo $uc_sub_topic; ?>
-</table></td>
-</tr>
-</table>
 
+<table cellspacing="3" cellpadding="3" border="0" style="margin: 2px;" >
+	<tr>
+		<td class="vt">
+			<table border="0" cellspacing="1" cellpadding="2" class="ucPW">
+				<tr>
+					<th class="following" colspan="3">Following</th>
+				</tr>
+				<?php echo $uc_buddy_ents; ?>
+			</table>
+		</td>
+
+		<td class="wa vt" style="border-left: 5px solid #fff;">
+			<table cellspacing="1" cellpadding="2" class="ContentTable">
+				<tr>
+					<th class="following" colspan="3">New Private Messages</th>
+				</tr>
+				<?php echo $uc_new_pms; ?>
+			</table>
+			<br /><br />
+			
+			<table cellspacing="1" cellpadding="2" class="ContentTable">
+				<tr>
+					<th class="following" colspan="4">Category With New Idea</th>
+				</tr>
+				<?php echo $uc_sub_forum; ?>
+			</table>
+			<br /><br />
+
+			<table cellspacing="1" cellpadding="2" class="ContentTable">
+			<tr>
+				<th colspan="4" class="following">Idea With New Comment</th>
+			</tr>
+				<?php echo $uc_sub_topic; ?>
+			</table>
+		</td>
+	</tr>
+</table>
 <br />  
+
+
 <?php echo $page_stats; ?>
 <?php echo (!empty($RIGHT_SIDEBAR) ? '
 </td><td width="200px" align-"right" valign="top" class="sidebar-right">

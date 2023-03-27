@@ -297,8 +297,8 @@ function nextCat(id)
 function min_max_cats(theme_image_root, minimize_category, maximize_category, sq, s)
 {
 	jQuery(document).ready(function() {
-		var toggleMinus = theme_image_root +'/min.png';
-		var togglePlus  = theme_image_root +'/max.png';
+		var toggleMinus = theme_image_root +'/up.png';
+		var togglePlus  = theme_image_root +'/down.png';
 
 		jQuery('.collapsed').prepend('<img src="'+ togglePlus +'" alt="+" title="'+ maximize_category +'" /> ')
 		               .addClass('collapsable');
@@ -343,8 +343,8 @@ function min_max_cats(theme_image_root, minimize_category, maximize_category, sq
 function min_max_posts(theme_image_root, minimize_message, maximize_message)
 {
 jQuery(document).ready(function() {
-  var toggleMinus = theme_image_root +'/min.png';
-  var togglePlus  = theme_image_root +'/max.png';
+  var toggleMinus = theme_image_root +'/up.png';
+  var togglePlus  = theme_image_root +'/down.png';
 
   jQuery('.collapsed').prepend('<img src="'+ togglePlus +'" alt="+" title="'+ maximize_message +'" class="collapsable" /> ');
   jQuery('.expanded').prepend('<img src="'+ toggleMinus +'" alt="-" title="'+ minimize_message +'" class="collapsable" /> ');

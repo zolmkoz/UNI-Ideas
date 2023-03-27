@@ -1481,12 +1481,13 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
 	<link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GLOBALS['FORUM_TITLE']; ?> Search" href="/uni-ideas/open_search.php" />
 	<?php echo $RSS; ?>
-	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
+
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
 	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/forum.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
@@ -1599,6 +1600,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 			left: 50%;
 			transform: translate(-50%, -50%);
 			color: white;
+			
 		}
 		.bnt-find{
 			color: white;
@@ -1611,6 +1613,11 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		}
 		.bnt-find:hover{
 			background-color: #fa4d1d;
+		}
+		.th_seach{
+			background-color: #0F2026;
+			color: #ffffff;
+			font-size: 20px;
 		}
 	</style>
 </head>
@@ -1658,8 +1665,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 
 <div class="hero-image">
   <div class="hero-text">
-    <h1 style="font-size:50px; color:#0F2026">Say your story, We always listen</h1>
-    <h3 style="color:#0F2026">Let's create your ideas!</h3>
+    <h3 style="color:#FA4D1D;font-size: 70px;">Let's create your ideas!</h3>
     <button class="bnt-find" >POST &nbsp;<span class="glyphicon glyphicon-chevron-right" style="color: #ffffff;font-size: 20px"></span></button>
   </div>
   <span id="ShowLinks" style="margin-left: 50%;position: absolute; top: 92%; left: 3%;">
@@ -1690,13 +1696,13 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<div class="w3-responsive">
 			<table class="w3-table-all" style="border: none;">
 				<tr>
-					<th  style="font-size: 25px;width: 50%">Forum Search</th>
-					<th  style="font-size: 25px;width: 50%">Search Options</th>
+					<th class="th_seach">Caterories Search</th>
+					<th  class="th_seach" >Search Options</th>
 				</tr>
 				<tr style="background-color: #ccc;">
 					<td>
-						<input style="width: 30%;height:30px;" spellcheck="true" type="search" name="srch" tabindex="1" value="<?php echo filter_var($srch, FILTER_SANITIZE_STRING); ?>" /> 
-						<input style="width: 7%;background-color:#0F2026;color:#ffffff;border:none;height:30px" type="submit" tabindex="2" name="btn_submit" value="Search" />
+						<input style="width: 50%;height:30px;" spellcheck="true" type="search" name="srch" tabindex="1" value="<?php echo filter_var($srch, FILTER_SANITIZE_STRING); ?>" /> 
+						<input style="width: 15%;background-color:#0F2026;color:#ffffff;border:none;height:30px" type="submit" tabindex="2" name="btn_submit" value="Search" />
 						<br />
 						<span class="SmallText">
 							<?php echo $search_options; ?>
@@ -1707,7 +1713,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 						<div class="sr" style="font-weight:bold;font-size:20px">Attachments:<br /><select style="color: #0F2026;font-size:15px" class="SmallText" name="attach"><?php echo $attach_options; ?></select></div>
 						<div class="sr" style="font-weight:bold;font-size:20px">Search logic:<br /><select style="color: #0F2026;font-size:15px" class="SmallText" name="search_logic"><?php echo $logic_options; ?></select></div>
 						<div class="sr" style="font-weight:bold;font-size:20px">Sort by:<br /><select style="color: #0F2026;font-size:15px" class="SmallText" name="sort_order"><?php echo $sort_options; ?></select></div>
-						<div class="sr" style="font-weight:bold;font-size:20px">Filter by user:<br /><input style="font-size:15px" class="SmallText" type="text" value="<?php echo filter_var($author, FILTER_SANITIZE_STRING); ?>" name="author" /></div>
+						<div class="sr" style="font-weight:bold;font-size:20px">Filter by user:<br /><input style="font-size:15px" type="text" value="<?php echo filter_var($author, FILTER_SANITIZE_STRING); ?>" name="author" /></div>
 					</td>
 				</tr>
 			</table>

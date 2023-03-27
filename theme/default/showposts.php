@@ -149,6 +149,7 @@ function tmpl_create_pager($start, $count, $total, $arg, $suf='', $append=1, $js
 	return $limit;
 }
 
+
 function perms_from_obj($obj, $adm)
 {
 	$perms = 1|2|4|8|16|32|64|128|256|512|1024|2048|4096|8192|16384|32768|262144;
@@ -262,14 +263,7 @@ if (_uid) {
 	}$tabs = '';
 if (_uid) {
 	$tablist = array(
-'Notifications'=>'uc',
-'Account Settings'=>'register',
-'Subscriptions'=>'subscribed',
-'Bookmarks'=>'bookmarked',
-'Referrals'=>'referals',
-'Buddy List'=>'buddy_list',
-'Ignore List'=>'ignore_list',
-'Show Own Posts'=>'showposts'
+
 );
 
 	if (!($FUD_OPT_2 & 8192)) {
@@ -286,7 +280,7 @@ if (_uid) {
 
 	if (!$mod_id_chk) {
 		if ($FUD_OPT_1 & 1024) {
-			$tablist['Private Messaging'] = 'pmsg';
+			
 		}
 		$pg = ($_GET['t'] == 'pmsg_view' || $_GET['t'] == 'ppost') ? 'pmsg' : $_GET['t'];
 
@@ -345,11 +339,12 @@ if (_uid) {
 			$THREADS_PER_PAGE, $start));
 
 		while ($r = db_rowarr($c)) {
-			$post_entry .= '<tr class="'.alt_var('search_alt','RowStyleA','RowStyleB').'">
-	<td class="GenText"><a href="/uni-ideas/index.php?t='.d_thread_view.'&amp;goto='.$r[3].'&amp;'._rsid.'#msg_'.$r[3].'">'.$r[2].'</a></td>
-	<td class="GenText nw"><a href="/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$r[1].'&amp;'._rsid.'">'.$r[0].'</a></td>
-	<td class="DateText nw">'.utf8_encode(strftime('%a, %d %B %Y %H:%M', $r[4])).'</td>
-</tr>';
+			$post_entry .= '
+			<tr '.alt_var('search_alt','RowStyleA','RowStyleB').'">
+				<td style="border-bottom: 1px solid #ccc" class="GenText" ><span class="glyphicon glyphicon-star" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span><a style="text-decoration: none; color: #0F2026;font-size: 15px;font-weight:bold" href="/uni-ideas/index.php?t='.d_thread_view.'&amp;goto='.$r[3].'&amp;'._rsid.'#msg_'.$r[3].'">'.$r[2].'</a></td>
+				<td style="border-bottom: 1px solid #ccc" class="GenText nw"><span class="glyphicon glyphicon-th-list" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span><a style="text-decoration: none; color: #0F2026;font-size: 15px;" href="/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$r[1].'&amp;'._rsid.'">'.$r[0].'</a></td>
+				<td style="border-bottom: 1px solid #ccc" class="DateText nw"><span class="glyphicon glyphicon-time" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.utf8_encode(strftime('%a, %d %B %Y %H:%M', $r[4])).'</td>
+			</tr>';
 		}
 		unset($c);
 
@@ -380,19 +375,27 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<meta charset="utf-8">
+<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="<?php echo (!empty($META_DESCR) ? $META_DESCR.'' : $GLOBALS['FORUM_DESCR'].''); ?>" />
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
 	<link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GLOBALS['FORUM_TITLE']; ?> Search" href="/uni-ideas/open_search.php" />
 	<?php echo $RSS; ?>
-	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
+
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/forum.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
-	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -479,6 +482,22 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		.hero-image {
+			background-image: url("/uni-ideas/theme/default/images/3.png");
+			height: 800px;
+			background-repeat: no-repeat;
+			background-size: 100%;
+			position: relative;
+		}
+
+		.hero-text {
+			text-align: center;
+			position: absolute;
+			top: 10%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			color: white;
+		}
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -522,36 +541,41 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
+
+
+
 <?php echo (isset($_GET['id']) && _uid == $_GET['id'] ? $tabs.'' : ''); ?>
+
+<div class="hero-image">
+<div class="hero-text">
+	<h1 style="text-align: center;color:#0F2026;font-size: 80px">Your Ideas</h1>
+  </div>
+</div>
+
+
 <?php echo $admin_cp; ?>
 <table cellspacing="1" cellpadding="2" class="ContentTable">
 <tr>
-	<th colspan="3">User Information</th>
+	<th colspan="3" style="background-color: #0F2026; font-size: 20px;color:#ffffff;">User Information</th>
 </tr>
-<tr class="RowStyleA">
-	<td class="GenText wa">Login: <a href="/uni-ideas/index.php?t=usrinfo&amp;id=<?php echo $uid; ?>&amp;<?php echo _rsid; ?>"><?php echo filter_var($u_alias, FILTER_SANITIZE_STRING); ?></a></td>
-	<td class="GenText nw">Registered on <?php echo utf8_encode(strftime('%a, %d %B %Y', $u_reg_date)); ?></td>
-	<td class="GenText nw">Message Count <?php echo $u_pcount; ?></td>
+<tr class="RowStyleA" style="background-color: #fff;border-bottom: 1px solid #0F2026">
+	<td class="GenText wa" style="color: #0F2026; font-size: 15px"><span class="glyphicon glyphicon-user" style="color: #FA4D1D; font-size: 20px;">&nbsp;</span><a style="text-decoration: none; color: #0F2026;font-size: 20px;font-weight:bold" href="/uni-ideas/index.php?t=usrinfo&amp;id=<?php echo $uid; ?>&amp;<?php echo _rsid; ?>"><?php echo filter_var($u_alias, FILTER_SANITIZE_STRING); ?></a></td>
+	<td class="GenText nw" style="color: #0F2026; font-size: 13px;"><span style="color: #0F2026; font-size: 13px;font-weight:bold">Comment</span>  &nbsp;  &nbsp; <span class="glyphicon glyphicon-comment" style="color: #FA4D1D; font-size: 14px;"></span> <?php echo $u_pcount; ?> &nbsp;   &nbsp; </td>
+	<td class="GenText nw" style="color: #0F2026; font-size: 13px;"><span style="color: #0F2026; font-size: 13px;font-weight:bold">Registered on  &nbsp; </span> <span class="glyphicon glyphicon-time" style="color: #FA4D1D; font-size: 14px;">&nbsp; </span><?php echo utf8_encode(strftime('%a, %d %B %Y', $u_reg_date)); ?></td>
 </tr>
-<tr>
-	<th class="wa">Subject</th>
-	<th class="nw">Forum:</th>
-	<th class="nw"><a class="thLnk" href="/uni-ideas/index.php?t=showposts&amp;so=<?php echo $SORT_ORDER_R; ?>&amp;id=<?php echo $uid; ?>&amp;<?php echo _rsid; ?>" rel="nofollow">Date Posted</a></th>
+<tr style="background-color: #0F2026; font-size: 20px; color:#fff">
+	<th class="wa" style="color: #fff; font-size: 20px">Topics</th>
+	<th class="nw" style="color: #fff; font-size: 20px">Categories</th>
+	<th class="nw"><a style="color: #fff; font-size: 20px; text-decoration: none;" class="thLnk" href="/uni-ideas/index.php?t=showposts&amp;so=<?php echo $SORT_ORDER_R; ?>&amp;id=<?php echo $uid; ?>&amp;<?php echo _rsid; ?>" rel="nofollow">Date Posted</a></th>
 </tr>
 <?php echo $post_entry; ?>
 </table>
 <?php echo $pager; ?>
 <br />  
-<?php echo $page_stats; ?>
-<?php echo (!empty($RIGHT_SIDEBAR) ? '
-</td><td width="200px" align-"right" valign="top" class="sidebar-right">
-	'.$RIGHT_SIDEBAR.'
-' : ''); ?>
-</td></tr></table>
 
-</div>
+
   <!-- Footer -->
-</div>
+
 <div class="footer ac">
 	<div class="logo_foot">
 		<img  src="/uni-ideas/theme/default/images/logomain.png" alt="" />

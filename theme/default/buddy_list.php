@@ -198,7 +198,7 @@ if (_uid) {
 
 		do {
 			if ((!($r[5] & 32768) && $FUD_OPT_2 & 32) || $is_a) {
-				$online_status = (($r[8] + $LOGEDIN_TIMEOUT * 60) > __request_timestamp__) ? '<img src="/uni-ideas/theme/default/images/online.png" title="'.$r[2].' is currently online" alt="'.$r[2].' is currently online" />' : '<img src="/uni-ideas/theme/default/images/offline.png" title="'.$r[2].' is currently offline" alt="'.$r[2].' is currently offline" />';
+				$online_status = (($r[8] + $LOGEDIN_TIMEOUT * 60) > __request_timestamp__) ? '<img src="/uni-ideas/theme/default/images/icon/green-dot.png" title="'.$r[2].' is currently online" alt="'.$r[2].' is currently online" />' : '<img src="/uni-ideas/theme/default/images/icon/reddot_123.png" title="'.$r[2].' is currently offline" alt="'.$r[2].' is currently offline" />';
 			} else {
 				$online_status = '';
 			}
@@ -210,32 +210,36 @@ if (_uid) {
 				$bday_indicator = '';
 			}
 
-			$buddies .= '<tr class="'.alt_var('search_alt','RowStyleA','RowStyleB').'">
-	<td class="ac">'.$online_status.'</td>
-	<td class="GenText wa">
-		'.($FUD_OPT_1 & 1024 ? '<a href="/uni-ideas/index.php?t=ppost&amp;'._rsid.'&amp;toi='.urlencode($r[0]).'">'.$r[2].'</a>' : '<a href="/uni-ideas/index.php?t=email&amp;toi='.$r[1].'&amp;'._rsid.'" rel="nofollow">'.$r[2].'</a>' ) .'&nbsp;
-		<span class="SmallText">(<a href="/uni-ideas/index.php?t=buddy_list&amp;'._rsid.'&amp;del='.$r[0].'&amp;SQ='.$GLOBALS['sq'].'">remove</a>)</span>&nbsp;
-		'.$bday_indicator.'
-	</td>
-	<td class="ac">'.$r[6].'</td>
-	<td class="ac nw">'.utf8_encode(strftime('%a, %d %B %Y %H:%M', $r[3])).'</td>
-	<td class="GenText nw">
-		<a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r[1].'&amp;'._rsid.'"><img src="/uni-ideas/theme/default/images/msg_about.gif" alt="" /></a>&nbsp;
-		<a href="/uni-ideas/index.php?t=showposts&amp;'._rsid.'&amp;id='.$r[1].'"><img src="/uni-ideas/theme/default/images/show_posts.gif" alt="" /></a>
-		'.($r[7] ? '<a href="'.$r[7].'"><img src="/uni-ideas/theme/default/images/homepage.gif" alt="" /></a>' : '' ) .'
-	</td>
-</tr>';
+			$buddies .= '
+			<tr style="background-color:#fff"'.alt_var('search_alt','RowStyleA','RowStyleB').'">
+				<td style="border-bottom: 1px solid #ccc">'.$online_status.'</td>
+				<td style="background-color:#fff;border-bottom: 1px solid #ccc"><span class="glyphicon glyphicon-user" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>
+					'.($FUD_OPT_1 & 1024 ? '
+					<a style="text-decoration: none; color: #0F2026;font-size: 20px;font-weight:bold" href="/uni-ideas/index.php?t=ppost&amp;'._rsid.'&amp;toi='.urlencode($r[0]).'">'.$r[2].'</a>' : '
+					<a href="/uni-ideas/index.php?t=email&amp;toi='.$r[1].'&amp;'._rsid.'" rel="nofollow">'.$r[2].'</a>' ) .'&nbsp;
+						
+				</td>
+				<td class="ac" style="border-bottom: 1px solid #ccc"><span class="glyphicon glyphicon-comment" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.$r[6].'</td>
+				<td class="GenText nw" style="text-align: center;border-bottom: 1px solid #ccc">
+					<a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r[1].'&amp;'._rsid.'"><img src="/uni-ideas/theme/default/images/icon/profile.png" alt="" /></a>&nbsp;
+					<a href="/uni-ideas/index.php?t=showposts&amp;'._rsid.'&amp;id='.$r[1].'"><img src="/uni-ideas/theme/default/images/icon/post.png" alt="" /></a>
+					'.($r[7] ? '<a href="'.$r[7].'"><img src="/uni-ideas/theme/default/images/homepage.gif" alt="" /></a>' : '' ) .'
+					<span class="SmallText">
+						<a href="/uni-ideas/index.php?t=buddy_list&amp;'._rsid.'&amp;del='.$r[0].'&amp;SQ='.$GLOBALS['sq'].'"><img src="/uni-ideas/theme/default/images/icon/unfollow.png" alt="" /></a></span>&nbsp;
+						'.$bday_indicator.'
+				</td>
+			</tr>';
 		} while (($r = db_rowarr($c)));
 		$buddies = '<table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr>
-	<th>Status</th>
-	<th>My Buddies</th>
-	<th class="nw ac">Message Count</th>
-	<th class="ac nw">Registered on</th>
-	<th class="ac nw">Action</th>
-</tr>
-'.$buddies.'
-</table>';
+
+		<tr style="border-bottom: 1px solid #000;background-color:#0F2026">
+			<th style="color: #fff;font-size:20px">Status</th>
+			<th style="color: #ff;font-size:20px">Following</th>
+			<th class="nw ac" style="color: #fff;font-size:20px">Comment</th>
+			<th class="ac nw" style="color: #fff;font-size:20px">Action</th>
+		</tr>
+		'.$buddies.'
+	</table>';
 	}
 	unset($c);
 
@@ -249,19 +253,27 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<meta charset="utf-8">
+<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="<?php echo (!empty($META_DESCR) ? $META_DESCR.'' : $GLOBALS['FORUM_DESCR'].''); ?>" />
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
 	<link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GLOBALS['FORUM_TITLE']; ?> Search" href="/uni-ideas/open_search.php" />
 	<?php echo $RSS; ?>
-	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
+
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/forum.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
-	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -348,6 +360,40 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		.hero-image {
+			background-image: url("/uni-ideas/theme/default/images/2.png");
+			height: 800px;
+			background-repeat: no-repeat;
+			background-size: 100%;
+			position: relative;
+		}
+
+		.hero-text {
+			text-align: center;
+			position: absolute;
+			top: 10%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			color: white;
+		}
+		div.ctb table {text-align: right;}
+		.bnt-find{
+			color: white;
+			background-color: #0F2026;
+			font-size: 15px;
+			border-radius: 9px;
+			width: 80px;
+			border-color: #ffffff;
+		}
+		.bnt-find:hover{
+			background-color: #fa4d1d;
+		}
+		.input_tag{
+			border: none;
+			border-bottom: 1px solid #FA4D1D;
+			background-color: #fff;
+			font-size: 15px;
+		}
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -391,26 +437,35 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
-<?php echo $tabs; ?>
+
+
+<div class="hero-image">
+<div class="hero-text">
+	<h1 style="text-align: center;color:#0F2026;font-size: 80px">Following</h1>
+  </div>
+</div>
+
+
+<form id="buddy_add" action="/uni-ideas/index.php?t=buddy_list" method="post"><?php echo _hs; ?>
+	<table>
+		<th style="color: #0F2026;font-size: 20px">
+			Add Following  &nbsp;  &nbsp; 
+		</th>
+		<th>
+			<input style="color: #0F2026;" type="text" tabindex="1" name="add_login" id="add_login" value="" maxlength="100" size="25" />
+			<input tabindex="2" type="submit" class="bnt-find" name="submit" value="Follow" />
+		</th>
+	</table>
+		
+</form>
+
 <?php echo $buddies; ?>
-<br /><br />
-<form id="buddy_add" action="/uni-ideas/index.php?t=buddy_list" method="post"><?php echo _hs; ?><div class="ctb">
-<table cellspacing="1" cellpadding="2" class="MiniTable">
-<tr>
-	<th class="nw">Add Buddy</th>
-</tr>
-<tr class="RowStyleA">
-	<td class="GenText nw Smalltext">
-		Enter the login of the user you wish to add.
-		<?php echo (($FUD_OPT_1 & 8388608 || (_uid && $FUD_OPT_1 & 4194304)) ? '<br />Or use the <a href="javascript://" onclick="javascript: window_open(&#39;/uni-ideas/index.php?t=pmuserloc&amp;'._rsid.'&amp;js_redr=buddy_add.add_login&amp;overwrite=1&#39;, &#39;user_list&#39;, 400,250);">Find User</a> feature to find a person.' : ''); ?>
-		<br /><br />
-		<input type="text" tabindex="1" name="add_login" id="add_login" value="" maxlength="100" size="25" />
-		<input tabindex="2" type="submit" class="button" name="submit" value="Add" />
-	</td>
-</tr>
-</table>
-</div></form>
-<br />  
+
+
+
+
+
+
 <?php echo $page_stats; ?>
 <script>
 	document.forms['buddy_add'].add_login.focus();

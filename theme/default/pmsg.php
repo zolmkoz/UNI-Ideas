@@ -920,7 +920,8 @@ if (_uid) {
 				$tab_url .= '&amp;id='. _uid;
 			}
 			$tabs .= $pg == $tab ? '' : '
-			<td  style="border: none"><div style="background-color: #fff;border: none;margin-left: 5px 20px">&ensp;|||&ensp;<a style="text-decoration: none; color: #000; font-weight: bold;font-size: 15px;border: none;width: 100px" href="'.$tab_url.'">'.$tab_name.'</a></div></td>';
+			<td  style="border: none"><div style="background-color: #fff;border: none;margin-left: 5px 20px">&ensp;|&ensp;
+			<a style="text-decoration: none; color: #000; font-weight: bold;font-size: 17px;border: none;width: 100px" href="'.$tab_url.'">'.$tab_name.'</a></div></td>';
 		}
 
 		$tabs = '<table cellspacing="1" cellpadding="0" style="border: 1px solid #ccc">
@@ -1084,7 +1085,7 @@ if (_uid) {
 		$private_msg_entry .= '
 		
 		<div class="w3-responsive">
-			<table class="w3-table-all" style="border: none;">
+			<table class="w3-table-all" style="border: none; background-color:#fff">
 				<tr>
 					<td width="5%" ><input type="checkbox" name="sel[]" value="'.$obj->id.'" /></td>
 					<td width="30%">'.$msg_type.'<a style="text-decoration: none; color: #0F2026; font-weight: bold;font-size: 15px" href="'.$goto.'">'.$obj->subject.'</a>'.(($obj->pmsg_opt & 4 && $obj->pmsg_opt & 16 && $obj->duser_id == _uid && $obj->ouser_id != _uid) ? '<span class="SmallText">&nbsp;&nbsp;[<a href="/uni-ideas/index.php?t=pmsg_view&amp;'._rsid.'&amp;dr=1&amp;id='.$obj->id.'" title="Do not send a confirmation that you&#39;ve read this message">deny receipt</a>]</span>' : '' ) .'</td>
@@ -1123,7 +1124,6 @@ if (_uid) {
 				</td>
 			</tr>
 			<tr>
-			<td>DOWNLOAD MESSAGE DUMP</td>
 			</tr>
 		</table>
 		';
@@ -1151,7 +1151,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
 	<link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GLOBALS['FORUM_TITLE']; ?> Search" href="/uni-ideas/open_search.php" />
 	<?php echo $RSS; ?>
-	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/forum.css">
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
 	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -1253,8 +1253,8 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		}
 		.table-1 {
 			width: 100%;
-			background-color: #0F2026;
-			border: 1px #c2cdd6 solid;
+			background-color: #eee;
+			border: none;
 			color: #fff;
 		}
 		.hero-image {
@@ -1285,6 +1285,19 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		.bnt-find:hover{
 			background-color: #fa4d1d;
 		}
+
+		td.pmSn {
+			background: #E64848;
+		}
+
+		td.pmSa {
+			background: #C21010;
+		}
+
+		td.pmSf {
+			background: #FF1E00;
+		}
+
 		
 	</style>
 </head>
@@ -1329,18 +1342,16 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
-
-<?php echo $tabs; ?>
-<hr style="height:1px; width: 60%; background-color:#fa4d1d"/>
+<br />
 
 <div class="hero-image">
 </div>
 
-<hr style="height:1px; width: 60%; background-color:#fa4d1d"/>
+
 
 <table cellspacing="1" cellpadding="2" class="table-1">
 	<tr>
-		<td colspan="3" style = "font-size:25px">Your private message folders are <?php echo $percent_full; ?>% full.</td>
+		<td colspan="3" style = "font-size:20px; color:#000;">Your private message folders are <?php echo $percent_full; ?>% full.</td>
 	</tr>
 	<tr>
 		<td colspan="3" >
@@ -1350,14 +1361,13 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		</td>
 	</tr>
 	<tr >
-		<td width="58" style="font-weight: bold;font-size:30px">0%</td>
-		<td  width="58" style="font-weight: bold;font-size:30px">50%</td>
-		<td  width="58" style="font-weight: bold;font-size:30px">100%</td>
+		<td width="58" style="font-weight: bold;font-size:17px;color:#000;">0%</td>
+		<td  width="58" style="font-weight: bold;font-size:17px;color:#000;">50%</td>
+		<td  width="58" style="font-weight: bold;font-size:17px;color:#000;">100%</td>
 	</tr>
 </table>
 
-<hr style="height:1px; width: 60%; background-color:#fa4d1d"/>
-
+<br/>
 
 
 
@@ -1366,8 +1376,10 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <form action="/uni-ideas/index.php?t=pmsg" method="post" id="priv_frm"><?php echo _hs; ?>
 <table cellspacing="1" cellpadding="2" class="w3-table-all" style="border: none;padding: 0px 0px">
 <tr>
-	<td colspan="3" style="padding: 0px;"><?php echo ($private_tools ? '<a href="/uni-ideas/index.php?t=ppost&amp;<?php echo _rsid; ?>"><img style="width: 120px;height:45px" src="/uni-ideas/theme/default/images/icon/newmes.png" alt="" /></a>' : '&nbsp;' )  .'</td>
-	<td colspan="3" class="SmallText ar nw" style="color: #2B3467; font-weight: bold;font-size: 20px">
+	<td colspan="3" style="padding: 0px;"><?php echo ($private_tools ? '
+		<a href="/uni-ideas/index.php?t=ppost&amp;<?php echo _rsid; ?>">
+			<img style="width: 120px;height:50px" src="/uni-ideas/theme/default/images/icon/newmes.png" alt="" /></a>' : '&nbsp;' )  .'</td>
+	<td colspan="3" style="color: #2B3467; font-weight: bold;font-size: 20px">
 		Folder:
 		<select style="font-size: 15px; width: 200px" name="folder_id" onchange="document.forms[\'priv_frm\'].submit();">
 		'.$select_options_cur_folder.'
@@ -1380,7 +1392,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 
 
 
-<tr>
+<tr style="background-color:#0F2026;color:#fff">
 	<th width="5%" style="font-size: 20px">Select &nbsp; <input type="checkbox" name="toggle" title="all/none" onclick="jQuery(\'input:checkbox\').prop(\'checked\', this.checked);" /> </th>
 	<th width="30%"><a style="text-decoration: none; color: #fff; font-weight: bold;font-size: 20px" href="/uni-ideas/index.php?t=pmsg&amp;folder_id='.$folder_id.'&amp;'._rsid.'&amp;o=subject&amp;s='.($o=='p.subject' && $s=='ASC' ? 'd' : 'a'); ?>" class="thLnk">Subject</a></th>
 	<th width="10%"><a style="text-decoration: none; color: #fff; font-weight: bold;font-size: 20px" href="/uni-ideas/index.php?t=pmsg&amp;folder_id=<?php echo $folder_id; ?>&amp;<?php echo _rsid; ?>&amp;o=<?php echo ($folder_id == 3 ? 'alias2' : 'alias' )  .'&amp;s='.(($o=='u.alias' || $o=='u2.alias') && $s=='ASC' ? 'd' : 'a' )  .'" class="thLnk">'.($folder_id == 3 ? 'Recipient' : 'Author'); ?></a></th>

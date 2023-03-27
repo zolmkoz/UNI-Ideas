@@ -59,7 +59,7 @@ if (_uid === '_uid') {
 
 		$help_section_data .= '<table cellspacing="1" cellpadding="2" class="ContentTable">
 <tr>
-	<th >'.$topic_title.'</th>
+	<th style="background-color:#0F2026; color:#fff">'.$topic_title.'</th>
 </tr>
 <tr>
 	<td class="content">

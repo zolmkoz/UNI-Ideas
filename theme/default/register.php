@@ -2665,7 +2665,7 @@ if (_uid) {
 'Subscriptions'=>'subscribed',
 'Bookmarks'=>'bookmarked',
 'Referrals'=>'referals',
-'Buddy List'=>'buddy_list',
+'Following'=>'buddy_list',
 'Ignore List'=>'ignore_list',
 'Show Own Posts'=>'showposts'
 );
@@ -2698,14 +2698,20 @@ if (_uid) {
 			} else if ($tab == 'showposts') {
 				$tab_url .= '&amp;id='. _uid;
 			}
-			$tabs .= $pg == $tab ? '<td class="tabON"><div class="tabT"><a class="tabON" href="'.$tab_url.'">'.$tab_name.'</a></div></td>' : '<td class="tabI"><div class="tabT"><a href="'.$tab_url.'">'.$tab_name.'</a></div></td>';
+			$tabs .= $pg == $tab ? '
+			<td class="td_nav">&ensp;
+				<a class="control_panel" style="text-decoration: none; color: #000; font-weight: bold;font-size: 17px;border: none;width: 100px"  href="'.$tab_url.'">'.$tab_name.'</a>
+			</td>' : '
+			<td class="td_nav">&ensp;&ensp;
+				<a class="control_panel" style="text-decoration: none; color: #000; font-weight: bold;font-size: 17px;border: none;width: 100px"  href="'.$tab_url.'">'.$tab_name.'</a>
+			</td>';
 		}
 
-		$tabs = '<table cellspacing="1" cellpadding="0" class="tab">
-<tr>
-	'.$tabs.'
-</tr>
-</table>';
+		$tabs = '<table cellspacing="1" cellpadding="0" >
+					<tr>
+						'.$tabs.'
+					</tr>
+				</table>';
 	}
 }/* Read custom field definitions from the DB. */
 function get_custom_field_defs()
@@ -2877,10 +2883,11 @@ function serialize_custom_fields()
 					$avatar_type = $a_type;
 				}
 				$avatar_type_sel_options = tmpl_draw_select_opt($sel_val, $sel_opt, $avatar_type);
-				$avatar_type_sel = '<tr class="child-c2 vt RowStyleA" style="display: none;">
-	<td>Avatar Type:</td>
-	<td><select name="avatar_type" onchange="document.forms[\'fud_register\'].submit();">'.$avatar_type_sel_options.'</select></td>
-</tr>';
+				$avatar_type_sel = ' 
+				<tr class="child-c2 vt RowStyleA">
+					<td>Avatar Type:&nbsp;</td>
+					<td><select style="font-size: 15px" class="input_tag" name="avatar_type" onchange="document.forms[\'fud_register\'].submit();">'.$avatar_type_sel_options.'</select></td>
+				</tr>';
 
 				/* Preview image. */
 				if (isset($_POST['prev_loaded'])) {
@@ -2919,23 +2926,32 @@ function serialize_custom_fields()
 					} else {
 						$reg_avatar_img = 'images/avatars/'. q_singleval('SELECT img FROM fud30_avatar WHERE id='. (int)$reg_avatar);
 					}
-					$del_built_in_avatar = $reg_avatar ? '[<a href="javascript://" onclick="document.reg_avatar_img.src=\'/uni-ideas/blank.gif\'; document.forms[\'fud_register\'].reg_avatar.value=\'0\';">Delete Avatar</a>]' : '';
-					$avatar = '<tr class="child-c2 vt RowStyleA" style="display: none;">
-	<td>Avatar:</td>
-	<td>
-		<img src="'.$reg_avatar_img.'" name="reg_avatar_img" alt="" />
-		<input type="hidden" name="reg_avatar" value="'.$reg_avatar.'" />[<a href="javascript: window_open(\'/uni-ideas/index.php?t=avatarsel&amp;'._rsid.'\', \'avtsel\', 400, 300);">Select Avatar</a>]
-		'.$del_built_in_avatar.'<br />
-	</td>
-</tr>';
+					$del_built_in_avatar = $reg_avatar ? '<a style="text-decoration: none; color: #DF2E38;font-size: 13px;" href="javascript://" onclick="document.reg_avatar_img.src=\'/uni-ideas/blank.gif\'; document.forms[\'fud_register\'].reg_avatar.value=\'0\';">Delete Avatar</a>' : '';
+					$avatar = '
+					<tr class="child-c2 vt RowStyleA" >
+						<td>
+							<div >
+								<div style="display: flex; align-items: center;justify-content: center;margin-top: 30px">
+									<img style="width: 200px; height:200px;" src="'.$reg_avatar_img.'" name="reg_avatar_img" alt="" />
+								</div>
+								<div style="display: flex; align-items: center;justify-content: center;margin-top: 10px">
+									<input type="hidden" name="reg_avatar" value="'.$reg_avatar.'" />
+									<a style="text-decoration: none; color: #0F2026";font-size: 15px;" href="javascript: window_open(\'/uni-ideas/index.php?t=avatarsel&amp;'._rsid.'\', \'avtsel\', 400, 300);">Select Avatar&nbsp;&nbsp;</a>
+									'.$del_built_in_avatar.'<br />
+								</div>
+							</div>
+							
+							
+						</td>
+					</tr>';
 				} else if ($avatar_type == 'c') {
 					if (!isset($reg_avatar_loc)) {
 						$reg_avatar_loc = '';
 					}
-					$avatar = '<tr class="child-c2 vt RowStyleC" style="display: none;">
+					$avatar = '<tr class="child-c2 vt RowStyleC" >
 	<td colspan="2">The custom avatar will not appear until it is approved by the administrator.<br /><span class="SmallText">The avatar, should be no larger than <b>'.$GLOBALS['CUSTOM_AVATAR_MAX_DIM'].' pixels</b> and must be in <b>jpg</b>, <b>gif</b> or <b>png</b> format.</span></td>
 </tr>
-<tr class="child-c2 vt RowStyleA" style="display: none;">
+<tr class="child-c2 vt RowStyleA" >
 	<td>Custom Avatar URL: '.draw_err('avatar').'</td>
 	<td><input type="text" value="'.$reg_avatar_loc.'" name="reg_avatar_loc" /></td>
 </tr>';
@@ -2944,10 +2960,10 @@ function serialize_custom_fields()
 					$buttons = (!empty($avatar_arr['file']) && empty($avatar_arr['del'])) ? '&nbsp;<input type="submit" class="button" name="btn_detach" value="Delete Avatar" />' : '<input type="file" name="avatar_upload" />
 <input type="submit" class="button" name="btn_upload" value="Preview" />
 <input type="hidden" name="tmp_f_val" value="1" />';
-					$avatar = '<tr class="child-c2 vt RowStyleC" style="display: none;">
+					$avatar = '<tr class="child-c2 vt RowStyleC" >
 	<td colspan="2">The custom avatar will not appear until it is approved by the administrator.<br /><span class="SmallText">The avatar, should be no larger than <b>'.$GLOBALS['CUSTOM_AVATAR_MAX_DIM'].' pixels</b> and must be in <b>jpg</b>, <b>gif</b> or <b>png</b> format.</span></td>
 </tr>
-<tr class="child-c2 vt RowStyleA" style="display: none;">
+<tr class="child-c2 vt RowStyleA" >
 	<td>Custom Avatar File: '.draw_err('avatar').'</td>
 	<td>
 		<table border="0" cellspacing="0" cellpadding="0">
@@ -3019,19 +3035,27 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<meta charset="utf-8">
+<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="<?php echo (!empty($META_DESCR) ? $META_DESCR.'' : $GLOBALS['FORUM_DESCR'].''); ?>" />
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
 	<link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GLOBALS['FORUM_TITLE']; ?> Search" href="/uni-ideas/open_search.php" />
 	<?php echo $RSS; ?>
-	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
+
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/forum.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
-	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -3123,10 +3147,65 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 			font-size: 20px;
 			
 		}
-	.RowStyle{
-		background-color: #0F2026;
-		color: #ffffff;
-	}
+		.RowStyle{
+			background-color: #0F2026;
+			color: #ffffff;
+		}
+		.td_nav{
+			border: none;
+			color: black;
+		}
+		.td_nav:hover{
+			border-bottom: 2px solid #fa4d1d;
+		}
+		.control_panel:hover{
+			background-color: #fff;
+		}
+		.hero-image {
+			background-image: url("/uni-ideas/theme/default/images/5.png");
+			height: 700px;
+			background-repeat: no-repeat;
+			background-size: 100%;
+			position: relative;
+		}
+
+		.hero-text {
+			text-align: center;
+			position: absolute;
+			top: 10%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			color: white;
+		}
+		.re ,.collapsed{
+			background-color: #0F2026;
+		}
+		.RowStyleA {
+			display: flex;
+			padding-left: 45%;
+			align-items: center;
+			background: #fff;
+			font-size: 20px;
+		}
+
+		.RowStyleB, .curtime, fieldset {
+			background: #dee2e6;
+		}
+
+		.RowStyleC {
+			background: #c2cdd6;
+		}
+
+		.SmallText{
+			color: #000;
+			font-size: 10px;
+		}
+		.input_tag{
+			border: none;
+			border-bottom: 1px solid #FA4D1D;
+			background-color: #fff;
+			font-size: 15px;
+		}
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -3170,291 +3249,240 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
-<?php echo $tabs; ?>
-<form method="post" action="/uni-ideas/index.php?t=register" id="fud_register" enctype="multipart/form-data"<?php echo ($FUD_OPT_3 & 256 ? ' autocomplete="off"' : ''); ?>>
-<table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr id="c1" style="display: table-row;">
-	<th colspan="2"  class="re collapsed"  >Required Information</th>
-</tr>
-<tr class="child-c1">
-	<td colspan="2" class="RowStyle">All fields are required.</td>
-</tr>
-<?php echo (!__fud_real_user__ ? (!__fud_real_user__ ? draw_err('reg_time_limit').'' : '' )  .'
-<tr class="child-c1 RowStyleA">
-	<td width="55%"><label for="reg_login">
-            <div style="color:black; font size: 10px">Login:</div>
-			<br />
-            <span class="SmallText"  >The name by which you would like to log-in and be known on this site.</span>
-            '.draw_err('reg_login').'</label>
-        </td>
-	<td width="45%"><input type="text" size="25" name="reg_login" id="reg_login" value="'.$reg_login.'" maxlength="'.$GLOBALS['MAX_LOGIN_SHOW'].'" required="required" />
-                        <span id="reg_login-result"><span></td>
-</tr>
-'.($FUD_OPT_2 & 128 ? '<tr class="child-c1 RowStyleA">
-	<td>Alias:'.draw_err('reg_alias').'<br /><span class="SmallText">If you want a nickname other than your login to be displayed in the forum, enter it here.</span></td>
-	<td><input type="text" name="reg_alias" size="25" value="'.filter_var($reg_alias, FILTER_SANITIZE_STRING).'" maxlength="'.$GLOBALS['MAX_LOGIN_SHOW'].'" /></td>
-</tr>' : '' )  .'
-<tr class="child-c1 RowStyleA">
-	<td><label for="reg_plaintext_passwd">
-            Password:<br />
-            <span class="SmallText">Password for your account. Passwords are case-sensitive and must be at least 6 characters long.</span>
-            '.draw_err('reg_plaintext_passwd').'</label>
-        </td>
-	<td><input type="password" name="reg_plaintext_passwd" id="reg_plaintext_passwd" size="25" required="required" /></td>
-</tr>
-<tr class="child-c1 RowStyleA">
-	<td><label for="reg_plaintext_passwd_conf">
-            Confirm Password:<br />
-            <span class="SmallText">Please re-enter your password.</span></label>
-        </td>
-	<td><input type="password" name="reg_plaintext_passwd_conf" id="reg_plaintext_passwd_conf" size="25" onkeyup="passwords_match(\'reg_plaintext_passwd\', this); return false;" required="required" /></td>
-</tr>
-<tr class="child-c1 RowStyleA">
-	<td><label for="reg_email">
-            E-mail Address:<br />
-            <span class="SmallText">Your e-mail address. You can choose to hide it below, in the Preferences section.</span>
-            '.draw_err('reg_email').'</label>
-        </td>
-        <td><input type="email" name="reg_email" id="reg_email" size="25" value="'.$reg_email.'" required="required" /></td>
-	<span class="dn" style="display:none; visibility:hidden;">
-		<input type="text" name="turing_test1" value="'.__request_timestamp__.'" />
-		<input type="text" name="turing_test2" value="" />
-		<input type="text" name="turing_test3" value="'.md5($GLOBALS['FORUM_SETTINGS_PATH']).'" />
-	</span>
+<div class="hero-image">
+<div class="hero-text">
+	<h1 style="text-align: center;color:#0F2026;font-size: 80px">Account Settings</h1>
+  </div>
+</div>
 
-</tr>
-'.(!($FUD_OPT_3 & 128) ? '<tr class="child-c1 RowStyleA">
-	<td class="vt"><label for="turing_test">
-                Verification:
-                '.draw_err('reg_turing').'</label>
-        </td>
-	<td>
-		'.generate_turing_val().'
-	</td>
-</tr>' : '' )  : '<tr class="child-c1 RowStyleA">
-	<td width="60%">Login:<br />
-                        <span class="SmallText">The name by which you would like to log-in and be known on this site.</span</td>
-	<td><span class="fb">'.$reg_login.'</span>'.(($FUD_OPT_4 & 1) && !$mod_id ? '&nbsp; <span class="SmallText">[ <a href="javascript://" onclick="window_open(\'/uni-ideas/index.php?t=ruser&amp;'._rsid.'\',\'ruser\',470,250);">change login</a> ]</span>' : '' )  .'</td>
-</tr>
-'.($FUD_OPT_2 & 128 ? '<tr class="child-c1 RowStyleA">
-	<td>Alias:'.draw_err('reg_alias').'<br /><span class="SmallText">If you want a nickname other than your login to be displayed in the forum, enter it here.</span></td>
-	<td><input type="text" name="reg_alias" size="25" value="'.filter_var($reg_alias, FILTER_SANITIZE_STRING).'" maxlength="'.$GLOBALS['MAX_LOGIN_SHOW'].'" /></td>
-</tr>' : '' )  .'
-<tr class="child-c1 RowStyleA">
-	<td>Your Password:'.draw_err('reg_confirm_passwd').'<br />
-            <span class="SmallText">Password for your account. Passwords are case-sensitive and must be at least 6 characters long.</span></td>
-	<td><nobr><input type="password" name="reg_confirm_passwd" size="25" />'.(($FUD_OPT_4 & 2) && !$mod_id ? '&nbsp; <span class="SmallText">[ <a href="javascript://" onclick="window_open(\'/uni-ideas/index.php?t=rpasswd&amp;'._rsid.'\',\'rpass\',470,250);">change password</a> ]</span>' : '' )  .'</nobr></td>
-</tr>
-<tr class="child-c1 RowStyleA">
-	<td>E-mail Address:'.draw_err('reg_email').'<br />
-            <span class="SmallText">Your e-mail address. You can choose to hide it below, in the Preferences section.</span></td>
-	<td><input type="email" name="reg_email" size="25" value="'.$reg_email.'" /></td>
-</tr>' )  .'
-'.$required_custom_fields.'
 
-<tr id="c2" style="display: table-row;">
-	<th colspan="2" class="re collapsed">Optional Information</th>
-</tr>
-<tr class="child-c2 RowStyleA" style="display: none;">
-	<td colspan="2" class="RowStyle">It is recommended that you not reveal any personal or identifying information in your profile. All information will be viewable by other forum members.</td>
-</tr>
-'.$optional_custom_fields.'
-<tr class="child-c2 RowStyleA" style="display: none;">
-	<td>Name:<br />
-            <span class="SmallText">Your real name.</span></td>
-	<td><input type="text" name="reg_name" size="25" value="'.$reg_name.'"></td>
-</tr>
-<tr class="child-c2 RowStyleA" style="display: none;">
-	<td>Location:</td>
-	<td><input type="text" spellcheck="true" name="reg_location" value="'.$reg_location.'" maxlength="255" size="25" /></td>
-</tr>
-<tr class="child-c2 RowStyleA" style="display: none;">
-	<td>Occupation:</td>
-	<td><input type="text" spellcheck="true" name="reg_occupation" value="'.$reg_occupation.'" maxlength="255" size="25" /></td>
-</tr>
-<tr class="child-c2 RowStyleA" style="display: none;">
-	<td>Interests:</td>
-	<td><input type="text" spellcheck="true" name="reg_interests" value="'.$reg_interests.'" maxlength="255" size="25" /></td>
-</tr>
-'.$avatar_type_sel.'
-'.$avatar.'
-<tr class="child-c2 RowStyleA vt" style="display: none;">
-	<td>Birth Date:<br /><span class="SmallText">If you enter a birth date, then other forum members will be able to see it in your profile.</span></td>
-	<td>
-		<table border="0" cellspacing="3" cellpadding="0">
-		 <tr class="GenText">
-			<td class="ac">Day</td>
-			<td class="ac">Month</td>
-			<td class="ac">Year</td>
-		</tr>
-		<tr>
-			<td class="ac"><select name="b_day">'.$day_select.'</select></td>
-			<td class="ac"><select name="b_month">'.$month_select.'</select></td>
-			<td class="ac"><input type="number" name="b_year" value="'.$b_year.'" maxlength="4" size="5" /></td>
+
+
+
+
+	<form method="post" action="/uni-ideas/index.php?t=register" id="fud_register" enctype="multipart/form-data"<?php echo ($FUD_OPT_3 & 256 ? ' autocomplete="off"' : ''); ?>>
+				<table cellspacing="1" cellpadding="2" class="ContentTable">
+					<tr id="c1" style="display: table-row">
+						<h1 style="text-align: center;background-color:#eee; margin: 0px;display:block;font-size:50px">User Profile</h1>
+					</tr>
+
+					<tr class="child-c1">
+						<!-- <td colspan="2" class="RowStyle">All fields are required.</td> -->
+					</tr>
+
+					<?php echo (!__fud_real_user__ ? (!__fud_real_user__ ? draw_err('reg_time_limit').'' : '' )  .'
+					'.($FUD_OPT_2 & 128 ? '
+					<tr class="child-c1 RowStyleA">
+						<td>Alias:'.draw_err('reg_alias').'<br /><span class="SmallText">If you want a nickname other than your login to be displayed in the forum, enter it here.</span></td>
+						<td><input type="text" name="reg_alias" size="25" value="'.filter_var($reg_alias, FILTER_SANITIZE_STRING).'" maxlength="'.$GLOBALS['MAX_LOGIN_SHOW'].'" /></td>
+					</tr>' : '' )  .'
+
+					<tr class="child-c1 RowStyleA">
+						<td><label for="reg_plaintext_passwd">
+								Password:<br />
+								<span class="SmallText">Password for your account. Passwords are case-sensitive and must be at least 6 characters long.</span>
+								'.draw_err('reg_plaintext_passwd').'</label>
+							</td>
+						<td><input type="password" name="reg_plaintext_passwd" id="reg_plaintext_passwd" size="25" required="required" /></td>
+					</tr>
+
+					<tr class="child-c1 RowStyleA">
+						<td><label for="reg_plaintext_passwd_conf">
+								Confirm Password:<br />
+								<span class="SmallText">Please re-enter your password.</span></label>
+							</td>
+						<td><input type="password" name="reg_plaintext_passwd_conf" id="reg_plaintext_passwd_conf" size="25" onkeyup="passwords_match(\'reg_plaintext_passwd\', this); return false;" required="required" /></td>
+					</tr>
+
+
+					<tr class="child-c1 RowStyleA">
+						<td><label for="reg_email">&nbsp;
+						E-mail Address:<br />
+								<span class="SmallText">Your e-mail address. You can choose to hide it below, in the Preferences section.</span>
+								'.draw_err('reg_email').'</label>
+							</td>
+							<td><input type="email" name="reg_email" id="reg_email" size="25" value="'.$reg_email.'" required="required" /></td>
+						<span class="dn" style="display:none; visibility:hidden;">
+							<input type="text" name="turing_test1" value="'.__request_timestamp__.'" />
+							<input type="text" name="turing_test2" value="" />
+							<input type="text" name="turing_test3" value="'.md5($GLOBALS['FORUM_SETTINGS_PATH']).'" />
+						</span>
+					</tr>
+
+
+					'.(!($FUD_OPT_3 & 128) ? '
+					<tr class="child-c1 RowStyleA">
+						<td class="vt"><label for="turing_test">
+									Verification:
+									'.draw_err('reg_turing').'</label>
+							</td>
+						<td>
+							'.generate_turing_val().'
+						</td>
+					</tr>
+					' : '' )  : '
+		
+
+				'.$avatar.'
+				
+				<tr class="child-c1 RowStyleA">
+					<td><span style="font-weight:bold; font-size: 30px;margin-left:100px">'.$reg_login.'</span></span>
+						'.($FUD_OPT_2 & 128 ? '
+						
+					</td>
+					' : '' )  .'
+					'.$avatar_type_sel.'
+				<tr class="child-c1 RowStyleA">
+					<td>E-mail Address:&nbsp;'.draw_err('reg_email').'<br /></td>
+					<td><input class="input_tag" type="email" name="reg_email" size="25" value="'.$reg_email.'" /></td>
+					' )  .'			
+				</tr>
+
+				<tr>
+					<td style="display: block">'.(($FUD_OPT_4 & 2) && !$mod_id ? '
+						<span class="SmallText"><a style="text-decoration: none; color: #0F6292;font-size: 17px;font-weight:bold;margin-left:87%" href="javascript://" onclick="window_open(\'/uni-ideas/index.php?t=rpasswd&amp;'._rsid.'\',\'rpass\',470,250);">Have Change password?</a>
+						</span>' : '' )  .'
+					</td>
+				</tr>
+
+
+			'.$required_custom_fields.'
+			<tr id="c2" style="display: table-row;">
+				<th colspan="2" class="re collapsed">SEE MORE</th>
 			</tr>
-		</table>
-	</td>
-</tr>
-<tr class="child-c2 RowStyleA" style="display: none;">
-	<td>Gender:</td>
-	<td><select name="reg_gender">'.$gender_select.'</select></td>
-</tr>
-'.($FUD_OPT_2 & 65536 ? '<tr class="child-c2 RowStyleA" style="display: none;">
-	<td>Image:</td>
-	<td><input type="text" name="reg_user_image" value="'.$reg_user_image.'" maxlength="255" size="25" /></td>
-</tr>' : ''); ?>
-<?php echo (__fud_real_user__ ? '
-<tr class="child-c2 RowStyleA" style="display: none;">
-	<td>Homepage:'.draw_err('reg_home_page').'</td>
-	<td><input type="url" name="reg_home_page" value="'.$reg_home_page.'" maxlength="255" /></td>
-</tr>
-' : ''); ?>
-<tr class="child-c2 RowStyleA" style="display: none;">
-	<td class="RowStyleA" valign="top">Biography:<br /><span class="SmallText">A few details about yourself, such as your interests, job, etc...</span></td>
-	<td><textarea name="reg_bio" rows="5" cols="50"><?php echo $reg_bio; ?></textarea></td>
-</tr>
-<tr class="child-c2 RowStyleA" style="display: none;">
-	<td colspan="2">
-		<fieldset class="RowStyleAS">
-		<legend class="RowStyle" >Social networking sites:</legend>
-		<table border="0" cellspacing="3" cellpadding="5" align="center">
-		<tr>
-			<td>
-				<label>Facebook ID:<br /><img src="/uni-ideas/theme/default/images/facebook.png" alt="" />
-				<input type="text" name="reg_facebook" value="<?php echo $reg_facebook; ?>" maxlength="32" size="25" />
-				</label>
-			</td>
-			<td>
-				<label>Twitter Handle:<br /><img src="/uni-ideas/theme/default/images/twitter.png" alt="" />
-				<input type="text" name="reg_twitter" value="<?php echo $reg_twitter; ?>" maxlength="32" size="25" />
-				</label>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label>Google Chat/IM Handle:<br /><img src="/uni-ideas/theme/default/images/google.png" alt="" />
-				<input type="text" name="reg_google" value="<?php echo $reg_google; ?>" maxlength="32" size="25" />
-				</label>
-			</td>
-			<td>
-				<label>Yahoo Messenger:<br /><img src="/uni-ideas/theme/default/images/yahoo.png" alt="" />
-				<input type="text" name="reg_yahoo" value="<?php echo $reg_yahoo; ?>" maxlength="32" size="25" />
-				</label>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label>Skype Handle:<br /><img src="/uni-ideas/theme/default/images/skype.png" alt="" />
-				<input type="text" name="reg_skype" value="<?php echo $reg_skype; ?>" maxlength="32" size="25" />
-				</label>
-			</td>
-			<td>
-				<label>Jabber Handle:<br /><img src="/uni-ideas/theme/default/images/jabber.png" alt="" />
-				<input type="text" name="reg_jabber" value="<?php echo $reg_jabber; ?>" maxlength="32" size="25" />
-				</label>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label>ICQ:<br /><img src="/uni-ideas/theme/default/images/icq.png" alt="" />
-				<input type="text" name="reg_icq" value="<?php echo $reg_icq; ?>" maxlength="32" size="25" />
-				</label>
-			</td>
-		</tr>
-<?php echo ($FUD_OPT_2 & 2048 ? '
-' : '' )  .'
-		</table>
-		</fieldset>
-		<br />
-	</td>
-</tr>
 
-<tr id="c3" style="display: table-row;">
-	<th colspan="2" class="re collapsed">Preferences</th>
-</tr>
-'.($FUD_OPT_1 & 32768 ? '
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td class="vt">Signature:<br /><span class="SmallText">Optional signature, which will appear at the bottom of your messages.<br />'.tmpl_post_options('sig').($FORUM_SIG_ML ? '<br /><b>Maximum Length: </b>'.$GLOBALS['FORUM_SIG_ML'].' characters <a href="javascript: alert(&#39;Your Signature is &#39;+document.forms[&#39;fud_register&#39;].reg_sig.value.length+&#39; characters long. The maximum allowed signature length is '.$GLOBALS['FORUM_SIG_ML'].' characters.&#39;);" class="SmallText">Check Signature Length</a>' : '' )  .'</span></td>
-	<td>'.draw_err('reg_sig').'<textarea name="reg_sig" rows="5" cols="50">'.$reg_sig.'</textarea></td>
-</tr>
-' : ''); ?>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Time Zone:</td>
-	<td><select name="reg_time_zone"><?php echo $timezone_select; ?></select></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Ignore Administrative Messages:</td>
-	<td><?php echo $ignore_admin_radio; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Invisible Mode:<br /><span class="SmallText">Hides your online status.</span></td>
-	<td><?php echo $invisible_mode_radio; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Show E-mail Address:<br /><span class="SmallText">Choose this option if you want your e-mail address to be displayed publicly.</span></td>
-	<td><?php echo $show_email_radio; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Select Notification by Default:<br /><span class="SmallText">If notification is enabled by default, it can be disabled when posting.</span></td>
-	<td><?php echo $notify_default_radio; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Private Message Notification:<br /><span class="SmallText">If enabled, you will be notified whenever a private message is sent to you.</span></td>
-	<td><?php echo $pm_notify_default_radio; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Choose Notification Method:<br /><span class="SmallText">Set your preferred notification method or disable notifications (for example when you go on vacation).</span></td>
-	<td><select name="reg_notify_method"><?php echo $notification_select; ?></select></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Allow E-mail Messages:<br /><span class="SmallText">Allow other users to send you e-mails via this forum.</span></td>
-	<td><?php echo $accept_user_email; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Allow Private Messages:<br /><span class="SmallText">Allow other users to send you private messages in this forum.</span></td>
-	<td><?php echo $accept_pm; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Use Signature by Default:<br /><span class="SmallText">Automatically append your signature to every message you post.</span></td>
-	<td><?php echo $append_sig_radio; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Show Signatures:<br /><span class="SmallText">Allows you to either hide or show other forum members&#39; signatures.</span></td>
-	<td><?php echo $show_sig_radio; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Show Avatars:<br /><span class="SmallText">Allows you to hide avatars of other users when viewing their messages.</span></td>
-	<td><?php echo $show_avatar_radio; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Show IM indicators:<br /><span class="SmallText">Whether or not to show IM indicators of the author beside their messages.</span></td>
-	<td><?php echo $show_im_radio; ?></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Messages Per Page:</td>
-	<td><select name="reg_posts_ppg"><?php echo $mppg_select; ?></select></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Topics Per Page:</td>
-	<td><select name="reg_topics_per_page"><?php echo $topics_per_page; ?></select></td>
-</tr>
-<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Default Topic View:</td>
-	<td><select name="reg_default_view"><?php echo $view_select; ?></select></td>
-</tr>
-<?php echo ($theme_select ? '<tr class="child-c3 RowStyleA" style="display: none;">
-	<td>Theme:</td>
-	<td><select name="reg_theme">'.$theme_select.'</select></td>
-</tr>' : ''); ?>
-<tr class="RowStyleC">
-	<td colspan="2" class="ac"><?php echo (!__fud_real_user__ ? '<input type="submit" class="button" name="fud_submit" value="Register" />' : '<input type="submit" class="button" name="fud_submit" value="Update" />'); ?>&nbsp;<input type="reset" class="button" name="Reset" value="Reset" /></td>
-</tr>
-</table>
-<?php echo _hs; ?>
-<input type="hidden" name="prev_loaded" value="1" />
-<input type="hidden" name="mod_id" value="<?php echo $mod_id; ?>" />
-<input type="hidden" name="reg_coppa" value="<?php echo $reg_coppa; ?>" />
+
+			'.$optional_custom_fields.'
+			<tr class="child-c2 RowStyleA" style="display: none;">
+				<td>Name:&nbsp;<br />	
+				<td><input class="input_tag" type="text" name="reg_name" size="25" value="'.$reg_name.'"></td>
+			</tr>
+
+
+			<tr class="child-c2 RowStyleA" style="display: none;">
+				<td>Location:&nbsp;</td>
+				<td><input class="input_tag" type="text" spellcheck="true" name="reg_location" value="'.$reg_location.'" maxlength="255" size="25" /></td>
+			</tr>
+
+
+			<tr class="child-c2 RowStyleA" style="display: none;">
+				<td>Occupation:&nbsp;</td>
+				<td><input class="input_tag" type="text" spellcheck="true" name="reg_occupation" value="'.$reg_occupation.'" maxlength="255" size="25" /></td>
+			</tr>
+
+
+			<tr class="child-c2 RowStyleA vt" style="display: none;">
+				<td>Birth Date:&nbsp;<br /></td>
+				<td>
+					<table border="0" cellspacing="3" cellpadding="0">
+					<tr class="GenText">
+						<td class="ac">Day</td>
+						<td class="ac">Month</td>
+						<td class="ac">Year</td>
+					</tr>
+					<tr>
+						<td class="ac"><select class="input_tag" style="height: 30px" name="b_day">'.$day_select.'</select></td>
+						<td class="ac"><select class="input_tag" style="height: 30px" name="b_month">'.$month_select.'</select></td>
+						<td class="ac"><input class="input_tag" style="height: 30px" type="number" name="b_year" value="'.$b_year.'" maxlength="4" size="5" /></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+
+
+
+		<tr class="child-c2 RowStyleA" style="display: none;">
+			<td>Gender:&nbsp;</td>
+			<td><select class="input_tag" style="height: 30px; font-size: 15px" name="reg_gender">'.$gender_select.'</select></td>
+		</tr>
+
+
+
+		<tr id="c3" style="display: table-row;">
+			
+			<th colspan="2" class="re collapsed">Preferences</th>
+		</tr>
+
+	'.($FUD_OPT_1 & 32768 ? '
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>'.draw_err('reg_sig').'</td>
+	</tr>
+	' : ''); ?>
+
+
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Time Zone: &nbsp; </td>
+		<td><select class="input_tag" name="reg_time_zone"><?php echo $timezone_select; ?></select></td>
+	</tr>
+	
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Invisible Mode: &nbsp; <br /></td>
+		<td><?php echo $invisible_mode_radio; ?></td>
+	</tr>
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Show E-mail Address: &nbsp; <br /></td>
+		<td><?php echo $show_email_radio; ?></td>
+	</tr>
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Select Notification by Default: &nbsp; <br /></td>
+		<td><?php echo $notify_default_radio; ?></td>
+	</tr>
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Private Message Notification: &nbsp; <br /></td>
+		<td><?php echo $pm_notify_default_radio; ?></td>
+	</tr>
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Choose Notification Method: &nbsp; <br /></td>
+		<td><select class="input_tag" name="reg_notify_method"><?php echo $notification_select; ?></select></td>
+	</tr>
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Allow E-mail Messages: &nbsp; <br /></td>
+		<td><?php echo $accept_user_email; ?></td>
+	</tr>
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Allow Private Messages: &nbsp; <br /></td>
+		<td><?php echo $accept_pm; ?></td>
+	</tr>
+
+	
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Show Avatars: &nbsp; <br /></td>
+		<td><?php echo $show_avatar_radio; ?></td>
+	</tr>
+
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Messages Per Page: &nbsp; </td>
+		<td><select class="input_tag" name="reg_posts_ppg"><?php echo $mppg_select; ?></select></td>
+	</tr>
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Topics Per Page: &nbsp; </td>
+		<td><select class="input_tag" name="reg_topics_per_page"><?php echo $topics_per_page; ?></select></td>
+	</tr>
+	<tr class="child-c3 RowStyleA" style="display: none;">
+		<td>Default Topic View: &nbsp; </td>
+		<td><select class="input_tag" name="reg_default_view"><?php echo $view_select; ?></select></td>
+	</tr>
+	
+	<tr >
+		<td colspan="2" class="ac"><?php echo (!__fud_real_user__ ? '
+			<input style="margin-top: 5px" type="submit" class="bnt" name="fud_submit" value="Register" />' : '
+			<input type="submit" style="border: none; width: 100px; height: 45px; background-color:#13538A;color:#000;font-size: 20px;border-radius: 5px; margin-top: 5px;color:#fff" class="bnt" name="fud_submit" value="Update" />'); ?>&nbsp;
+			<input style="width: 100px; border: none; height: 45px; background-color:#DF2E38;color:#fff;font-size: 20px;border-radius: 5px; margin-top: 5px" type="reset" class="bnt" name="Reset" value="Reset" />
+		</td>
+	</tr>
+
+	</table>
+	<?php echo _hs; ?>
+	<input type="hidden" name="prev_loaded" value="1" />
+	<input type="hidden" name="mod_id" value="<?php echo $mod_id; ?>" />
+	<input type="hidden" name="reg_coppa" value="<?php echo $reg_coppa; ?>" />
+
 </form>
+
+
+
+
+
 <script>
         min_max_cats("/uni-ideas/theme/default/images", "Minimize Category", "Maximize Category", "", "");
 
@@ -3482,13 +3510,9 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 
 </script>
 
-<br />  
-<?php echo $page_stats; ?>
-<?php echo (!empty($RIGHT_SIDEBAR) ? '
-</td><td width="200px" align-"right" valign="top" class="sidebar-right">
-	'.$RIGHT_SIDEBAR.'
-' : ''); ?>
-</td></tr></table>
+
+<br/>
+
 
 </div>
   <!-- Footer -->

@@ -284,11 +284,12 @@ if (_uid) {
 
 	$subscribed_thread_data = $subscribed_forum_data = '';
 	while (($r = db_rowarr($c))) {
-		$subscribed_forum_data .= '<tr class="'.alt_var('search_alt','RowStyleA','RowStyleB').'">
-	<td><input type="checkbox" name="fe[]" value="'.$r[0].'" /></td>
-	<td class="nw"><a href="/uni-ideas/index.php?t=subscribed&amp;frm_id='.$r[0].'&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'">Unsubscribe</a></td>
-	<td class="wa"><a href="/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$r[0].'&amp;'._rsid.'">'.$r[1].'</a></td>
-</tr>';
+		$subscribed_forum_data .= '
+		<tr'.alt_var('search_alt','RowStyleA','RowStyleB').'">
+			<td style="border-bottom: 1px solid #ccc"><input type="checkbox" name="fe[]" value="'.$r[0].'" /></td>
+			<td style="border-bottom: 1px solid #ccc" class="wa"><span class="glyphicon glyphicon-heart" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span><a style="text-decoration: none; font-weight:bold;color: #0F2026;font-size: 17px;" href="/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$r[0].'&amp;'._rsid.'">'.$r[1].'</a></td>
+			<td><a style="text-decoration: none; color: #DF2E38;font-size: 13px;" href="/uni-ideas/index.php?t=subscribed&amp;frm_id='.$r[0].'&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'"><img style="margin-top: -5px; width: 20px" src="/uni-ideas/theme/default/images/icon/unsubcribe1.png">Unsubscribe  &nbsp;  &nbsp;  &nbsp; </a></td>
+		</tr>';
 	}
 	unset($c);
 
@@ -300,11 +301,12 @@ if (_uid) {
 			$THREADS_PER_PAGE, $start));
 
 	while (($r = db_rowarr($c))) {
-		$subscribed_thread_data .= '<tr class="'.alt_var('search_alt','RowStyleA','RowStyleB').'">
-	<td><input type="checkbox" name="te[]" value="'.$r[0].'" /></td>
-	<td class="nw"><a href="/uni-ideas/index.php?t=subscribed&amp;th='.$r[0].'&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'">Unsubscribe</a></td>
-	<td class="wa">'.$r[2].' &raquo; <a href="/uni-ideas/index.php?t='.d_thread_view.'&amp;th='.$r[0].'&amp;unread=1&amp;'._rsid.'">'.$r[1].'</a></td>
-</tr>';
+		$subscribed_thread_data .= '
+		<tr'.alt_var('search_alt','RowStyleA','RowStyleB').'">
+			<td style="border-bottom: 1px solid #ccc"><input type="checkbox" name="te[]" value="'.$r[0].'" /></td>
+			<td style="border-bottom: 1px solid #ccc" class="wa"><span class="glyphicon glyphicon-heart" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.$r[2].' &raquo; <a style="text-decoration: none; font-weight:bold;color: #0F2026;font-size: 17px;" href="/uni-ideas/index.php?t='.d_thread_view.'&amp;th='.$r[0].'&amp;unread=1&amp;'._rsid.'">'.$r[1].'</a></td>
+			<td style="border-bottom: 1px solid #ccc"><a style="text-decoration: none; color: #DF2E38;font-size: 13px;" href="/uni-ideas/index.php?t=subscribed&amp;th='.$r[0].'&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'"><img style="margin-top: -5px; width: 20px" src="/uni-ideas/theme/default/images/icon/unsubcribe1.png">Unsubscribe</a></td>
+		</tr>';
 	}
 	unset($c);
 
@@ -329,19 +331,27 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<meta charset="utf-8">
+<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="<?php echo (!empty($META_DESCR) ? $META_DESCR.'' : $GLOBALS['FORUM_DESCR'].''); ?>" />
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
 	<link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GLOBALS['FORUM_TITLE']; ?> Search" href="/uni-ideas/open_search.php" />
 	<?php echo $RSS; ?>
-	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
+
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/forum.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
-	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<style>
 		*{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -428,6 +438,22 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		.hero-image {
+			background-image: url("/uni-ideas/theme/default/images/2.png");
+			height: 800px;
+			background-repeat: no-repeat;
+			background-size: 100%;
+			position: relative;
+		}
+
+		.hero-text {
+			text-align: center;
+			position: absolute;
+			top: 8%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			color: white;
+		}
 	</style>
 </head>
 <body style="background-color: #ffffff;">
@@ -471,40 +497,72 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
-<?php echo $tabs; ?>
+
+
+
+<div class="hero-image">
+<div class="hero-text">
+	<h1 style="text-align: center;color:#0F2026;font-size: 80px">Subscription</h1>
+  </div>
+</div>
+
+
+
+
 <form method="post" id="subscribe" action="/uni-ideas/index.php?t=subscribed">
-<?php echo _hs; ?>
-<table cellspacing="1" cellpadding="2" class="ContentTable">
-<tr>
-	<th colspan="3">Subscribed Forums<a name="fff"></a></th>
-</tr>
-<?php echo ($subscribed_forum_data ? '
-'.$subscribed_forum_data.'
-<tr class="RowStyleC">
-	<td class="ac" colspan="2"><input type="submit" class="button" name="f_unsub_sel" value="Unsubscribe" /></td>
-	<td class="ar"><input type="submit" class="button" name="f_unsub_all" value="Unsubscribe From All Forums" /></td>
-</tr>
-' : '
-<tr class="'.alt_var('search_alt','RowStyleA','RowStyleB').'">
-	<td colspan="3">No subscribed forums</td>
-</tr>
-'); ?>
-<tr>
-	<th colspan="3">Subscribed Topics</th>
-</tr>
-<?php echo ($subscribed_thread_data ? '
-'.$subscribed_thread_data.'
-<tr class="RowStyleC">
-	<td class="ac" colspan="2"><input type="submit" class="button" name="t_unsub_sel" value="Unsubscribe" /></td>
-	<td class="ar"><input type="submit" class="button" name="t_unsub_all" value="Unsubscribe From All Topics" /></td>
-</tr>
-' : '
-<tr class="'.alt_var('search_alt','RowStyleA','RowStyleB').'">
-	<td colspan="3">No subscribed topics</td>
-</tr>
-'); ?>
+	<?php echo _hs; ?>
+		<table cellspacing="1" cellpadding="2" class="ContentTable">
+			<tr>
+				<th colspan="3" style="color: #fff;font-size:20px;background-color:#0F2026">Subscribed Categories<a name="fff"></a></th>
+			</tr>
+
+
+			<?php echo ($subscribed_forum_data ? '
+			'.$subscribed_forum_data.'
+					<tr style="border-bottom: 1px solid #000;">
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><input type="submit" style="position: relative; left: 1725px; margin-top: 5px;width: 120px; height: 30px; background-color:#DF2E38;color:#fff;font-size: 17px;border-radius: 5px;border:none"  class="bnt" name="f_unsub_sel" value="Unsubscribe" /></td>
+					</tr>
+				' : '
+				<tr class="'.alt_var('search_alt','RowStyleA','RowStyleB').'">
+					<td colspan="3">No subscribed category</td>
+				</tr>
+			'); ?>
+
+
+
+
+		<tr>
+			<th colspan="3" style="color: #fff;font-size:20px;background-color:#0F2026">Subscribed Ideas</th>
+		</tr>
+
+
+	
+		<?php echo ($subscribed_thread_data ? '
+		'.$subscribed_thread_data.'
+		<tr style="border-bottom: 1px solid #000">
+		</tr>
+		<tr>
+			<td class="ac" colspan="2"><input style="position: relative; left: 750px; margin-top: 5px;width: 120px; height: 30px; background-color:#DF2E38;color:#fff;font-size: 17px;border-radius: 5px;border:none" type="submit" class="bnt" name="t_unsub_sel" value="Unsubscribe" /></td>
+			<td class="ar"><input style="position: relative; left: -30px; margin-top: 5px;width: 180px; height: 30px; background-color:#BD525A;color:#fff;font-size: 17px;border-radius: 5px;border:none" type="submit" class="bnt" name="t_unsub_all" value="Unsubscribe All Ideas" /></td>
+		</tr>
+		' : '
+		<tr class="'.alt_var('search_alt','RowStyleA','RowStyleB').'">
+			<td colspan="3">No subscribed ideas</td>
+		</tr>
+		'); ?>
+
+
+
 </table>
 </form>
+
+
+
+
 <?php echo $pager; ?>
 <br />  
 <?php echo $page_stats; ?>

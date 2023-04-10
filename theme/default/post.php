@@ -5111,16 +5111,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <body>
 <!--  -->
 <div class="header">
-  <?php echo ($GLOBALS['FUD_OPT_1'] & 1 && $GLOBALS['FUD_OPT_1'] & 16777216 ? '
-  <div class="headsearch">
-    <form id="headsearch" method="get" action="/uni-ideas/index.php">'._hs.'
-      <input type="hidden" name="t" value="search" />
-      <br /><label accesskey="f" title="Forum Search">Forum Search:<br />
-      <input type="search" name="srch" value="" size="20" placeholder="Forum Search" /></label>
-      <input type="image" src="/uni-ideas/theme/default/images/search.png" title="Search" name="btn_submit">&nbsp;
-    </form>
-  </div>
-  ' : ''); ?>
+
   <a href="/uni-ideas/" title="Home">
     <img class="headimg" src="/uni-ideas/theme/default/images/logomain.png" alt="" align="left" height="95"/>
     <span class="headtitle"><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
@@ -5320,7 +5311,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<input type="submit" accesskey="c" class="button" value="Cancel" tabindex="4" name="cancel" />&nbsp;
 		<input type="submit" accesskey="r" class="button" value="Preview Message" tabindex="5" name="preview" />&nbsp;
 		<?php echo $spell_check_button; ?>
-		<input type="submit" accesskey="s" class="button" value="<?php echo $label; ?>" tabindex="6" name="btn_submit" onclick="document.forms['post_form'].submitted.value=1;" />
+		<input style="background:#fa4d1d; color:#fff"type="submit" accesskey="s" class="button" value="<?php echo $label; ?>" tabindex="6" name="btn_submit" onclick="document.forms['post_form'].submitted.value=1;" />
 	</td>
 </tr>
 </table>

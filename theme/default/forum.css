@@ -147,16 +147,7 @@ font.ptp { /* space between poll title & number of votes */
 	width: 75%;
 }
 
-.AnnText {
-	color: #000;
-	background: #f5d300;
-	margin-top: 7px;
-	margin-bottom: 7px;
-}
 
-.AnnSubjText {
-	font-weight: bold;
-}
 
 .MsgSubText {
 	font-weight: bold;
@@ -316,11 +307,7 @@ a[href^="mailto:"] {
 	text-align: right;
 }
 
-.MsgR2, .MsgR1, .MsgR3, .MsgIg {
-	background: #dee2e6;
-	border-bottom: 1px solid #aaa;
-	padding: 2px;
-}
+
 
 .MsgIg {
 	border: 0;
@@ -395,10 +382,6 @@ td.msgud, td.msgot, td.msgot a, div.ctags {
 	white-space: nowrap;
 }
 
-td.msgud {
-	padding-right: 10px;
-	text-align: left;
-}
 
 td.msgot {
 	text-align: right;
@@ -623,7 +606,6 @@ img.r {
 
 /* The following are partial elements that are used to save space. */
 .wo { width:		1px; }
-.wa { width:		100%; }
 .ac { text-align:	center; }
 .al { text-align:	left; }
 .ar { text-align:	right; }
@@ -632,7 +614,6 @@ img.r {
 .vb { vertical-align:	bottom; }
 .vt { vertical-align:	top; }
 .vm { vertical-align:	middle; }
-.nw { white-space: 	nowrap; }
 .fb { font-weight:	bold; }
 .dn { display: none; visibility:hidden;}
 .clear { clear: both; }
@@ -738,15 +719,7 @@ a.down {
     padding-left: 10px;
 }
 
-/* Add a card effect for articles */
-.card {
-    background-color: #f4f4f4;
-    padding: 0 10px 10px 10px;
-    margin-top: 10px;
-    font-size: 10pt;
-    line-height: 1.7;
-    box-shadow: inset 0 0 10px #ccc;
-}
+
 .rightcolumn .card {
     background-color: #ddd;
 }

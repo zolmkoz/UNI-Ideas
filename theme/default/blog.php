@@ -869,25 +869,37 @@ $RSS = ($FUD_OPT_2 & 1048576 ? '
 		if ( ($break = strpos($topic->body, '<!--break-->')) > 0)  {
 			$topic->body = substr($topic->body, 0, $break);
 		}
-		$msg_list .= '<div class="card">
-      <a href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'" title="'.$topic->subject.'"><h1>'.$topic->subject.'</h1></a>
-      <h5>'.($topic->tdescr ? $topic->tdescr.'; ' : '' ) .utf8_encode(strftime('%a, %d %B %Y %H:%M', $topic->post_stamp)).'</h5>
-      <p>'.$topic->body.'</p>
-      <span class="SmallText"><a href="/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$topic->forum_id.'&amp;'._rsid.'">'.$topic->forum_name.'</a> | '.(_uid ? '
-<a href="/uni-ideas/index.php?t='.d_thread_view.'&amp;th='.$topic->id.'&amp;unread=1&amp;'._rsid.'">'.convertPlural($topic->replies, array(''.$topic->replies.' comment',''.$topic->replies.' comments')).'</a>
-' : '
-<a href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'">'.convertPlural($topic->replies, array(''.$topic->replies.' comment',''.$topic->replies.' comments')).'</a>
-' ) .'</span>
-    </div>
-<!-- TODO - can we use this code?
+		$msg_list .= '
+		<div class="card">
+      		<a style= "text-decoration: none" href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'" title="'.$topic->subject.'">
+				<h1>'.$topic->subject.'</h1>
+			</a>
+			<p>'.$topic->body.'</p>
+			<p>'.utf8_encode(strftime('%a, %d %B %Y %H:%M', $topic->post_stamp)).'</p>
+      		<span class="SmallText">
+				<a style= "text-decoration: none" href="/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$topic->forum_id.'&amp;'._rsid.'">Category: '.$topic->forum_name.'</a> '.(_uid ? '
+				<a style= "text-decoration: none; margin-left: 30px" href="/uni-ideas/index.php?t='.d_thread_view.'&amp;th='.$topic->id.'&amp;unread=1&amp;'._rsid.'">Comment '.convertPlural($topic->replies, array(''.$topic->replies.' ',''.$topic->replies.' ')).'</a>
+			' : '
+			<a style= "text-decoration: none" href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'">Comment '.convertPlural($topic->replies, array(''.$topic->replies.' comment',''.$topic->replies.' ')).'</a>
+			' ) .'</span>
+   		</div>
+
+		<!-- TODO - can we use this code?
 				'.($topic->icon ? '
-					<a href="/uni-ideas/index.php/blog/'.$start.'/'.$topic->icon.'/"><img src="/uni-ideas/images/message_icons/'.$topic->icon.'" alt="'.$topic->icon.'" align="left" class="news_icon" style="margin-right: 10px !important;padding: 0px;" height="48" width="48"></a>
+					<a href="/uni-ideas/index.php/blog/'.$start.'/'.$topic->icon.'/">
+					<img src="/uni-ideas/images/message_icons/'.$topic->icon.'" alt="'.$topic->icon.'" align="left" class="news_icon" style="margin-right: 10px !important;padding: 0px;" height="48" width="48"></a>
 				' : '' ) .'
 
-<div class="msglink" id="msg_'.$topic->id.'" style="float; right;display: none;position: relative; top: 32px;left: -330px;"><input type="text" onFocus="this.select()" value="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'" size="20" tabindex="1" name="srch" class="inputbox" alt="search"></div>
-<a name="msg_num_'.$topic->id.'"></a><a name="msg_'.$topic->id.'"></a><a href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'" title="'.$topic->subject.'"><span class="blog_title">'.$topic->subject.'</span></a><br><br>
-<a href="/uni-ideas/index.php/t/'.$topic->thread_id.'/'._rsid.'#quickreply" class="button">Comment on this article</a>
--->';
+				<div class="msglink" id="msg_'.$topic->id.'" style="float; right;display: none;position: relative; top: 32px;left: -330px;">
+					<input type="text" onFocus="this.select()" value="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'" size="20" tabindex="1" name="srch" class="inputbox" alt="search">
+				</div>
+				<a name="msg_num_'.$topic->id.'"></a>
+				<a name="msg_'.$topic->id.'"></a>
+				<a href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'" title="'.$topic->subject.'">
+					<span class="blog_title">'.$topic->subject.'</span>
+				</a><br><br>
+				<a href="/uni-ideas/index.php/t/'.$topic->thread_id.'/'._rsid.'#quickreply" class="button">Comment on this article</a>
+		-->';
 	}
 
 	// New posts for sidebar.
@@ -906,7 +918,7 @@ $RSS = ($FUD_OPT_2 & 1048576 ? '
 			$topic->subject = substr($topic->subject, 0, 40);
    			$topic->subject = substr($topic->subject, 0, strrpos($topic->subject, ' ')) .'…';
 		}
-		$new_topic_list .= '<p><a href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'">' . $topic->subject . '</a></p>';
+		$new_topic_list .= '<p><a style="text-decoration: none" href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'">' . $topic->subject . '</a></p>';
         }
 	$new_topic_list .= '</div>';
 
@@ -918,7 +930,7 @@ $RSS = ($FUD_OPT_2 & 1048576 ? '
 		ORDER BY views DESC', 10));
         $most_viewed_list = '<div class="item-list">';
         while ($topic = db_rowobj($c)) {
-		$most_viewed_list .= '<p><a href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'">' . $topic->subject . '</a></p>';
+		$most_viewed_list .= '<p><a style="text-decoration: none" href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'">' . $topic->subject . '</a></p>';
         }
 	$most_viewed_list .= '</div>';
 
@@ -931,7 +943,7 @@ $RSS = ($FUD_OPT_2 & 1048576 ? '
 			ORDER BY rating*n_rating DESC, m.post_stamp DESC', 10));
 	        $best_rated_list = '<div class="item-list">';
         	while ($topic = db_rowobj($c)) {
-			$best_rated_list .= '<p><a href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'">' . $topic->subject . '</a></p>';
+			$best_rated_list .= '<p><a style="text-decoration: none" href="/uni-ideas/index.php?t=msg&amp;th='.$topic->thread_id.'&amp;'._rsid.'">' . $topic->subject . '</a></p>';
 	        }
 		$best_rated_list .= '</div>';
 	}
@@ -940,7 +952,7 @@ $RSS = ($FUD_OPT_2 & 1048576 ? '
         $c = uq(q_limit('SELECT id, login FROM fud30_users ORDER BY join_date DESC', 5));
         $recent_member_list = '<div class="item-list">';
         while ($member = db_rowobj($c)) {
-		$recent_member_list .= '<p><a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$member->id.'&amp;'._rsid.'">' . $member->login . '</a></p>';
+		$recent_member_list .= '<p><a style="text-decoration: none" href="/uni-ideas/index.php?t=usrinfo&amp;id='.$member->id.'&amp;'._rsid.'">' . $member->login . '</a></p>';
         }
 	$recent_member_list .= '</div>';
 
@@ -953,42 +965,39 @@ $RSS = ($FUD_OPT_2 & 1048576 ? '
 	}
 
 	$page_data = '<!-- MODEL -> https://www.w3schools.com/howto/howto_css_blog_layout.asp -->
-<!-- table cellspacing="0" cellpadding="0" border="0" -->
-<div class="group">
-  <div class="leftcolumn">
-   '.$msg_list.'
-  </div>
-  <div class="rightcolumn">
-    <div class="card">
-      <h3>'.$GLOBALS['FORUM_TITLE'].'</h3>
-      <span style="MsgBodyText">'.$GLOBALS['FORUM_DESCR'].'</span>
-    </div>
-    <div class="card">
-      <h3>Recent Post</h3>
-      '.$new_topic_list.'
-    </div>
-    <div class="card">
-      <h3>Most viewed</h3>
-      '.$most_viewed_list.'
-    </div>
-'.(($FUD_OPT_2 & 4096) ? '
-    <div class="card">
-      <h3>Best rated</h3>
-      '.$best_rated_list.'
-    </div>
-' : '' ) .'
-'.(($FUD_OPT_1 & 8388608 || (_uid && $FUD_OPT_1 & 4194304) || $usr->users_opt & 1048576) ? '
-    <div class="card">
-      <h3>New Members</h3>
-      '.$recent_member_list.'
-    </div>
-' : '' ) .'
-    '.($FUD_OPT_2 & 1048576 ? '<br />
-<div style="float: right"><a href="/uni-ideas/rdf.php?mode=m&amp;l=1&amp;basic=1&amp;n=10" class="button"><img src="/uni-ideas/theme/default/images/rss.gif" title="Syndicate this forum (XML)" alt="RSS" width="16" height="16"> RSS</a></div>
-' : '' )  .'
-  </div>
-</div>
-<!-- /table -->';
+	<!-- table cellspacing="0" cellpadding="0" border="0" -->
+	<div class="group">
+	<div class="leftcolumn">
+	'.$msg_list.'
+	</div>
+	<div class="rightcolumn">
+		<div class="card">
+		<h3>'.$GLOBALS['FORUM_TITLE'].'</h3>
+		<span style="MsgBodyText">'.$GLOBALS['FORUM_DESCR'].'</span>
+		</div>
+		<div class="card">
+		<h3>Recent Post</h3>
+		'.$new_topic_list.'
+		</div>
+		<div class="card">
+		<h3>Most viewed</h3>
+		'.$most_viewed_list.'
+		</div>
+	'.(($FUD_OPT_2 & 4096) ? '
+		<div class="card">
+		<h3>Best rated</h3>
+		'.$best_rated_list.'
+		</div>
+	' : '' ) .'
+	'.(($FUD_OPT_1 & 8388608 || (_uid && $FUD_OPT_1 & 4194304) || $usr->users_opt & 1048576) ? '
+		
+	' : '' ) .'
+		'.($FUD_OPT_2 & 1048576 ? '<br />
+
+	' : '' )  .'
+	</div>
+	</div>
+	<!-- /table -->';
 
 if (_uid) {
 	$admin_cp = $accounts_pending_approval = $group_mgr = $reported_msgs = $custom_avatar_queue = $mod_que = $thr_exch = '';
@@ -1244,23 +1253,22 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		/* Add a card effect for articles */
+		.card {
+			background-color: #f4f4f4;
+			padding: 0 10px 10px 10px;
+			margin-top: 10px;
+			font-size: 10pt;
+			line-height: 1.7;
+			box-shadow: inset 0 0 10px #ccc;
+		}
 	</style>
 </head>
 <body style="background-color: #ffffff;">
 <!--HEADER-->
 <div class="header" style="background-color: #0F2026; border: none;">
 
-  <?php echo ($GLOBALS['FUD_OPT_1'] & 1 && $GLOBALS['FUD_OPT_1'] & 16777216 ? '
-		<div class="headsearch">
-		<form id="headsearch" method="get" action="/uni-ideas/index.php">'._hs.'
-		<input type="hidden" name="t" value="search" />
-		<br>
-		<br>
-		<input class = "search_input" type="search" name="srch" value="" size="50" placeholder="Forum Search" /></label>
-		<input type="image" src="/uni-ideas/theme/default/images/search.png" title="Search" name="btn_submit">&nbsp;
-		</form>
-		</div>
-  ' : ''); ?>
+ 
   <a href="/uni-ideas/" title="Home">
     <img class="headimg" style="margin: 7px 0;" src="/uni-ideas/theme/default/images/logomain.png" alt="" align="left" height="95"/>
     <span class="headtitle" style="margin: 30px 0;font-size: 40px;"><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
@@ -1271,12 +1279,11 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!--Nav bar-->
 <div>
 	<div class="nav">
-		
-		<?php echo ($FUD_OPT_4 & 16 ? '<div class="menu"><a href="/uni-ideas/index.php?t=blog&amp;'._rsid.'" title="Blog"><img src="/uni-ideas/theme/default/images/blog.png" alt="" width="16" height="16" /> Blog</a></div>' : ''); ?>
+
 		<?php echo ($FUD_OPT_4 & 8 ? '<div class="menu"><a href="/uni-ideas/index.php?t=page&amp;'._rsid.'" title="Pages"><img src="/uni-ideas/theme/default/images/pages.png" alt="" width="16" height="16" /> Pages</a></div>' : ''); ?>
 		<?php echo ($FUD_OPT_3 & 134217728 ? '<div class="menu"><a href="/uni-ideas/index.php?t=cal&amp;'._rsid.'" title="Calendar"><img src="/uni-ideas/theme/default/images/calendar.png" alt="" width="16" height="16" /> Calendar</a></div>' : ''); ?>
 		<div class="menu"><a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>" title="Home"><img src="/uni-ideas/theme/default/images/icon/home.png" alt="" width="16" height="16" /> Home</a></div>
-
+		<?php echo ($FUD_OPT_4 & 16 ? '<div class="menu"><a href="/uni-ideas/index.php?t=blog&amp;'._rsid.'" title="Blog"><img src="/uni-ideas/theme/default/images/icon/blogging.png" alt="" width="16" height="16" /> Blog</a></div>' : ''); ?>
 		<?php echo ($FUD_OPT_1 & 16777216 ? ' <div class="menu"><a href="/uni-ideas/index.php?t=search'.(isset($frm->forum_id) ? '&amp;forum_limiter='.(int)$frm->forum_id.'' : '' )  .'&amp;'._rsid.'" title="Search"><img src="/uni-ideas/theme/default/images/icon/magnifier.png" alt="" width="16" height="16" /> Search</a></div>' : ''); ?>
 		<div class="menu"><a accesskey="h" href="/uni-ideas/index.php?t=help_index&amp;<?php echo _rsid; ?>" title="Help"><img src="/uni-ideas/theme/default/images/icon/help-web-button.png" alt="" width="16" height="16" /> Help</a></div>
 		<?php echo (($FUD_OPT_1 & 8388608 || (_uid && $FUD_OPT_1 & 4194304) || $usr->users_opt & 1048576) ? '<div class="menu"><a href="/uni-ideas/index.php?t=finduser&amp;btn_submit=Find&amp;'._rsid.'" title="Members"><img src="/uni-ideas/theme/default/images/icon/group.png" alt="" width="16" height="16" /> Members</a></div>' : ''); ?>
@@ -1287,28 +1294,28 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
-<?php echo (_uid ? '<span class="GenText">Welcome <b>'.$usr->alias.'</b>, your last visit was on '.utf8_encode(strftime('%a, %d %B %Y %H:%M', $usr->last_visit)).'</span><br />' : ''); ?>
-<span id="ShowLinks">
-<span class="GenText fb">Show:</span>
-<a href="/uni-ideas/index.php?t=selmsg&amp;date=today&amp;<?php echo _rsid; ?>&amp;frm_id=<?php echo (isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'&amp;th='.$th.'" title="Show all messages that were posted today" rel="nofollow">Today&#39;s Messages</a>
-'.(_uid ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;unread=1&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all unread messages" rel="nofollow">Unread Messages</a>&nbsp;' : ''); ?>
-<?php echo (!$th ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;reply_count=0&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all messages, which have no replies" rel="nofollow">Unanswered Messages</a>&nbsp;' : ''); ?>
-<b>::</b> <a href="/uni-ideas/index.php?t=polllist&amp;<?php echo _rsid; ?>" rel="nofollow">Polls</a>
-<b>::</b> <a href="/uni-ideas/index.php?t=mnav&amp;<?php echo _rsid; ?>" rel="nofollow">Message Navigator</a>
-</span><?php echo $admin_cp; ?>
-<?php echo $announcements; ?>
-<?php echo $page_data; ?>
-<br />
-<?php echo $page_pager; ?>
-<br />  
-<?php echo $page_stats; ?>
-<?php echo (!empty($RIGHT_SIDEBAR) ? '
-</td><td width="200px" align-"right" valign="top" class="sidebar-right">
-	'.$RIGHT_SIDEBAR.'
-' : ''); ?>
-</td></tr></table>
+
+
+
+	<span id="ShowLinks">
+		<a style=" text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px;" href="/uni-ideas/index.php?t=selmsg&amp;date=today&amp;<?php echo _rsid; ?>&amp;frm_id=<?php echo (isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'&amp;th='.$th.'" title="Show all messages that were posted today" rel="nofollow">Today&#39;s Messages</a>
+				'.(_uid ? '<b style="color: #2B3467;">|</b><a style="text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px;" href="/uni-ideas/index.php?t=selmsg&amp;unread=1&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all unread messages" rel="nofollow">&nbsp;Unread Messages</a>&nbsp;' : ''); ?>
+			<?php echo (!$th ? '<b style="color: #344CB7;">|</b> <a href="/uni-ideas/index.php?t=selmsg&amp;reply_count=0&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all messages, which have no replies" rel="nofollow" style=" text-decoration: none; color: #2B3467; font-weight: bold; font-size: 15px;">Unanswered Messages</a>&nbsp;' : ''); ?>
+			<b style='color: #2B3467;'>|</b> <a style='text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px;' href='/uni-ideas/index.php?t=polllist&amp;<?php echo _rsid; ?>' rel='nofollow'>Polls</a>
+			<b style='color: #2B3467;'>|</b> <a style=' text-decoration: none; color: #2B3467; font-weight: bold;font-size: 15px;' href='/uni-ideas/index.php?t=mnav&amp;<?php echo _rsid; ?> rel='nofollow'>Message Navigator</a>
+			</span>
+
+		<?php echo $admin_cp; ?>
+		<?php echo $announcements; ?>
+					
+		<?php echo $page_data; ?>
+
+
 
 </div>
+
+
+
   <!-- Footer -->
 </div>
 <div class="footer ac">

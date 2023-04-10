@@ -601,7 +601,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		}
 
 		.SmallText{
-			color: white;
+			color: black;
 		}
 		.footer{
 			background-color: #0F2026;
@@ -617,7 +617,7 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 			display: flex;
 			justify-content: center;
 		}
-		.logo_foot span{
+		.logo_foot span{	
 			font-weight: bold;
 			font-size: 20px;
 			
@@ -626,23 +626,17 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		.ac{
+			color: #0F2026;
+		}
+
 	</style>
 </head>
 <body style="background-color: #ffffff;">
 <!--HEADER-->
 <div class="header" style="background-color: #0F2026; border: none;">
 
-  <?php echo ($GLOBALS['FUD_OPT_1'] & 1 && $GLOBALS['FUD_OPT_1'] & 16777216 ? '
-		<div class="headsearch">
-		<form id="headsearch" method="get" action="/uni-ideas/index.php">'._hs.'
-		<input type="hidden" name="t" value="search" />
-		<br>
-		<br>
-		<input class = "search_input" type="search" name="srch" value="" size="50" placeholder="Forum Search" /></label>
-		<input type="image" src="/uni-ideas/theme/default/images/search.png" title="Search" name="btn_submit">&nbsp;
-		</form>
-		</div>
-  ' : ''); ?>
+ 
   <a href="/uni-ideas/" title="Home">
     <img class="headimg" style="margin: 7px 0;" src="/uni-ideas/theme/default/images/logomain.png" alt="" align="left" height="95"/>
     <span class="headtitle" style="margin: 30px 0;font-size: 40px;"><?php echo $GLOBALS['FORUM_TITLE']; ?></span>

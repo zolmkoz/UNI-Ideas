@@ -18,10 +18,10 @@
 	$GLOBALS['FILE_STORE']		= 'C:/xampp/htdocs/UNI-Ideas/files/';
 	$GLOBALS['FORUM_SETTINGS_PATH'] = 'C:/xampp/htdocs/UNI-Ideas/cache/';
 	$GLOBALS['PLUGIN_PATH'] 	= 'C:/xampp/htdocs/UNI-Ideas/plugins/';
-	$GLOBALS['FUD_OPT_1']		= 1737421887;
-	$GLOBALS['FUD_OPT_2']		= 1777733759;
-	$GLOBALS['FUD_OPT_3']		= 41943104;
-	$GLOBALS['FUD_OPT_4']		= 3;
+	$GLOBALS['FUD_OPT_1']		= 1737389117;
+	$GLOBALS['FUD_OPT_2']		= 2045120637;
+	$GLOBALS['FUD_OPT_3']		= 41943136;
+	$GLOBALS['FUD_OPT_4']		= 18;
 	$GLOBALS['CUSTOM_AVATAR_MAX_SIZE'] = 20000;	/* bytes */
 	$GLOBALS['CUSTOM_AVATAR_MAX_DIM']  = '64x64';	/* width x height (pixels) */
 	$GLOBALS['COOKIE_PATH']		= '/uni-ideas/';
@@ -53,8 +53,8 @@
 	$GLOBALS['MOVED_THR_PTR_EXPIRY']	= 3;		/* days */
 	$GLOBALS['MAX_SMILIES_SHOWN']	= 15;		/* int */
 	$GLOBALS['DISABLED_REASON']	= 'Temporarily offline; please come back soon!';
-	$GLOBALS['POSTS_PER_PAGE'] 	= 40;
-	$GLOBALS['THREADS_PER_PAGE']	= 40;
+	$GLOBALS['POSTS_PER_PAGE'] 	= 10;
+	$GLOBALS['THREADS_PER_PAGE']	= 10;
 	$GLOBALS['WORD_WRAP']		= 60;
 	$GLOBALS['NOTIFY_FROM']		= 'admin@UNI-ideas.com';		/* email */
 	$GLOBALS['ANON_NICK']		= 'Anonymous';	/* coward */
@@ -79,7 +79,7 @@
 	$GLOBALS['SHOW_N_MODS']		= 0;
 	$GLOBALS['TREE_THREADS_MAX_DEPTH']	= 15;
 	$GLOBALS['TREE_THREADS_MAX_SUBJ_LEN']	= 75;
-	$GLOBALS['REG_TIME_LIMIT']		= 60;		/* seconds */
+	$GLOBALS['REG_TIME_LIMIT']		= 10;		/* seconds */
 	$GLOBALS['POST_ICONS_PER_ROW']	= 9;		/* int */
 	$GLOBALS['MAX_LOGGEDIN_USERS']	= 25;		/* int */
 	$GLOBALS['PHP_COMPRESSION_LEVEL']	= 9;		/* int 1-9 */
@@ -89,7 +89,7 @@
 	$GLOBALS['FEED_MAX_N_RESULTS']	= 20;		/* int */
 	$GLOBALS['FEED_AUTH_ID']	= 0;		/* 0 - treat as anon user, >0 treat like specific forum user */
 	$GLOBALS['FEED_CACHE_AGE']	= 3600;
-	$GLOBALS['PDF_PAGE']		= 'letter';	/* string */
+	$GLOBALS['PDF_PAGE']		= 'A4';	/* string */
 	$GLOBALS['PDF_WMARGIN']		= 15;		/* int */
 	$GLOBALS['PDF_HMARGIN']		= 15;		/* int */
 	$GLOBALS['PDF_MAX_CPU']		= 15;		/* seconds */

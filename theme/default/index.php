@@ -173,7 +173,7 @@ if (_uid === '_uid') {
 
 		$forum_list_table_data .= '<tr style="background-color: #fff;border: none;display: '.(empty($collapse[$cid]) ? 'table-row' : 'none' )  .'" class="w3-table-all'.$r[5].'">
 	<td>'.(empty($r[12]) ? $forum_read_indicator : '<img title="Redirection" src="/uni-ideas/theme/default/images/moved.png" alt="" />' )  .'</td>
-	<td><a  href="'.(empty($r[12]) ? '/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$r[7].'&amp;'._rsid : $r[12] )  .'" class="big">'.$r[10].'</a>'.($r[11] ? '<br />'.$r[11] : '').$moderators.'</td>
+	<td class="big"><a style="text-decoration: none; color: #FA4D1D; font-size: 30px; font-weight: bold" href="'.(empty($r[12]) ? '/uni-ideas/index.php?t='.t_thread_view.'&amp;frm_id='.$r[7].'&amp;'._rsid : $r[12] )  .'" >'.$r[10].'</a>'.($r[11] ? '<br />' : '').$moderators.'</td>
 	<td style="text-align: center;"><span class="glyphicon glyphicon-comment" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.(empty($r[12]) ? $r[13] : '--' )  .'</td>
 	<td style="text-align: center;"><span class="glyphicon glyphicon-book" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.(empty($r[12]) ? $r[14] : '--' )  .'</td>
 	<td style="text-align: center;"><span class="glyphicon glyphicon-cloud-upload" style="color: #FA4D1D; font-size: 14px;">&nbsp;</span>'.(empty($r[12]) ? ($r[8] ? '<span>'.utf8_encode(strftime('%a, %d %B %Y', $r[2])).'</span><br />By: '.($r[3] ? '<a style="text-decoration: none;color:#0F2026" href="/uni-ideas/index.php?t=usrinfo&amp;id='.$r[3].'&amp;'._rsid.'">'.$r[4].'</a>' : $GLOBALS['ANON_NICK'] ) .' <a href="/uni-ideas/index.php?t='.d_thread_view.'&amp;goto='.$r[8].'&amp;'._rsid.'#msg_'.$r[8].'"><img title="'.$r[0].'" src="/uni-ideas/theme/default/images/goto.gif" alt="'.$r[0].'" width="9" height="9" /></a>' : 'n/a' )  : '--' )  .'</td>
@@ -541,17 +541,7 @@ $logedin = $forum_info = '';
 <!--HEADER-->
 <div class="header" style="background-color: #0F2026; border: none;">
 
-  <?php echo ($GLOBALS['FUD_OPT_1'] & 1 && $GLOBALS['FUD_OPT_1'] & 16777216 ? '
-		<div class="headsearch">
-		<form id="headsearch" method="get" action="/uni-ideas/index.php">'._hs.'
-		<input type="hidden" name="t" value="search" />
-		<br>
-		<br>
-		<input class = "search_input" type="search" name="srch" value="" size="50" placeholder="Forum Search" /></label>
-		<input type="image" src="/uni-ideas/theme/default/images/search.png" title="Search" name="btn_submit">&nbsp;
-		</form>
-		</div>
-  ' : ''); ?>
+
   <a href="/uni-ideas/" title="Home">
     <img class="headimg" style="margin: 7px 0;" src="/uni-ideas/theme/default/images/logomain.png" alt="" align="left" height="95"/>
     <span class="headtitle" style="margin: 30px 0;font-size: 40px;"><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
@@ -563,11 +553,10 @@ $logedin = $forum_info = '';
 <div>
 	<div class="nav">
 
-		<?php echo ($FUD_OPT_4 & 16 ? '<div class="menu"><a href="/uni-ideas/index.php?t=blog&amp;'._rsid.'" title="Blog"><img src="/uni-ideas/theme/default/images/blog.png" alt="" width="16" height="16" /> Blog</a></div>' : ''); ?>
 		<?php echo ($FUD_OPT_4 & 8 ? '<div class="menu"><a href="/uni-ideas/index.php?t=page&amp;'._rsid.'" title="Pages"><img src="/uni-ideas/theme/default/images/pages.png" alt="" width="16" height="16" /> Pages</a></div>' : ''); ?>
 		<?php echo ($FUD_OPT_3 & 134217728 ? '<div class="menu"><a href="/uni-ideas/index.php?t=cal&amp;'._rsid.'" title="Calendar"><img src="/uni-ideas/theme/default/images/calendar.png" alt="" width="16" height="16" /> Calendar</a></div>' : ''); ?>
 		<div class="menu"><a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>" title="Home"><img src="/uni-ideas/theme/default/images/icon/home.png" alt="" width="16" height="16" /> Home</a></div>
-
+		<?php echo ($FUD_OPT_4 & 16 ? '<div class="menu"><a href="/uni-ideas/index.php?t=blog&amp;'._rsid.'" title="Blog"><img src="/uni-ideas/theme/default/images/icon/blogging.png" alt="" width="16" height="16" /> Blog</a></div>' : ''); ?>
 		<?php echo ($FUD_OPT_1 & 16777216 ? ' <div class="menu"><a href="/uni-ideas/index.php?t=search'.(isset($frm->forum_id) ? '&amp;forum_limiter='.(int)$frm->forum_id.'' : '' )  .'&amp;'._rsid.'" title="Search"><img src="/uni-ideas/theme/default/images/icon/magnifier.png" alt="" width="16" height="16" /> Search</a></div>' : ''); ?>
 		<div class="menu"><a accesskey="h" href="/uni-ideas/index.php?t=help_index&amp;<?php echo _rsid; ?>" title="Help"><img src="/uni-ideas/theme/default/images/icon/help-web-button.png" alt="" width="16" height="16" /> Help</a></div>
 		<?php echo (($FUD_OPT_1 & 8388608 || (_uid && $FUD_OPT_1 & 4194304) || $usr->users_opt & 1048576) ? '<div class="menu"><a href="/uni-ideas/index.php?t=finduser&amp;btn_submit=Find&amp;'._rsid.'" title="Members"><img src="/uni-ideas/theme/default/images/icon/group.png" alt="" width="16" height="16" /> Members</a></div>' : ''); ?>

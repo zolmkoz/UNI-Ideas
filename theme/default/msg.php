@@ -114,7 +114,11 @@ function tmpl_create_pager($start, $count, $total, $arg, $suf='', $append=1, $js
 			pager_replace($page_next_url, $upfx . $page_start, $count);
 			pager_replace($page_last_url, $upfx . $page_start_2, $count);
 		}
-		$page_pager_data .= !$js_pager ? '&nbsp;&nbsp;<a href="'.$page_next_url.'" accesskey="n" class="PagerLink">&rsaquo;</a>&nbsp;&nbsp;<a href="'.$page_last_url.'" class="PagerLink">&raquo;</a>' : '&nbsp;&nbsp;<a href="javascript://" onclick="'.$page_next_url.'" class="PagerLink">&rsaquo;</a>&nbsp;&nbsp;<a href="javascript://" onclick="'.$page_last_url.'" class="PagerLink">&raquo;</a>';
+		$page_pager_data .= !$js_pager ? '&nbsp;&nbsp;
+			<a href="'.$page_next_url.'" accesskey="n" class="PagerLink">&rsaquo;</a>&nbsp;&nbsp;
+			<a href="'.$page_last_url.'" class="PagerLink">&raquo;</a>' : '&nbsp;&nbsp;
+			<a href="javascript://" onclick="'.$page_next_url.'" class="PagerLink">&rsaquo;</a>&nbsp;&nbsp;
+			<a href="javascript://" onclick="'.$page_last_url.'" class="PagerLink">&raquo;</a>';
 	}
 
 	return !$js_pager ? '<span class="SmallText fb">Pages ('.$ttl_pg.'): ['.$page_pager_data.']</span>' : '<span class="SmallText fb">Pages ('.$ttl_pg.'): ['.$page_pager_data.']</span>';
@@ -263,24 +267,28 @@ function tmpl_drawmsg($obj, $usr, $perms, $hide_controls, &$m_num, $misc)
 
 	/* Check if the message should be ignored and it is not temporarily revelead. */
 	if ($usr->ignore_list && !empty($usr->ignore_list[$obj->poster_id]) && !isset($GLOBALS['__FMDSP__'][$obj->id])) {
-		return !$hide_controls ? '<tr>
-	<td>
-		<table border="0" cellspacing="0" cellpadding="0" class="MsgTable">
+		return !$hide_controls ? '
 		<tr>
-			<td class="MsgIg al">
-				<a name="msg_num_'.$m_num.'"></a>
-				<a name="msg_'.$obj->id.'"></a>
-				'.($obj->user_id ? 'Message by <a href="/uni-ideas/index.php?t=usrinfo&amp;'._rsid.'&amp;id='.$obj->user_id.'">'.$obj->login.'</a> is ignored' : $GLOBALS['ANON_NICK'].' is ignored' )  .'&nbsp;
-				[<a href="/uni-ideas/index.php?'. make_reveal_link($obj->id).'">reveal message</a>]&nbsp;
-				[<a href="/uni-ideas/index.php?'.make_tmp_unignore_lnk($obj->poster_id).'">reveal all messages by '.$user_login.'</a>]&nbsp;
-				[<a href="/uni-ideas/index.php?t=ignore_list&amp;del='.$obj->poster_id.'&amp;redr=1&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'">stop ignoring this user</a>]</td>
-				<td class="MsgIg" align="right">'.$prev_message.$next_message.'
-			</td>
-		</tr>
+			<td>
+				<table border="0" cellspacing="0" cellpadding="0" class="MsgTable">
+				<tr>
+					<td class="MsgIg al">
+						<a name="msg_num_'.$m_num.'"></a>
+						<a name="msg_'.$obj->id.'"></a>
+						'.($obj->user_id ? 'Message by <a href="/uni-ideas/index.php?t=usrinfo&amp;'._rsid.'&amp;id='.$obj->user_id.'">'.$obj->login.'</a> is ignored' : $GLOBALS['ANON_NICK'].' is ignored' )  .'&nbsp;
+						[<a href="/uni-ideas/index.php?'. make_reveal_link($obj->id).'">reveal message</a>]&nbsp;
+						[<a href="/uni-ideas/index.php?'.make_tmp_unignore_lnk($obj->poster_id).'">reveal all messages by '.$user_login.'</a>]&nbsp;
+						[<a href="/uni-ideas/index.php?t=ignore_list&amp;del='.$obj->poster_id.'&amp;redr=1&amp;'._rsid.'&amp;SQ='.$GLOBALS['sq'].'">stop ignoring this user</a>]</td>
+						<td class="MsgIg" align="right">'.$prev_message.$next_message.'
+					</td>
+				</tr>
 		</table>
 	</td>
 </tr>' : '<tr class="MsgR1 GenText">
-	<td><a name="msg_num_'.$m_num.'"></a> <a name="msg_'.$obj->id.'"></a>Post by '.$user_login.' is ignored&nbsp;</td>
+	<td>
+		<a name="msg_num_'.$m_num.'"></a>
+		<a name="msg_'.$obj->id.'"></a>Post by '.$user_login.' is ignored&nbsp;
+	</td>
 </tr>';
 	}
 
@@ -303,13 +311,9 @@ function tmpl_drawmsg($obj, $usr, $perms, $hide_controls, &$m_num, $misc)
 		$avatar = ($obj->avatar_loc || $level_image) ? '<td class="avatarPad wo">'.$obj->avatar_loc.$level_image.'</td>' : '';
 		$dmsg_tags = ($custom_tag || $level_name) ? '<div class="ctags">'.$level_name.$custom_tag.'</div>' : '';
 
-		if (($o2 & 32 && !($a & 32768)) || $b & 1048576) {
-			$online_indicator = (($obj->time_sec + $GLOBALS['LOGEDIN_TIMEOUT'] * 60) > __request_timestamp__) ? '<img src="/uni-ideas/theme/default/images/online.png" alt="'.$obj->login.' is currently online" title="'.$obj->login.' is currently online" width="16" height="16" />&nbsp;' : '<img src="/uni-ideas/theme/default/images/offline.png" alt="'.$obj->login.' is currently offline" title="'.$obj->login.' is currently offline" width="16" height="16" />&nbsp;';
-		} else {
-			$online_indicator = '';
-		}
+		
 
-		$user_link = '<a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$obj->user_id.'&amp;'._rsid.'">'.$user_login.'</a>';
+		$user_link = '<a style="text-decoration: none; font-size: 21px;" href="/uni-ideas/index.php?t=usrinfo&amp;id='.$obj->user_id.'&amp;'._rsid.'">'.$user_login.'</a>';
 
 		$location = $obj->location ? '<br /><b>Location: </b>'.(strlen($obj->location) > $GLOBALS['MAX_LOCATION_SHOW'] ? substr($obj->location, 0, $GLOBALS['MAX_LOCATION_SHOW']) . '...' : $obj->location) : '';
 
@@ -555,44 +559,101 @@ function tmpl_drawmsg($obj, $usr, $perms, $hide_controls, &$m_num, $misc)
 		}
 	}
 
-	return '<tr><td class="MsgSpacer"><table cellspacing="0" cellpadding="0" class="MsgTable">
-<tr>
-<td colspan="2" class="MsgR1"><table cellspacing="0" cellpadding="0" class="ContentTable"><tr><td class="MsgR1 vt al MsgSubText"><a name="msg_num_'.$m_num.'"></a><a name="msg_'.$obj->id.'"></a>'.($obj->icon && !$hide_controls ? '<img src="images/message_icons/'.$obj->icon.'" alt="'.$obj->icon.'" />&nbsp;&nbsp;' : '' )  .$obj->subject.$rpl.'</td>
-<td class="MsgR1 vt ar"><span class="DateText">'.utf8_encode(strftime('%a, %d %B %Y %H:%M', $obj->post_stamp)).'</span> '.$prev_message.$next_message.'</td></tr></table></td></tr>
+	return '
+	<tr>
+		<td class="MsgSpacer">
+			<table cellspacing="0" cellpadding="0" class="MsgTable">
+				<tr>
+					<td colspan="2" class="MsgR1">
+						<table cellspacing="0" cellpadding="0" class="ContentTable">
+							<tr>
+							    <td class="MsgR1 vt al MsgSubText">'.$avatar.'</td>
+								<td class="MsgR1 vt al MsgSubText">'.$user_link.(!$hide_controls ? ($obj->disp_flag_cc && $GLOBALS['FUD_OPT_3'] & 524288 ? '&nbsp;&nbsp;
+									<img src="images/flags/'.$obj->disp_flag_cc.'.png" border="0" width="16" height="11" title="'.$obj->flag_country.'" alt="'.$obj->flag_country.'"/>' : '' )  .($obj->user_id ? '
+								</td>
 
-<tr class="MsgR2">
-<td class="MsgR2" width="15%" valign="top">
-<table cellspacing="0" cellpadding="0" class="ContentTable"><tr class="MsgR2"><td class="msgud">'.$online_indicator.$user_link.(!$hide_controls ? ($obj->disp_flag_cc && $GLOBALS['FUD_OPT_3'] & 524288 ? '&nbsp;&nbsp;<img src="images/flags/'.$obj->disp_flag_cc.'.png" border="0" width="16" height="11" title="'.$obj->flag_country.'" alt="'.$obj->flag_country.'"/>' : '' )  .($obj->user_id ? '</td></tr><tr class="MsgR2">'.$avatar.'</tr><tr class="MsgR2"><td class="msgud">'.$dmsg_tags.'</td></tr><tr class="MsgR2"> <td class="msgud">Messages:'.$obj->posted_msg_count.'<br />
-Registered:'.utf8_encode(strftime('%B %Y', $obj->join_date)).' '.$location : '' )   : '' )  .'</td></tr><tr class="MsgR2"><td class="msgud">'.$dmsg_bd_il.$dmsg_im_row.(!$hide_controls ? (($obj->host_name && $o1 & 268435456) ? 'From:'.$obj->host_name.'<br />' : '' )  .(($b & 1048576 || $usr->md || $o1 & 134217728) ? 'IP: <a href="/uni-ideas/index.php?t=ip&amp;ip='.$obj->ip_addr.'&amp;'._rsid.'" target="_blank">'.$obj->ip_addr.'</a>' : '' )   : '' )  .'</td></tr></table></td>
+								<td class="MsgR1 vt al MsgSubText" style="font-size: 30px">
+									<a name="msg_num_'.$m_num.'"></a>
+									<a name="msg_'.$obj->id.'"></a>
+									'.($obj->icon && !$hide_controls ? '
+										<img src="images/message_icons/'.$obj->icon.'" alt="'.$obj->icon.'" />
+										&nbsp;&nbsp;' : '' )  .$obj->subject.'
+								</td>
+								<td class="MsgR1 vt ar">
+									<span style="font-size: 12px" class="DateText">'.utf8_encode(strftime('%a, %d %B %Y %H:%M', $obj->post_stamp)).'</span> '.$prev_message.$next_message.'
+									
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
 
-<td class="MsgR3" width="85%" valign="top">'.$msg_body.$drawmsg_file_attachments.'
-'.$modified_message.(!$hide_controls ? (($obj->sig && $o1 & 32768 && $obj->msg_opt & 1 && $b & 4096 && !($a & 67108864)) ? '<br /><br /><hr class="sig" />'.$obj->sig : '' )  .'<p class="fr"><a href="/uni-ideas/index.php?t=report&amp;msg_id='.$obj->id.'&amp;'._rsid.'" rel="nofollow">Report message to a moderator</a></p>' : '' )  .'
-</td></tr>
-'.(!$hide_controls ? '<tr>
-	<td colspan="2" class="MsgToolBar">
-		<table border="0" cellspacing="0" cellpadding="0" class="wa">
-		<tr>
-			<td class="al nw">
-				'.($obj->user_id ? '<a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$obj->user_id.'&amp;'._rsid.'"><img alt="" src="/uni-ideas/theme/default/images/msg_about.gif" /></a>&nbsp;'.(($o1 & 4194304 && $a & 16) ? '<a href="/uni-ideas/index.php?t=email&amp;toi='.$obj->user_id.'&amp;'._rsid.'" rel="nofollow"><img alt="" src="/uni-ideas/theme/default/images/msg_email.gif" width="71" height="18" /></a>&nbsp;' : '' )  .($o1 & 1024 ? '<a href="/uni-ideas/index.php?t=ppost&amp;toi='.$obj->user_id.'&amp;rmid='.$obj->id.'&amp;'._rsid.'"><img alt="Send a private message to this user" title="Send a private message to this user" src="/uni-ideas/theme/default/images/msg_pm.gif" width="71" height="18" /></a>' : '' )   : '' )  .'
-				'.(($GLOBALS['FUD_OPT_4'] & 4 && $perms & 1024 && $obj->poster_id > 0 && !$obj->cant_karma && $obj->poster_id != $usr->id) ? '
-    <span id=karma_link_'.$obj->id.' class="SmallText">Rate author:
-	<a href="javascript://" onclick="changeKarma('.$obj->id.','.$obj->poster_id.',\'up\',\''.s.'\',\''.$usr->sq.'\');" class="karma up">+1</a>
-	<a href="javascript://" onclick="changeKarma('.$obj->id.','.$obj->poster_id.',\'down\',\''.s.'\',\''.$usr->sq.'\');" class="karma down">-1</a>
-    </span>
-' : '' )  .'
-			</td>
-			<td class="GenText wa ac">'.$next_page.'</td>
-			<td class="nw ar">
-				'.($perms & 32 ? '<a href="/uni-ideas/index.php?t=mmod&amp;del='.$obj->id.'&amp;'._rsid.'"><img alt="" src="/uni-ideas/theme/default/images/msg_delete.gif" width="71" height="18" /></a>&nbsp;' : '' )  .'
-				'.$edit_link.'
-				'.$reply_link.'
-				'.$quote_link.'
-			</td>
-		</tr>
-		</table>
-	</td>
-</tr>' : '' )  .'
-</table></td></tr>';
+				<tr class="MsgR2">
+					<td class="MsgR2" width="15%" valign="top">
+						<table cellspacing="0" cellpadding="0" class="ContentTable">
+
+							<tr class="MsgR2">
+								<td class="msgud">'.$dmsg_tags.'</td>
+							</tr>
+							<tr class="MsgR2">
+								<td class="msgud">Messages:'.$obj->posted_msg_count.'<br />
+									Registered:'.utf8_encode(strftime('%B %Y', $obj->join_date)).' '.$location : '' )   : '' )  .'
+								</td>
+							</tr>
+							<tr class="MsgR2">
+								<td class="msgud">'.$dmsg_bd_il.$dmsg_im_row.(!$hide_controls ? (($obj->host_name && $o1 & 268435456) ? '
+									From:'.$obj->host_name.'<br />' : '' )  .(($b & 1048576 || $usr->md || $o1 & 134217728) ? '
+									IP: <a href="/uni-ideas/index.php?t=ip&amp;ip='.$obj->ip_addr.'&amp;'._rsid.'" target="_blank">'.$obj->ip_addr.'</a>' : '' )   : '' )  .'
+								</td>
+							</tr>
+						</table>
+					</td>
+
+					<td style="border-left: 2px solid #000; " class="MsgR3" width="85%" valign="top">'.$msg_body.$drawmsg_file_attachments.'
+						'.$modified_message.(!$hide_controls ? (($obj->sig && $o1 & 32768 && $obj->msg_opt & 1 && $b & 4096 && !($a & 67108864)) ? '<br /><br />
+						<hr class="sig" />'.$obj->sig : '' )  .'
+						<p class="fr">
+							<a href="/uni-ideas/index.php?t=report&amp;msg_id='.$obj->id.'&amp;'._rsid.'" rel="nofollow">Report message to a moderator</a>
+						</p>' : '' )  .'
+					</td>
+				</tr>
+				'.(!$hide_controls ? '
+				<tr>
+					<td colspan="2" class="MsgToolBar">
+						<table border="0" cellspacing="0" cellpadding="0" class="wa">
+							<tr>
+								<td class="al nw">
+									'.($obj->user_id ? '
+									<a href="/uni-ideas/index.php?t=usrinfo&amp;id='.$obj->user_id.'&amp;'._rsid.'">
+										<img alt="" src="/uni-ideas/theme/default/images/msg_about.gif" />
+									</a>&nbsp;'.(($o1 & 4194304 && $a & 16) ? '
+									<a href="/uni-ideas/index.php?t=email&amp;toi='.$obj->user_id.'&amp;'._rsid.'" rel="nofollow">
+										<img alt="" src="/uni-ideas/theme/default/images/msg_email.gif" width="71" height="18" />
+									</a>&nbsp;' : '' )  .($o1 & 1024 ? '
+									<a href="/uni-ideas/index.php?t=ppost&amp;toi='.$obj->user_id.'&amp;rmid='.$obj->id.'&amp;'._rsid.'">
+										<img alt="Send a private message to this user" title="Send a private message to this user" src="/uni-ideas/theme/default/images/msg_pm.gif" width="71" height="18" />
+									</a>' : '' )   : '' )  .'
+									'.(($GLOBALS['FUD_OPT_4'] & 4 && $perms & 1024 && $obj->poster_id > 0 && !$obj->cant_karma && $obj->poster_id != $usr->id) ? '
+									<span id=karma_link_'.$obj->id.' class="SmallText">Rate author:
+									<a href="javascript://" onclick="changeKarma('.$obj->id.','.$obj->poster_id.',\'up\',\''.s.'\',\''.$usr->sq.'\');" class="karma up">+1</a>
+									<a href="javascript://" onclick="changeKarma('.$obj->id.','.$obj->poster_id.',\'down\',\''.s.'\',\''.$usr->sq.'\');" class="karma down">-1</a>
+									</span>
+									' : '' )  .'
+								</td>
+								<td class="GenText wa ac">'.$next_page.'</td>
+								<td class="nw ar">
+									'.($perms & 32 ? '<a href="/uni-ideas/index.php?t=mmod&amp;del='.$obj->id.'&amp;'._rsid.'"><img alt="" src="/uni-ideas/theme/default/images/msg_delete.gif" width="71" height="18" /></a>&nbsp;' : '' )  .'
+									'.$edit_link.'
+									'.$reply_link.'
+									'.$quote_link.'
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>' : '' )  .'
+			</table>
+		</td>
+	</tr>';
 }function read_msg_body($off, $len, $id)
 {
 	if ($off == -1) {	// Fetch from DB and return.
@@ -1143,9 +1204,11 @@ function post_to_smiley($text)
 		}
 		*/
 
-		$first_unread_message_link = (($total - $th) > $count) ? '| <a href="/uni-ideas/index.php?t=msg&amp;unread=1&amp;th='.$th.'&amp;'._rsid.'" title="Go to the 1st unread message inside this topic">Go to unread messages</a>&nbsp;' : '';
-		$subscribe_status = $frm->subscribed ? '| <a href="/uni-ideas/index.php?t=msg&amp;th='.$th.'&amp;notify='.$usr->id.'&amp;'._rsid.'&amp;opt=off&amp;start='.$_GET['start'].'&amp;SQ='.$GLOBALS['sq'].'" title="Stop receiving notifications about new messages in this topic">Unsubscribe from topic</a>&nbsp;' : '| <a href="/uni-ideas/index.php?t=msg&amp;th='.$th.'&amp;notify='.$usr->id.'&amp;'._rsid.'&amp;opt=on&amp;start='.$_GET['start'].'&amp;SQ='.$GLOBALS['sq'].'" title="Receive notification about new messages inside this topic">Subscribe to topic</a>&nbsp;';
-		$bookmark_status  = $frm->bookmarked ? '| <a href="/uni-ideas/index.php?t=msg&amp;th='.$th.'&amp;bookmark='.$usr->id.'&amp;'._rsid.'&amp;opt=off&amp;start='.$_GET['start'].'&amp;SQ='.$GLOBALS['sq'].'" title="Remove this topic from your list of bookmarks">Remove from bookmarks</a>&nbsp;' : '| <a href="/uni-ideas/index.php?t=msg&amp;th='.$th.'&amp;bookmark='.$usr->id.'&amp;'._rsid.'&amp;opt=on&amp;start='.$_GET['start'].'&amp;SQ='.$GLOBALS['sq'].'" title="Add this topic to your list of bookmarks">Bookmark topic</a>&nbsp;';
+		$first_unread_message_link = (($total - $th) > $count) ? ' <a style=" text-decoration: none; color: #2B3467; font-weight: bold;font-size: 13px;" href="/uni-ideas/index.php?t=msg&amp;unread=1&amp;th='.$th.'&amp;'._rsid.'" title="Go to the 1st unread message inside this topic">Go to unread messages <span class="glyphicon glyphicon-star"></a>&nbsp;' : '';
+		$subscribe_status = $frm->subscribed ? '| <a style=" text-decoration: none; color: #2B3467; font-weight: bold;font-size: 13px;" href="/uni-ideas/index.php?t=msg&amp;th='.$th.'&amp;notify='.$usr->id.'&amp;'._rsid.'&amp;opt=off&amp;start='.$_GET['start'].'&amp;SQ='.$GLOBALS['sq'].'" title="Stop receiving notifications about new messages in this topic">Unsubscribe from topic &nbsp;<span class="glyphicon glyphicon-star"></a>&nbsp;' : '
+												| <a style=" text-decoration: none; color: #2B3467; font-weight: bold;font-size: 13px;" href="/uni-ideas/index.php?t=msg&amp;th='.$th.'&amp;notify='.$usr->id.'&amp;'._rsid.'&amp;opt=on&amp;start='.$_GET['start'].'&amp;SQ='.$GLOBALS['sq'].'" title="Receive notification about new messages inside this topic">Subscribe to topic &nbsp;<span class="glyphicon glyphicon-star"></a>&nbsp;';
+		$bookmark_status  = $frm->bookmarked ? '| <a style=" text-decoration: none; color: #2B3467; font-weight: bold;font-size: 13px;" href="/uni-ideas/index.php?t=msg&amp;th='.$th.'&amp;bookmark='.$usr->id.'&amp;'._rsid.'&amp;opt=off&amp;start='.$_GET['start'].'&amp;SQ='.$GLOBALS['sq'].'" title="Remove this topic from your list of bookmarks">Remove from bookmarks &nbsp;<span class="glyphicon glyphicon-bookmark"></span></a>&nbsp;' : '
+												| <a style=" text-decoration: none; color: #2B3467; font-weight: bold;font-size: 13px;" href="/uni-ideas/index.php?t=msg&amp;th='.$th.'&amp;bookmark='.$usr->id.'&amp;'._rsid.'&amp;opt=on&amp;start='.$_GET['start'].'&amp;SQ='.$GLOBALS['sq'].'" title="Add this topic to your list of bookmarks">Bookmark topic &nbsp;<span class="glyphicon glyphicon-bookmark"></span></a>&nbsp;';
 	} else {
 		if (__fud_cache($frm->last_post_date)) {
 			return;
@@ -1263,17 +1326,6 @@ if (_uid) {
 	}
 	unset($c);
 	
-	return ($frmcount > 1 ? '
-<span class="SmallText fb">Goto Forum:</span>
-<form action="/uni-ideas/index.php" id="frmquicksel" method="get">
-	<input type="hidden" name="t" value="'.$dest.'" />
-	'._hs.'
-	<select class="SmallText" name="frm_id">
-		'.$selection_options.'
-	</select>&nbsp;&nbsp;
-	<input type="submit" class="button small" name="frm_goto" value="Go" />
-</form>
-' : '' ) ;
 }if (!isset($th)) {
 	$th = 0;
 }
@@ -1374,24 +1426,41 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	$quick_reply_collapsed = $GLOBALS['FUD_OPT_3'] & 16777216;
 	$quick_reply_subject = strncmp('Re:', $obj2->subject, strlen('Re:')) ? 'Re:'.' '. $obj2->subject : $obj2->subject;
 ?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<meta charset="utf-8">
+<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="<?php echo (!empty($META_DESCR) ? $META_DESCR.'' : $GLOBALS['FORUM_DESCR'].''); ?>" />
 	<title><?php echo $GLOBALS['FORUM_TITLE'].$TITLE_EXTRA; ?></title>
 	<link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GLOBALS['FORUM_TITLE']; ?> Search" href="/uni-ideas/open_search.php" />
 	<?php echo $RSS; ?>
-	<link rel="stylesheet" href="/uni-ideas/theme/default/forum.css" media="screen" title="Default Forum Theme" />
+
 	<link rel="stylesheet" href="/uni-ideas/js/ui/jquery-ui.css" media="screen" />
+	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="/uni-ideas/js/jquery.js"></script>
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
+	<link rel="stylesheet" href="/UNI-Ideas/theme/default/forum.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script async src="/uni-ideas/js/ui/jquery-ui.js"></script>
 	<script src="/uni-ideas/js/lib.js"></script>
 	<link rel="stylesheet" href="/UNI-Ideas/theme/default/style.css">
-	<link rel="icon" type="image" href="/uni-ideas/theme/default/images/faviconx.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<style>
 		*{
+			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+		}
+		body{
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 		}
 		.nav {
@@ -1476,23 +1545,27 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	
 			height: 30px;
 		}
+		.MsgR2, .MsgR1, .MsgR3, .MsgIg {
+			background: #fff;
+			border-bottom: 1px solid #fff;
+			padding: 2px;
+		}
+
+		.MsgIg {
+			border: 0;
+		}
+
+		.MsgR1 {
+			background: #fff;
+		}
+
 	</style>
 </head>
 <body style="background-color: #ffffff;">
 <!--HEADER-->
 <div class="header" style="background-color: #0F2026; border: none;">
 
-  <?php echo ($GLOBALS['FUD_OPT_1'] & 1 && $GLOBALS['FUD_OPT_1'] & 16777216 ? '
-		<div class="headsearch">
-		<form id="headsearch" method="get" action="/uni-ideas/index.php">'._hs.'
-		<input type="hidden" name="t" value="search" />
-		<br>
-		<br>
-		<input class = "search_input" type="search" name="srch" value="" size="50" placeholder="Forum Search" /></label>
-		<input type="image" src="/uni-ideas/theme/default/images/search.png" title="Search" name="btn_submit">&nbsp;
-		</form>
-		</div>
-  ' : ''); ?>
+ 
   <a href="/uni-ideas/" title="Home">
     <img class="headimg" style="margin: 7px 0;" src="/uni-ideas/theme/default/images/logomain.png" alt="" align="left" height="95"/>
     <span class="headtitle" style="margin: 30px 0;font-size: 40px;"><?php echo $GLOBALS['FORUM_TITLE']; ?></span>
@@ -1503,12 +1576,11 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 <!--Nav bar-->
 <div>
 	<div class="nav">
-		
-		<?php echo ($FUD_OPT_4 & 16 ? '<div class="menu"><a href="/uni-ideas/index.php?t=blog&amp;'._rsid.'" title="Blog"><img src="/uni-ideas/theme/default/images/blog.png" alt="" width="16" height="16" /> Blog</a></div>' : ''); ?>
+
 		<?php echo ($FUD_OPT_4 & 8 ? '<div class="menu"><a href="/uni-ideas/index.php?t=page&amp;'._rsid.'" title="Pages"><img src="/uni-ideas/theme/default/images/pages.png" alt="" width="16" height="16" /> Pages</a></div>' : ''); ?>
 		<?php echo ($FUD_OPT_3 & 134217728 ? '<div class="menu"><a href="/uni-ideas/index.php?t=cal&amp;'._rsid.'" title="Calendar"><img src="/uni-ideas/theme/default/images/calendar.png" alt="" width="16" height="16" /> Calendar</a></div>' : ''); ?>
 		<div class="menu"><a href="/uni-ideas/index.php?t=index&amp;<?php echo _rsid; ?>" title="Home"><img src="/uni-ideas/theme/default/images/icon/home.png" alt="" width="16" height="16" /> Home</a></div>
-
+		<?php echo ($FUD_OPT_4 & 16 ? '<div class="menu"><a href="/uni-ideas/index.php?t=blog&amp;'._rsid.'" title="Blog"><img src="/uni-ideas/theme/default/images/icon/blogging.png" alt="" width="16" height="16" /> Blog</a></div>' : ''); ?>
 		<?php echo ($FUD_OPT_1 & 16777216 ? ' <div class="menu"><a href="/uni-ideas/index.php?t=search'.(isset($frm->forum_id) ? '&amp;forum_limiter='.(int)$frm->forum_id.'' : '' )  .'&amp;'._rsid.'" title="Search"><img src="/uni-ideas/theme/default/images/icon/magnifier.png" alt="" width="16" height="16" /> Search</a></div>' : ''); ?>
 		<div class="menu"><a accesskey="h" href="/uni-ideas/index.php?t=help_index&amp;<?php echo _rsid; ?>" title="Help"><img src="/uni-ideas/theme/default/images/icon/help-web-button.png" alt="" width="16" height="16" /> Help</a></div>
 		<?php echo (($FUD_OPT_1 & 8388608 || (_uid && $FUD_OPT_1 & 4194304) || $usr->users_opt & 1048576) ? '<div class="menu"><a href="/uni-ideas/index.php?t=finduser&amp;btn_submit=Find&amp;'._rsid.'" title="Members"><img src="/uni-ideas/theme/default/images/icon/group.png" alt="" width="16" height="16" /> Members</a></div>' : ''); ?>
@@ -1519,141 +1591,165 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 		<?php echo ($is_a || ($usr->users_opt & 268435456) ? '<div class="menu"><a href="/uni-ideas/adm/index.php?S='.s.'&amp;SQ='.$GLOBALS['sq'].'" title="Administration"><img src="/uni-ideas/theme/default/images/icon/configuration.png" alt="" width="16" height="16" /> Administration</a></div>' : ''); ?>
 	</ul>
 </div>
+
 <?php echo $admin_cp; ?>
 <a name="page_top"> </a>
-<?php echo draw_forum_path($frm->cat_id, $frm->name, $frm->forum_id, $frm->subject); ?>
-<?php echo ($frm->tdescr ? ' <span class="small">('.$frm->tdescr.')</span>' : ''); ?> 
-<span id="threadRating"><?php echo ($FUD_OPT_2 & 4096 && $frm->rating ? '&nbsp;('.($MOD ? '<a href="javascript://" onclick="window_open(\'/uni-ideas/index.php?t=ratingtrack&amp;'._rsid.'&amp;th='.$frm->id.'\', \'th_rating_track\', 300, 400);">' : '' )  .'<img src="/uni-ideas/theme/default/images/'.$frm->rating.'stars.gif" title="'.$frm->rating.' from '.convertPlural($frm->n_rating, array(''.$frm->n_rating.' vote',''.$frm->n_rating.' votes')).'" alt=""/>'.($MOD ? '</a>' : '' )  .') '.convertPlural($frm->n_rating, array(''.$frm->n_rating.' Vote',''.$frm->n_rating.' Votes')).'' : ''); ?></span>
-<table cellspacing="0" cellpadding="0" border="0" class="wa">
-<tr>
-<td class="GenText al">
-	<span id="ShowLinks">
-<span class="GenText fb">Show:</span>
-<a href="/uni-ideas/index.php?t=selmsg&amp;date=today&amp;<?php echo _rsid; ?>&amp;frm_id=<?php echo (isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'&amp;th='.$th.'" title="Show all messages that were posted today" rel="nofollow">Today&#39;s Messages</a>
-'.(_uid ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;unread=1&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all unread messages" rel="nofollow">Unread Messages</a>&nbsp;' : ''); ?>
-<?php echo (!$th ? '<b>::</b> <a href="/uni-ideas/index.php?t=selmsg&amp;reply_count=0&amp;'._rsid.'&amp;frm_id='.(isset($frm->forum_id) ? $frm->forum_id.'' : $frm->id.'' )  .'" title="Show all messages, which have no replies" rel="nofollow">Unanswered Messages</a>&nbsp;' : ''); ?>
-<b>::</b> <a href="/uni-ideas/index.php?t=polllist&amp;<?php echo _rsid; ?>" rel="nofollow">Polls</a>
-<b>::</b> <a href="/uni-ideas/index.php?t=mnav&amp;<?php echo _rsid; ?>" rel="nofollow">Message Navigator</a>
-</span>
-	<br />
-	<?php echo (($frm->replies && $perms & 2048) ? '<a href="/uni-ideas/index.php?t=split_th&amp;'._rsid.'&amp;th='.$th.'">Split Topic</a>&nbsp;|&nbsp;' : ''); ?>
-	<?php echo (($frm->replies && $perms & 8192) ? '<a href="/uni-ideas/index.php?t=movemsg&amp;th='.$th.'">Move messages</a>&nbsp;|&nbsp;' : ''); ?>
-	<?php echo ($perms & 8192 ? '<a href="javascript://" onclick="window_open(\'/uni-ideas/index.php?t=mvthread&amp;'._rsid.'&amp;th='.$th.'\', \'th_move\', 300, 400);">Move</a>&nbsp;|&nbsp;' : ''); ?>
-	<?php echo ($perms & 4096 ? ($frm->thread_opt & 1 ? '<a href="/uni-ideas/index.php?t=mmod&amp;'._rsid.'&amp;th='.$th.'&amp;unlock=1&amp;SQ='.$GLOBALS['sq'].'">Unlock Topic</a>&nbsp;|&nbsp;' : '<a href="/uni-ideas/index.php?t=mmod&amp;'._rsid.'&amp;th='.$th.'&amp;lock=1&amp;SQ='.$GLOBALS['sq'].'">Lock Topic</a>&nbsp;|&nbsp;'):'').'
-	'.($FUD_OPT_2 & 1073741824 ? '<a href="/uni-ideas/index.php?t=remail&amp;th='.$th.'&amp;'._rsid.'" title="Send the URL to this page to your friend(s) via e-mail" rel="nofollow">E-mail to friend</a>&nbsp;' : ''); ?>
-	<?php echo $first_unread_message_link.$subscribe_status.$bookmark_status; ?>
-</td>
-<td class="vb ar">
-	<?php echo ($FUD_OPT_3 & 2 ? '' : '<a href="/uni-ideas/index.php?t=tree&amp;th='.$th.'&amp;'._rsid.'"><img title="Switch to threaded view of this topic" alt="Switch to threaded view of this topic" src="/uni-ideas/theme/default/images/tree_view.gif" width="100" height="25" /></a>&nbsp;'); ?><a href="/uni-ideas/index.php?t=post&amp;frm_id=<?php echo $frm->forum_id; ?>&amp;<?php echo _rsid; ?>"><img alt="Create a new topic" src="/uni-ideas/theme/default/images/new_thread.gif" width="100" height="25" /></a><?php echo ((!($frm->thread_opt & 1) || $perms & 4096) ? '&nbsp;<a href="/uni-ideas/index.php?t=post&amp;th_id='.$th.'&amp;reply_to='.$frm->root_msg_id.'&amp;'._rsid.'&amp;start='.$_GET['start'].'"><img src="/uni-ideas/theme/default/images/post_reply.gif" alt="Submit Reply" width="100" height="25" /></a>' : ''); ?>
-</td>
-</tr>
-</table>
+
+
+<div class="row">
+	<div class="col-4">
+
+		<?php echo (($frm->replies && $perms & 2048) ? '<a href="/uni-ideas/index.php?t=split_th&amp;'._rsid.'&amp;th='.$th.'">Split Topic</a>&nbsp;|&nbsp;' : ''); ?>
+
+		<?php echo (($frm->replies && $perms & 8192) ? '<a href="/uni-ideas/index.php?t=movemsg&amp;th='.$th.'">Move messages</a>&nbsp;|&nbsp;' : ''); ?>
+
+		<?php echo ($perms & 8192 ? '<a href="javascript://" onclick="window_open(\'/uni-ideas/index.php?t=mvthread&amp;'._rsid.'&amp;th='.$th.'\', \'th_move\', 300, 400);">Move</a>&nbsp;|&nbsp;' : ''); ?>
+
+		<?php echo ($perms & 4096 ? ($frm->thread_opt & 1 ? '<a href="/uni-ideas/index.php?t=mmod&amp;'._rsid.'&amp;th='.$th.'&amp;unlock=1&amp;SQ='.$GLOBALS['sq'].'">Unlock Topic</a>&nbsp;|&nbsp;' : '&nbsp;|&nbsp;'):'').'
+		'.($FUD_OPT_2 & 1073741824 ? '
+
+		<a style=" text-decoration: none; color: #2B3467; font-weight: bold;font-size: 13px; href="/uni-ideas/index.php?t=remail&amp;th='.$th.'&amp;'._rsid.'" title="Send the URL to this page to your friend(s) via e-mail" rel="nofollow"></a>&nbsp;' : ''); ?>
+
+		<?php echo $first_unread_message_link.$subscribe_status.$bookmark_status; ?>
+	</div>
+
+	<div class="col-8" style="display: flex;align-items:center;justify-content:right">
+		<?php echo ($FUD_OPT_3 & 2 ? '' : '
+				&nbsp;'); ?>
+				<a href="/uni-ideas/index.php?t=post&amp;frm_id=<?php echo $frm->forum_id; ?>&amp;<?php echo _rsid; ?>">
+					<img alt="Create a new topic" src="/uni-ideas/theme/default/images/new_thread.gif" width="100" height="25" /></a><?php echo ((!($frm->thread_opt & 1) || $perms & 4096) ? '&nbsp;
+				' : ''); ?>
+	</div>
+	
+</div>
+
+
 
 <table cellspacing="0" cellpadding="0" class="ContentTable"><?php echo $message_data; ?></table>
-<?php echo ($quick_reply_enabled ? '<form action="/uni-ideas/index.php?t=post" method="post" id="post_form" name="post_form" enctype="multipart/form-data" onsubmit="document.forms[\'post_form\'].btn_submit.disabled = true;">
-<table cellspacing="0" cellpadding="0" class="ContentTable">
-<tr>
-	<td class="MsgSpacer">
-		<table cellspacing="0" cellpadding="0" class="MsgTable">
+
+
+
+<?php echo ($quick_reply_enabled ? '
+<form action="/uni-ideas/index.php?t=post" method="post" id="post_form" name="post_form" enctype="multipart/form-data" onsubmit="document.forms[\'post_form\'].btn_submit.disabled = true;">
+	<table cellspacing="0" cellpadding="0" class="ContentTable">
 		<tr>
-			<td class="MsgR1 fb '.($quick_reply_collapsed ? 'collapsed' : 'expanded' )  .'">
-				Quick Reply
+			<td class="MsgSpacer">
+				<table cellspacing="0" cellpadding="0" class="MsgTable">
+					<tr>
+						<td class="MsgR1 fb '.($quick_reply_collapsed ? 'collapsed' : 'expanded' )  .'">
+							Quick Reply
+						</td>
+					</tr>
+
+					<tr>
+						<td class="MsgR3" '.($quick_reply_collapsed ? 'style="display:none;"' : '' )  .'>
+							<table>
+								<tr class="RowStyleA">
+									<td class="GenText nw">Formatting Tools:</td>
+									<td class="nw">
+										<span class="FormattingToolsBG">
+											<span class="FormattingToolsCLR"><a title="Bold" accesskey="b" href="javascript: insertTag(\'txtb\', \'[b]\', \'[/b]\');"><img alt="" src="/uni-ideas/theme/default/images/b_bold.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Italics" accesskey="i" href="javascript: insertTag(\'txtb\', \'[i]\', \'[/i]\');"><img alt="" src="/uni-ideas/theme/default/images/b_italic.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Underline" accesskey="u" href="javascript: insertTag(\'txtb\', \'[u]\', \'[/u]\');"><img alt="" src="/uni-ideas/theme/default/images/b_underline.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Align Left" href="javascript: insertTag(\'txtb\', \'[ALIGN=left]\', \'[/ALIGN]\');"><img alt="" src="/uni-ideas/theme/default/images/b_aleft.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Align Center" href="javascript: insertTag(\'txtb\', \'[ALIGN=center]\', \'[/ALIGN]\');"><img alt="" src="/uni-ideas/theme/default/images/b_acenter.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Align Right" href="javascript: insertTag(\'txtb\', \'[ALIGN=right]\', \'[/ALIGN]\');"><img alt="" src="/uni-ideas/theme/default/images/b_aright.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Insert a Link" accesskey="w" href="javascript: url_insert(\'Link location:\');"><img alt="" src="/uni-ideas/theme/default/images/b_url.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Insert an E-mail address" accesskey="e" href="javascript: email_insert(\'E-mail address:\');"><img alt="" src="/uni-ideas/theme/default/images/b_email.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Insert an image" accesskey="m" href="javascript: image_insert(\'Image URL:\');"><img alt="" src="/uni-ideas/theme/default/images/b_image.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Add numbered list" accesskey="l" href="javascript: window_open(\'/uni-ideas/index.php?t=mklist&amp;'._rsid.'&amp;tp=OL:1\', \'listmaker\', 350, 350);"><img alt="" src="/uni-ideas/theme/default/images/b_numlist.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Add bulleted list" href="javascript: window_open(\'/uni-ideas/index.php?t=mklist&amp;'._rsid.'&amp;tp=UL:square\', \'listmaker\', 350, 350);"><img alt="" src="/uni-ideas/theme/default/images/b_bulletlist.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Add Quote" accesskey="q" href="javascript: insertTag(\'txtb\', \'[quote]\', \'[/quote]\');"><img alt="" src="/uni-ideas/theme/default/images/b_quote.gif" /></a></span>
+											<span class="FormattingToolsCLR"><a title="Add Code" accesskey="c" href="javascript: insertTag(\'txtb\', \'[code]\', \'[/code]\');"><img alt="" src="/uni-ideas/theme/default/images/b_code.gif" /></a></span>
+										</span>
+
+										<span class="hide1">&nbsp;&nbsp;
+											<select name="fnt_size" onchange="insertTag(\'txtb\', \'[size=\'+document.post_form.fnt_size.options[this.selectedIndex].value+\']\', \'[/size]\'); document.post_form.fnt_size.options[0].selected=true">
+												<option value="" selected="selected">Size</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+											</select>
+											<select name="fnt_color" onchange="insertTag(\'txtb\', \'[color=\'+document.post_form.fnt_color.options[this.selectedIndex].value+\']\', \'[/color]\'); document.post_form.fnt_color.options[0].selected=true">
+												<option value="">Color</option>
+												<option value="skyblue" style="color:skyblue">Sky Blue</option>
+												<option value="royalblue" style="color:royalblue">Royal Blue</option>
+												<option value="blue" style="color:blue">Blue</option>
+												<option value="darkblue" style="color:darkblue">Dark Blue</option>
+												<option value="orange" style="color:orange">Orange</option>
+												<option value="orangered" style="color:orangered">Orange Red</option>
+												<option value="crimson" style="color:crimson">Crimson</option>
+												<option value="red" style="color:red">Red</option>
+												<option value="firebrick" style="color:firebrick">Firebrick</option>
+												<option value="darkred" style="color:darkred">Dark Red</option>
+												<option value="green" style="color:green">Green</option>
+												<option value="limegreen" style="color:limegreen">Lime Green</option>
+												<option value="seagreen" style="color:seagreen">Sea Green</option>
+												<option value="deeppink" style="color:deeppink">Deep Pink</option>
+												<option value="tomato" style="color:tomato">Tomato</option>
+												<option value="coral" style="color:coral">Coral</option>
+												<option value="purple" style="color:purple">Purple</option>
+												<option value="indigo" style="color:indigo">Indigo</option>
+												<option value="burlywood" style="color:burlywood">Burly Wood</option>
+												<option value="sandybrown" style="color:sandybrown">Sandy Brown</option>
+												<option value="sienna" style="color:sienna">Sienna</option>
+												<option value="chocolate" style="color:chocolate">Chocolate</option>
+												<option value="teal" style="color:teal">Teal</option>
+												<option value="silver" style="color:silver">Silver</option>
+											</select>
+											<select name="fnt_face" onchange="insertTag(\'txtb\', \'[font=\'+document.post_form.fnt_face.options[this.selectedIndex].value+\']\', \'[/font]\'); document.post_form.fnt_face.options[0].selected=true">
+												<option value="">Font</option>
+												<option value="Arial" style="font-family:Arial">Arial</option>
+												<option value="Times" style="font-family:Times">Times</option>
+												<option value="Courier" style="font-family:Courier">Courier</option>
+												<option value="Century" style="font-family:Century">Century</option>
+											</select>
+										</span>
+									</td>
+								</tr>
+							</table>
+							<textarea wrap="virtual" id="txtb" cols="" rows="" name="msg_body" style="width:99%; height:100px;"></textarea>
+							'._hs.'
+							<input type="hidden" name="submitted" value="" />
+							<input type="hidden" name="msg_subject" value="'.$quick_reply_subject.'" />
+							<input type="hidden" name="reply_to" value="'.$obj2->last_post_id.'" />
+							<input type="hidden" name="th_id" value="'.$obj2->thread_id.'" />
+							<input type="hidden" name="frm_id" value="'.$obj2->forum_id.'" />
+							<input type="hidden" name="prev_loaded" value="1" />
+							<input type="hidden" name="msg_show_sig" value="'.($usr->users_opt & 2048 ? 'Y' : '' )  .'" />
+							<input type="hidden" name="msg_poster_notif" value="'.($usr->users_opt & 2 ? 'Y' : '' )  .'" />
+						</td>
+					</tr>
+
+					<tr>
+						<td class="MsgToolBar" '.($quick_reply_collapsed ? 'style="display:none;"' : '' )  .'>
+							<input type="submit" accesskey="r" class="button" value="Preview Quick Reply" tabindex="4" name="preview" />
+							<input type="submit" accesskey="s" class="button" tabindex="5" name="btn_submit" value="Post Quick Reply" onclick="javascript: document.post_form.submitted.value=1;" />
+						</td>
+					</tr>
+				</table>
 			</td>
 		</tr>
-		<tr>
-			<td class="MsgR3" '.($quick_reply_collapsed ? 'style="display:none;"' : '' )  .'>
-				<table><tr class="RowStyleA"><td class="GenText nw">Formatting Tools:</td><td class="nw">
-<span class="FormattingToolsBG">
-	<span class="FormattingToolsCLR"><a title="Bold" accesskey="b" href="javascript: insertTag(\'txtb\', \'[b]\', \'[/b]\');"><img alt="" src="/uni-ideas/theme/default/images/b_bold.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Italics" accesskey="i" href="javascript: insertTag(\'txtb\', \'[i]\', \'[/i]\');"><img alt="" src="/uni-ideas/theme/default/images/b_italic.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Underline" accesskey="u" href="javascript: insertTag(\'txtb\', \'[u]\', \'[/u]\');"><img alt="" src="/uni-ideas/theme/default/images/b_underline.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Align Left" href="javascript: insertTag(\'txtb\', \'[ALIGN=left]\', \'[/ALIGN]\');"><img alt="" src="/uni-ideas/theme/default/images/b_aleft.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Align Center" href="javascript: insertTag(\'txtb\', \'[ALIGN=center]\', \'[/ALIGN]\');"><img alt="" src="/uni-ideas/theme/default/images/b_acenter.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Align Right" href="javascript: insertTag(\'txtb\', \'[ALIGN=right]\', \'[/ALIGN]\');"><img alt="" src="/uni-ideas/theme/default/images/b_aright.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Insert a Link" accesskey="w" href="javascript: url_insert(\'Link location:\');"><img alt="" src="/uni-ideas/theme/default/images/b_url.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Insert an E-mail address" accesskey="e" href="javascript: email_insert(\'E-mail address:\');"><img alt="" src="/uni-ideas/theme/default/images/b_email.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Insert an image" accesskey="m" href="javascript: image_insert(\'Image URL:\');"><img alt="" src="/uni-ideas/theme/default/images/b_image.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Add numbered list" accesskey="l" href="javascript: window_open(\'/uni-ideas/index.php?t=mklist&amp;'._rsid.'&amp;tp=OL:1\', \'listmaker\', 350, 350);"><img alt="" src="/uni-ideas/theme/default/images/b_numlist.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Add bulleted list" href="javascript: window_open(\'/uni-ideas/index.php?t=mklist&amp;'._rsid.'&amp;tp=UL:square\', \'listmaker\', 350, 350);"><img alt="" src="/uni-ideas/theme/default/images/b_bulletlist.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Add Quote" accesskey="q" href="javascript: insertTag(\'txtb\', \'[quote]\', \'[/quote]\');"><img alt="" src="/uni-ideas/theme/default/images/b_quote.gif" /></a></span>
-	<span class="FormattingToolsCLR"><a title="Add Code" accesskey="c" href="javascript: insertTag(\'txtb\', \'[code]\', \'[/code]\');"><img alt="" src="/uni-ideas/theme/default/images/b_code.gif" /></a></span>
-</span>
-<span class="hide1">
-&nbsp;&nbsp;
-<select name="fnt_size" onchange="insertTag(\'txtb\', \'[size=\'+document.post_form.fnt_size.options[this.selectedIndex].value+\']\', \'[/size]\'); document.post_form.fnt_size.options[0].selected=true">
-	<option value="" selected="selected">Size</option>
-	<option value="1">1</option>
-	<option value="2">2</option>
-	<option value="3">3</option>
-	<option value="4">4</option>
-	<option value="5">5</option>
-	<option value="6">6</option>
-	<option value="7">7</option>
-</select>
-<select name="fnt_color" onchange="insertTag(\'txtb\', \'[color=\'+document.post_form.fnt_color.options[this.selectedIndex].value+\']\', \'[/color]\'); document.post_form.fnt_color.options[0].selected=true">
-	<option value="">Color</option>
-	<option value="skyblue" style="color:skyblue">Sky Blue</option>
-	<option value="royalblue" style="color:royalblue">Royal Blue</option>
-	<option value="blue" style="color:blue">Blue</option>
-	<option value="darkblue" style="color:darkblue">Dark Blue</option>
-	<option value="orange" style="color:orange">Orange</option>
-	<option value="orangered" style="color:orangered">Orange Red</option>
-	<option value="crimson" style="color:crimson">Crimson</option>
-	<option value="red" style="color:red">Red</option>
-	<option value="firebrick" style="color:firebrick">Firebrick</option>
-	<option value="darkred" style="color:darkred">Dark Red</option>
-	<option value="green" style="color:green">Green</option>
-	<option value="limegreen" style="color:limegreen">Lime Green</option>
-	<option value="seagreen" style="color:seagreen">Sea Green</option>
-	<option value="deeppink" style="color:deeppink">Deep Pink</option>
-	<option value="tomato" style="color:tomato">Tomato</option>
-	<option value="coral" style="color:coral">Coral</option>
-	<option value="purple" style="color:purple">Purple</option>
-	<option value="indigo" style="color:indigo">Indigo</option>
-	<option value="burlywood" style="color:burlywood">Burly Wood</option>
-	<option value="sandybrown" style="color:sandybrown">Sandy Brown</option>
-	<option value="sienna" style="color:sienna">Sienna</option>
-	<option value="chocolate" style="color:chocolate">Chocolate</option>
-	<option value="teal" style="color:teal">Teal</option>
-	<option value="silver" style="color:silver">Silver</option>
-</select>
-<select name="fnt_face" onchange="insertTag(\'txtb\', \'[font=\'+document.post_form.fnt_face.options[this.selectedIndex].value+\']\', \'[/font]\'); document.post_form.fnt_face.options[0].selected=true">
-	<option value="">Font</option>
-	<option value="Arial" style="font-family:Arial">Arial</option>
-	<option value="Times" style="font-family:Times">Times</option>
-	<option value="Courier" style="font-family:Courier">Courier</option>
-	<option value="Century" style="font-family:Century">Century</option>
-</select>
-</span>
-</td></tr></table>
-				<textarea wrap="virtual" id="txtb" cols="" rows="" name="msg_body" style="width:99%; height:100px;"></textarea>
-				'._hs.'
-				<input type="hidden" name="submitted" value="" />
-				<input type="hidden" name="msg_subject" value="'.$quick_reply_subject.'" />
-				<input type="hidden" name="reply_to" value="'.$obj2->last_post_id.'" />
-				<input type="hidden" name="th_id" value="'.$obj2->thread_id.'" />
-				<input type="hidden" name="frm_id" value="'.$obj2->forum_id.'" />
-				<input type="hidden" name="prev_loaded" value="1" />
-				<input type="hidden" name="msg_show_sig" value="'.($usr->users_opt & 2048 ? 'Y' : '' )  .'" />
-				<input type="hidden" name="msg_poster_notif" value="'.($usr->users_opt & 2 ? 'Y' : '' )  .'" />
-			</td>
-		</tr>
-		<tr>
-			<td class="MsgToolBar" '.($quick_reply_collapsed ? 'style="display:none;"' : '' )  .'>
-				<input type="submit" accesskey="r" class="button" value="Preview Quick Reply" tabindex="4" name="preview" />
-				<input type="submit" accesskey="s" class="button" tabindex="5" name="btn_submit" value="Post Quick Reply" onclick="javascript: document.post_form.submitted.value=1;" />
-			</td>
-		</tr>
-		</table>
-	</td>
-</tr>
-</table>
+	</table>
 </form>' : '' )  .'
+
+
 <table border="0" cellspacing="0" cellpadding="0" class="wa">
-<tr>
-	<td class="vt">'.$page_pager.'&nbsp;</td>
-	<td class="GenText ar vb nw">'.($FUD_OPT_3 & 2 ? '' : '<a href="/uni-ideas/index.php?t=tree&amp;th='.$th.'&amp;'._rsid.'"><img title="Switch to threaded view of this topic" alt="Switch to threaded view of this topic" src="/uni-ideas/theme/default/images/tree_view.gif" width="100" height="25" /></a>&nbsp;'); ?><a href="/uni-ideas/index.php?t=post&amp;frm_id=<?php echo $frm->forum_id; ?>&amp;<?php echo _rsid; ?>"><img alt="Create a new topic" src="/uni-ideas/theme/default/images/new_thread.gif" width="100" height="25" /></a><?php echo (!$quick_reply_enabled && (!($frm->thread_opt & 1) || $perms & 4096) ? '&nbsp;<a href="/uni-ideas/index.php?t=post&amp;th_id='.$th.'&amp;reply_to='.$frm->root_msg_id.'&amp;'._rsid.'&amp;start='.$_GET['start'].'"><img src="/uni-ideas/theme/default/images/post_reply.gif" alt="Submit Reply" width="100" height="25" /></a>' : ''); ?></td>
-</tr>
+	<tr>
+		<td class="vt">'.$page_pager.'&nbsp;</td>
+		<td class="GenText ar vb nw">'.($FUD_OPT_3 & 2 ? '' : '
+		<a href="/uni-ideas/index.php?t=tree&amp;th='.$th.'&amp;'._rsid.'">
+		</a>&nbsp;'); ?>
+		<a href="/uni-ideas/index.php?t=post&amp;frm_id=<?php echo $frm->forum_id; ?>&amp;<?php echo _rsid; ?>">
+			
+		</a>
+		
+		</td>
+	</tr>
 </table>
 
 <?php echo ((!empty($prev_thread_link) || !empty($next_thread_link)) ? '
@@ -1662,20 +1758,18 @@ if ($FUD_OPT_2 & 2 || $is_a) {	// PUBLIC_STATS is enabled or Admin user.
 	'.$next_thread_link.'
 </table>
 ' : ''); ?>
-<?php echo (($FUD_OPT_2 & 4096 && $perms & 1024 && !$frm->cant_rate) ? '<form id="RateFrm" action="post">
-<select class="SmallText" onchange="if (this.value) topicVote(this.value, '.$frm->id.', \''.s.'\', \''.$usr->sq.'\');">
-	<option>Rate Topic</option>
-	<option value="1">1 Worst</option>
-	<option value="2">2</option>
-	<option value="3">3</option>
-	<option value="4">4</option>
-	<option value="5">5 Best</option>
-</select>
-</form>' : ''); ?>
+
+<?php echo (($FUD_OPT_2 & 4096 && $perms & 1024 && !$frm->cant_rate) ? '' : ''); ?>
+
+
 <?php echo tmpl_create_forum_select((isset($frm->forum_id) ? $frm->forum_id : $frm->id), $usr->users_opt & 1048576); ?>
 <br /><div class="wa ac">-=] <a href="javascript://" onclick="chng_focus('page_top');">Back to Top</a> [=-</div>
-<div class="ar SmallText"><?php echo ($FUD_OPT_2 & 1048576 ? '[ <a href="/uni-ideas/index.php?t=help_index&amp;section=boardusage#syndicate">Syndicate this forum (XML)</a> ] [ <a href="/uni-ideas/feed.php?mode=m&amp;th='.$th.'&amp;basic=1"><img src="/uni-ideas/theme/default/images/rss.gif" title="Syndicate this forum (XML)" alt="RSS" width="16" height="16" /></a> ]' : ''); ?> <?php echo ($FUD_OPT_2 & 2097152 ? '[ <a href="/uni-ideas/pdf.php?th='.$th.'&amp;'._rsid.'"><img src="/uni-ideas/theme/default/images/pdf.gif" title="Generate printable PDF" alt="PDF" /></a> ]' : ''); ?></div>
+<div class="ar SmallText"><?php echo ($FUD_OPT_2 & 1048576 ? '[ 
+	<a href="/uni-ideas/index.php?t=help_index&amp;section=boardusage#syndicate">Syndicate this forum (XML)</a> ] [ 
+		<a href="/uni-ideas/feed.php?mode=m&amp;th='.$th.'&amp;basic=1"><img src="/uni-ideas/theme/default/images/rss.gif" title="Syndicate this forum (XML)" alt="RSS" width="16" height="16" /></a> ]' : ''); ?> <?php echo ($FUD_OPT_2 & 2097152 ? '[ <a href="/uni-ideas/pdf.php?th='.$th.'&amp;'._rsid.'"><img src="/uni-ideas/theme/default/images/pdf.gif" title="Generate printable PDF" alt="PDF" /></a> ]' : ''); ?></div>
 <br />  
+
+
 <?php echo $page_stats; ?>
 <script>
 	min_max_posts('/uni-ideas/theme/default/images', 'Minimize Message', 'Maximize Message');

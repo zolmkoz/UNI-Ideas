@@ -45,7 +45,7 @@ if (defined('popup') ) {	/* Special header for popup pages. */
 <body>
 <div style="display: none;" id="dialogHolder"><p id="dialogContent"><!-- Placeholder for jQuery UI Dialog --></p></div>
 <table class="headtable"><tr>
-  <td><a href="index.php<?php if (defined('__adm_rsid')) echo '?'. __adm_rsid; ?>" title="Return to the Admin Control Panel Dashboard"><img src="../images/fudlogo.gif" width="200px" alt="" style="float:left;" border="0" /></a>
+  <td><a href="index.php<?php if (defined('__adm_rsid')) echo '?'. __adm_rsid; ?>" title="Return to the Admin Control Panel Dashboard"><img src="../images/logomain.png" width="200px" alt="" style="float:left;" border="0" /></a>
   </td>
   <td><span class="linkhead">Admin Control Panel</span></td>
   <td align="right"><?php if (defined('__fud_index_name__')) { ?>

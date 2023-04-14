@@ -18,9 +18,9 @@
 	$GLOBALS['FILE_STORE']		= 'C:/xampp/htdocs/UNI-Ideas/files/';
 	$GLOBALS['FORUM_SETTINGS_PATH'] = 'C:/xampp/htdocs/UNI-Ideas/cache/';
 	$GLOBALS['PLUGIN_PATH'] 	= 'C:/xampp/htdocs/UNI-Ideas/plugins/';
-	$GLOBALS['FUD_OPT_1']		= 1737389117;
-	$GLOBALS['FUD_OPT_2']		= 2045120637;
-	$GLOBALS['FUD_OPT_3']		= 41943136;
+	$GLOBALS['FUD_OPT_1']		= 1737389629;
+	$GLOBALS['FUD_OPT_2']		= 2046169727;
+	$GLOBALS['FUD_OPT_3']		= 41943104;
 	$GLOBALS['FUD_OPT_4']		= 18;
 	$GLOBALS['CUSTOM_AVATAR_MAX_SIZE'] = 20000;	/* bytes */
 	$GLOBALS['CUSTOM_AVATAR_MAX_DIM']  = '64x64';	/* width x height (pixels) */
@@ -36,11 +36,11 @@
 	$GLOBALS['DBHOST_DBNAME']	= 'fud_test';
 	$GLOBALS['DBHOST_TBL_PREFIX']	= 'fud30_';		/* do not modify this */
 	$GLOBALS['DBHOST_DBTYPE']	= 'mysqli';
-	$GLOBALS['FUD_SMTP_SERVER']	= '127.0.0.1';
-	$GLOBALS['FUD_SMTP_PORT']	= 25;
+	$GLOBALS['FUD_SMTP_SERVER']	= 'smtp.gmail.com';
+	$GLOBALS['FUD_SMTP_PORT']	= 465;
 	$GLOBALS['FUD_SMTP_TIMEOUT']	= 10;		/* seconds */
-	$GLOBALS['FUD_SMTP_LOGIN']	= '';
-	$GLOBALS['FUD_SMTP_PASS']	= '';
+	$GLOBALS['FUD_SMTP_LOGIN']	= 'nguyenntgcc19275@fpt.edu.vn';
+	$GLOBALS['FUD_SMTP_PASS']	= 'sizuszorzsepbarm';
 	$GLOBALS['ADMIN_EMAIL'] 	= 'admin@UNI-ideas.com';
 	$GLOBALS['PRIVATE_ATTACHMENTS']	= 5;		/* int */
 	$GLOBALS['PRIVATE_ATTACH_SIZE']	= 1000000;	/* bytes */
@@ -52,7 +52,7 @@
 	$GLOBALS['UNCONF_USER_EXPIRY']	= 7;		/* days */
 	$GLOBALS['MOVED_THR_PTR_EXPIRY']	= 3;		/* days */
 	$GLOBALS['MAX_SMILIES_SHOWN']	= 15;		/* int */
-	$GLOBALS['DISABLED_REASON']	= 'Temporarily offline; please come back soon!';
+	$GLOBALS['DISABLED_REASON']	= 'Temporarily offline; please come back soon!!';
 	$GLOBALS['POSTS_PER_PAGE'] 	= 10;
 	$GLOBALS['THREADS_PER_PAGE']	= 10;
 	$GLOBALS['WORD_WRAP']		= 60;
